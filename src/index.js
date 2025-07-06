@@ -36,8 +36,8 @@ function addFilename(text) {
 // Set application state and store
 var app_data = require('./app_data.json');
 const store = createStore((state = app_data, action) => {
-  console.log(state);
-  console.log(action);
+  // console.log(state);
+  // console.log(action);
  
 
   if (action.type == ('fileupload')) {
@@ -53,6 +53,13 @@ const store = createStore((state = app_data, action) => {
     }
   }
 
+  
+  if (action.type == ('RESULTS_SUMMARY_BUILD')) {
+    return {
+      ...state,
+      results_summary: action.payload
+    }
+  }
     if (action.type == ('start_polling')) {
       return {
         ...state,

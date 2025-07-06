@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
@@ -34,7 +35,7 @@ const columns = [
         flex:1
     },
     {
-        field: 'num_hits',
+        field: 'number_hits',
         headerName: 'Number Hits',
         width: 150,
         editable: false,
@@ -51,12 +52,14 @@ const columns = [
    
 ];
 
-const rows = [
+// const rows = [
    
-];
+// ];
 
-export default function ModelResults() {
-
+function ModelResults(props) {
+    
+    let rows = props.model_results;
+    //borderColor:'primary.light'
     return (
 
         <div className='results_data'>
@@ -80,7 +83,7 @@ export default function ModelResults() {
                     initialState={{
                         pagination: {
                             paginationModel: {
-                                pageSize: 5,
+                                pageSize: 100,
                             },
                         },
                         pinnedColumns: {
@@ -98,3 +101,14 @@ export default function ModelResults() {
         </div>
     );
 }
+
+
+
+const mapStateToProps = (state) => ({
+    model_results: state.results_summary
+})
+
+
+const ConnectedModelResults = connect(mapStateToProps)(ModelResults);
+
+export default ConnectedModelResults;

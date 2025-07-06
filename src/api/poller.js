@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 
 
 
@@ -15,7 +15,7 @@ let max_iter = 0;
 let poller_id = "";
 
 const PollData = (props) => {
-
+    const dispatch = useDispatch();
     const grabSimData = () => {
 
         // console.log('grabbing sim data')
@@ -25,15 +25,18 @@ const PollData = (props) => {
                 return (response.json());
             })
             .then((json_data) => {
-                console.log(json_data);
+                // console.log(json_data);
                 
-                BuildFrameStats(json_data);
+                let model_data = BuildFrameStats(json_data);
+                console.log(model_data['results_summary']);
+                dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
+
             });
         
 
     }
     
-    console.log(props);
+    // console.log(props);
 
     if (props.polling_state.running == true) {
         console.log("polling data");
@@ -143,20 +146,44 @@ function BuildFrameStats(data) {
     }
 
 
-    // console.log(frame_stats)
-    // console.log(all_environments);
 
-    // *** UPDATE GUI ***
-    // ShowFrameStory();
+    // Update application state with result structures
+    let results_summary = parseResults(frame_stats);
+    // console.log(results_summary);
+    let activity_profile = parseActivity(frame_stats);
 
-    // ShowActiveSpecImage(latest_iter);
+    
 
-    // ShowSimProgress(percentage_complete);
-
-    // ShowActivityPlot();
-    // *** RESET STATS ***
-    console.log(frame_stats); // results
     frame_stats = {}
+
+    return ({
+        "results_summary" : results_summary
+    });
 
 }
 
+const parseActivity = (frame_stats) => {
+    
+}
+
+const parseResults = (frame_stats) => {
+
+    // results summary
+
+    let results_summary = [];
+    for (const key in frame_stats) {
+
+        
+        results_summary.push({
+            "id": key,
+            "frame_number": key,
+            "time": frame_stats[key]['time'],
+            "probability": frame_stats[key]['probability'] * 100,
+            "number_bots": frame_stats[key]['number_bots']
+        });
+
+    }
+
+    return results_summary;
+
+}

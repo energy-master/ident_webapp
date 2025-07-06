@@ -65,10 +65,12 @@
     ],
     "paths":
     {
-        "root_data_path" : "/media/marlin/Elements41/marlin_live/"
+        "root_acoustic_path" : "/media/marlin/Elements41/marlin_live/",
+        "root_data_path" : "/media/marlin/Elements41/marlin_live_data/"
     },
     "polling_state" : {"running" : false},
-    "results" : []
+    "results_summary" : [],
+    "plot_activity_data": {"time_vals" : [], "datasets": {}}
 
 }
     
