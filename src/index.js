@@ -16,6 +16,7 @@ import SpecPanel from './components/spec_panel/spec_panel';
 import IDentSpeedMenu from './components/speed_menu/speed_menu';
 import DataPanel from './components/data_panel/data_panel';
 import PlotterPanel from './components/plotter_panel/plotter_panel';
+import ConnectedPollData from './api/poller';
 
 // import { configureStore } from 'react-redux';
 import ResultsPanel from './components/results_panel/results_panel';
@@ -28,17 +29,18 @@ function addFilename(text) {
   }
 }
 
-// Set application state
-var app_data = require('./app_data.json');
 
+
+
+
+// Set application state and store
+var app_data = require('./app_data.json');
 const store = createStore((state = app_data, action) => {
   console.log(state);
   console.log(action);
-  if (action.type == 'ADD_TODO') {
-    console.log("f");
-    // fileName = "hello-triiger";
-  }
-  if (action.type == ('fileupload')){
+ 
+
+  if (action.type == ('fileupload')) {
     let fileName = action.payload['file-data'].file.name;
     return {
       ...state,
@@ -47,9 +49,28 @@ const store = createStore((state = app_data, action) => {
         fileType: 'wav',
         location: 'unknown',
         sampleRate: 'unknown'
-       }
+      }
     }
   }
+
+    if (action.type == ('start_polling')) {
+      return {
+        ...state,
+        polling_state: {
+          "running" : true
+        }
+      }
+    }
+    if (action.type == ('stop_polling')) {
+      return {
+        ...state,
+        polling_state: {
+          "running" : false
+        }
+      }
+    }
+
+  
 
   
   // state.acousticFileData.fileName = "hello-triiger";
@@ -64,6 +85,7 @@ root.render(
   <React.StrictMode >
    
     <Provider store={store}>
+      <ConnectedPollData />
       <SpecPanel />
       <PlotterPanel />
       <IDentSpeedMenu />
@@ -77,8 +99,12 @@ root.render(
 
 
 setTimeout(() => {
-  store.dispatch(addFilename('fs'));
-}, 5000)
+  store.dispatch({ type: 'start_polling'});
+}, 3000)
+
+setTimeout(() => {
+  store.dispatch({ type: 'stop_polling' });
+}, 6000)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

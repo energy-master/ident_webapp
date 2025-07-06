@@ -1,5 +1,8 @@
 {
     "version" : 0.01,
+    "sim_data" : {
+        "run_id" : -1
+    },
     "acousticFileData" :
         {
             "fileName" : "No Active File",
@@ -63,7 +66,9 @@
     "paths":
     {
         "root_data_path" : "/media/marlin/Elements41/marlin_live/"
-    }
+    },
+    "polling_state" : {"running" : false},
+    "results" : []
 
 }
     
