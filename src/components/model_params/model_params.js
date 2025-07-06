@@ -92,7 +92,12 @@ function ModelParams(props) {
                         style={{ marginLeft: 16 }}
                         onClick={() => {
                             console.log(props)
-                            //parseName(params.row.col6)
+                            let dl_path = '/marlin_live_data/dump/out/' + props.model_parameters[0].model_id + '.zip';
+                            const link = document.createElement("a");
+                            link.download = props.model_parameters[0].model_id + '.zip';
+                            link.href = dl_path;
+                            link.click();
+                            
                         }}
                     >
                         Download
