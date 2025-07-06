@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
@@ -37,26 +39,52 @@ const columns = [
         headerName: 'Number Bots',
         width: 150,
         editable: true,
+    },
+    {
+        field: 'nfft',
+        headerName: 'nfft',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'window_stream',
+        headerName: 'Stream Window',
+        width: 150,
+        editable: false,
     }
-   
-    // {
-    //     field: 'fullName',
-    //     headerName: 'Full name',
-    //     description: 'This column has a value getter and is not sortable.',
-    //     sortable: false,
-    //     width: 160,
-    //     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    // },
-];
 
-const rows = [
-    { id: 1, fileName: 'no data', fileType: 'no data', sampleRate: 'no data', srcLength: 'no data' }
-    // { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 }
 
 ];
 
-export default function ModelParams() {
 
+
+
+function ModelParams(props) {
+
+    const dispatch = useDispatch();
+    
+    const processRowUpdate = (newRow) => {
+
+        const updatedRow = { ...newRow, isNew: false };
+        
+        updatedRow.id = parseInt(updatedRow.id);
+        updatedRow.model_id = String(updatedRow.model_id);
+        updatedRow.numberBots = parseInt(updatedRow.numberBots);
+        updatedRow.delta_t = parseFloat(updatedRow.delta_t);
+        updatedRow.nfft = parseInt(updatedRow.nfft);
+        updatedRow.window_stream = parseInt(updatedRow.window_stream);
+        //handle send data to api
+
+        console.log(updatedRow);
+        dispatch({type:"MODEL_PARMS_UPDATE", payload : updatedRow})
+
+        // return to datagrid
+        return updatedRow;
+
+    }
+
+    let rows = props.model_parameters;
+    
     return (
 
         <div className='model_params'>
@@ -77,7 +105,10 @@ export default function ModelParams() {
                     rows={rows}
                     columns={columns}
                     hideFooter
+                    processRowUpdate={processRowUpdate}
                     initialState={{
+                        
+
                         pagination: {
                             paginationModel: {
                                 pageSize: 5,
@@ -98,48 +129,18 @@ export default function ModelParams() {
         </div>
     );
 }
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
 
-// /* MUI Componenets */
-// import { DataGrid } from '@mui/x-data-grid';
 
-// import './IDentFileDataGrid.css'
 
-// /*
-// fetch(`${fileName}.json`)
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-// */
+const mapStateToProps = (state) => ({
+    model_parameters : state.model_parameters
+})
 
-// const rows = [
-//     { id: 1, name: "John Doe", age: 25 },
-//     { id: 2, name: "Jane Smith", age: 30 },
-//     { id: 3, name: "Sam Wilson", age: 35 },
-// ];
-// const columns = [
-//     { field: "id", headerName: "ID", width: 70, editable: true },
-//     { field: "name", headerName: "Name", width: 150, editable: true },
-//     { field: "age", headerName: "Age", width: 100, editable: true },
-//   ];
+// const ConnectedFileDataGrid = connect((state) => {
+//     console.log('drawing file data grid');
+//     return { fileName: state.acousticFileData.fileName };
+// })(IDentFileDataGrid);
 
-// export default class IDentFileDataGrid extends React.Component{
+const ConnectedModelParams = connect(mapStateToProps)(ModelParams);
 
-//     constructor(props) {
-//         super(props);
-//     }
-//     render() {
-//         return (
-//             <div className='IDentFileDataGrid'>
-//                 <DataGrid
-//                     columns={columns}
-//                     rows={rows}
-//                     hideFooterPagination
-//                     hideFooterSelectedRowCount
-//                     hideFooter 
-//                 />
-//             </div>
-//         );
-//     }
-
-// }
+export default ConnectedModelParams;

@@ -30,6 +30,8 @@ const PollData = (props) => {
                 let model_data = BuildFrameStats(json_data);
                 console.log(model_data['results_summary']);
                 dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
+                dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
+
 
             });
         
@@ -96,13 +98,14 @@ function BuildFrameStats(data) {
     let d_num = 0;
     // //iterate over and group accordingly
     for (const key in frame_data) {
+        // console.log(frame_data[key]);
         if (frame_data.hasOwnProperty(key)) {
             max_iter = Math.max(max_iter, key);
 
             for (var i = 0; i < frame_data[key].length; i++) {
 
 
-
+                
                 // frame stats
                 if (frame_stats.hasOwnProperty(key)) {
                     frame_stats[key].number_hits = frame_stats[key].number_hits + 1;
@@ -150,20 +153,63 @@ function BuildFrameStats(data) {
     // Update application state with result structures
     let results_summary = parseResults(frame_stats);
     // console.log(results_summary);
-    let activity_profile = parseActivity(frame_stats);
+    let activity_plot = parseActivity(frame_stats);
 
     
 
     frame_stats = {}
 
     return ({
-        "results_summary" : results_summary
+        "results_summary": results_summary,
+        "plot_activity_data" : activity_plot
     });
 
 }
 
+const getRandomColor = () => {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
+
 const parseActivity = (frame_stats) => {
-    
+
+    let t_vals = Array.from({ length: max_iter + 1 }, (_, index) => index + 1);
+    let plot_datasets = [];
+    console.log(all_environments);
+    for (const x of all_environments) {
+        console.log(max_iter);
+        let e_vals = Array(max_iter + 1).fill(0);
+        let _c_ = getRandomColor();
+        let barColors = Array(max_iter + 1).fill(_c_);
+        for (const key in frame_stats) {
+            if (frame_stats[key].env_prob.hasOwnProperty(x)) {
+                e_vals[key] = frame_stats[key].env_prob[x];
+               
+            }
+        }
+
+        plot_datasets.push({
+            label : x,
+            data: e_vals,
+            borderColor: getRandomColor(),
+            backgroundColor:barColors,
+            fill: true,
+            tension: 1.0
+
+        })
+
+
+    }
+
+    return {
+        "labels": t_vals,
+        "datasets" : plot_datasets
+    }
+
 }
 
 const parseResults = (frame_stats) => {

@@ -71,7 +71,7 @@ function ModelResults(props) {
             <Stack direction="column" gap={0} style={{ width: '100%' }}>
                 <Box sx={{ width: '100%',paddingtop: 0 }}>
                     <Typography variant="h6" gutterBottom>
-                        <span className='panel-header'>Model Results</span>
+                        <span className='panel-header'>Activity</span>
                     </Typography></Box>
 
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import './activity_plotter.css';
 // import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Bubble, Line, Bar } from 'react-chartjs-2';
@@ -14,6 +16,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import { propsStateInitializer } from '@mui/x-data-grid/internals';
 
 ChartJS.register(
     CategoryScale,
@@ -47,7 +50,7 @@ const buildData = (data) => {
     return data;
 }
 
-const ActivityPlotter = (parms) => {
+const ActivityPlotter = (props) => {
     const options = {
         maintainAspectRatio: false,
         aspectRatio: 1,
@@ -69,7 +72,16 @@ const ActivityPlotter = (parms) => {
         }
     };
       
-    const data = buildData();
+
+    let data = null;
+    if (props.activity_plot_data.labels.length == 0) {
+        data = buildData();
+    }
+    else {
+        data = props.activity_plot_data;
+        console.log(data);
+    }
+
 
     console.log(data);
     return (
@@ -82,4 +94,12 @@ const ActivityPlotter = (parms) => {
 
 
 
-export default ActivityPlotter;
+
+const mapStateToProps = (state) => ({
+    activity_plot_data: state.plot_activity_data
+})
+
+
+const ConnectedActivityPlotter = connect(mapStateToProps)(ActivityPlotter);
+
+export default ConnectedActivityPlotter;

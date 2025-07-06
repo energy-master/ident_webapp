@@ -35,10 +35,12 @@ function addFilename(text) {
 
 // Set application state and store
 var app_data = require('./app_data.json');
+app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000)
+console.log(app_data.model_parameters.model_id)
+
+
 const store = createStore((state = app_data, action) => {
-  // console.log(state);
-  // console.log(action);
- 
+  
 
   if (action.type == ('fileupload')) {
     let fileName = action.payload['file-data'].file.name;
@@ -54,6 +56,21 @@ const store = createStore((state = app_data, action) => {
   }
 
   
+  if (action.type == ('MODEL_PARMS_UPDATE')) {
+    console.log(action.payload)
+    return {
+      ...state,
+      model_parameters: action.payload
+    }
+  }
+  
+  if (action.type == ('ACTIVITY_PLOT_DATA_BUILD')) {
+    console.log(action.payload)
+    return {
+      ...state,
+      plot_activity_data: action.payload
+    }
+  }
   if (action.type == ('RESULTS_SUMMARY_BUILD')) {
     return {
       ...state,
@@ -107,11 +124,11 @@ root.render(
 
 setTimeout(() => {
   store.dispatch({ type: 'start_polling'});
-}, 3000)
+}, 1000)
 
 setTimeout(() => {
   store.dispatch({ type: 'stop_polling' });
-}, 6000)
+}, 5000)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

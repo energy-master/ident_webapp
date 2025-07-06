@@ -1,8 +1,6 @@
 {
     "version" : 0.01,
-    "sim_data" : {
-        "run_id" : -1
-    },
+    
     "acousticFileData" :
         {
             "fileName" : "No Active File",
@@ -70,7 +68,16 @@
     },
     "polling_state" : {"running" : false},
     "results_summary" : [],
-    "plot_activity_data": {"time_vals" : [], "datasets": {}}
+    "plot_activity_data": {"labels" : [], "datasets": {}},
+    "model_parameters" : [{
+        "id" : 1,
+        "model_id" : "-1",
+        "numberBots" : 0,
+        "delta_t" : 0.01,
+        "nfft" : 1024,
+        "window_stream" : 60
+
+    }]
 
 }
     
