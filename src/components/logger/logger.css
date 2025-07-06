@@ -1,0 +1,13 @@
+.logger {
+
+    /* position: absolute; */
+    /* top:var(--file_grid_top); */
+    /* left:var(--file_grid_left); */
+    width: var(--logger_width);
+    height: var(--logger_height);
+    overflow-x: scroll;
+    /* color:blue; */
+    margin: 2px;
+    color: var(--blue);
+
+}

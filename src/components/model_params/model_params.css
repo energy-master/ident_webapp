@@ -1,0 +1,13 @@
+.model_params {
+
+    /* position: absolute; */
+    /* top:var(--file_grid_top); */
+    /* left:var(--file_grid_left); */
+    width: var(--file_grid_width);
+    height: var(--file_grid_height);
+    overflow-x: scroll;
+    font-size: 10px;
+    color: var(--blue);
+    margin: 2px;
+
+}

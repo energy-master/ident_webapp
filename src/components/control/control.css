@@ -1,0 +1,17 @@
+
+
+.control
+{
+    /* position: absolute; */
+    /* top: var(--control_top);
+    left: var(--control_left); */
+    width: var(--control_width);
+    height: var(--control_height);
+    overflow-x: scroll;
+    display: flex;
+    flex-Direction: 'column';
+    align-Items: 'center';
+     justify-Content: 'center';
+     margin: 2px;
+    /* color: var(--blue); */
+}

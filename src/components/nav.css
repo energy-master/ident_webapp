@@ -1,0 +1,18 @@
+.navbar{
+    width : 100vw;
+    /* padding: 20px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .appName {
+            font-size: 25px;
+        }
+    
+    .logo {
+        display: flex;
+        align-items: center;   
+    }
+
+}
+

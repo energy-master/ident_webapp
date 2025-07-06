@@ -1,0 +1,13 @@
+.results_data {
+
+    /* position: absolute; */
+    /* top:var(--file_grid_top); */
+    /* left:var(--file_grid_left); */
+    width: var(--results_data_width);
+    height: var(--results_data_height);
+    overflow-x: scroll;
+    /* color:blue; */
+    margin: 2px;
+    color: var(--blue);
+
+}
