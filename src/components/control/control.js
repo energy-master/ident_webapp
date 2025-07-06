@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,8 +16,22 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import PauseIcon from '@mui/icons-material/Pause';
 import './control.css';
 
-export default function SimControlCard() {
-    const theme = useTheme();
+function SimControlCard(props) {
+    // const theme = useTheme();
+    const dispatch = useDispatch();
+
+    const StartPolling = () => {
+     
+        console.log('start');
+        dispatch({ type: "START_POLLING" })
+        
+    }
+
+
+    const StopPolling = () => {
+        console.log('stop');
+        dispatch({ type: "STOP_POLLING" })
+    }
 
     return (
         <div className='control'>
@@ -36,13 +54,13 @@ export default function SimControlCard() {
                         {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
                     </IconButton> */}
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width:'100%' }}>
-                    <IconButton aria-label="play/pause">
+                    <IconButton aria-label="play/pause" onClick={StartPolling}>
                         <PlayArrowIcon sx={{ height: 38, width: 38 }} />
                     </IconButton>
-                    <IconButton aria-label="next">
+                <IconButton aria-label="next" onClick={StopPolling}>
                             <PauseIcon sx={{ height: 38, width: 38 }} />
                     </IconButton>
-                    </Box>
+                </Box>
               
             {/* </Box> */}
             
@@ -50,3 +68,14 @@ export default function SimControlCard() {
         </div>
     );
 }
+
+
+
+const mapStateToProps = (state) => ({
+    polling_state: state.polling_state
+})
+
+
+const ConnectedSimControlCard = connect(mapStateToProps)(SimControlCard);
+
+export default ConnectedSimControlCard;

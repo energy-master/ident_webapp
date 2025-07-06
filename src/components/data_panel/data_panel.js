@@ -3,7 +3,7 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import ConnectedFileDataGrid from '../../components/ident_data_grid';
 import ConnectedModelParams from '../../components/model_params/model_params';
-import SimControlCard from '../../components/control/control';
+import ConnectedSimControlCard from '../../components/control/control';
 import Logger from '../logger/logger';
 
 
@@ -15,8 +15,8 @@ const DataPanel = ({})=> {
                 
                 <ConnectedFileDataGrid />
                 <ConnectedModelParams />
-                <Logger />
-                <SimControlCard />
+                {/* <Logger /> */}
+                <ConnectedSimControlCard />
 
             </Paper>
         </div>

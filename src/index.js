@@ -77,7 +77,7 @@ const store = createStore((state = app_data, action) => {
       results_summary: action.payload
     }
   }
-    if (action.type == ('start_polling')) {
+    if (action.type == ('START_POLLING')) {
       return {
         ...state,
         polling_state: {
@@ -85,7 +85,7 @@ const store = createStore((state = app_data, action) => {
         }
       }
     }
-    if (action.type == ('stop_polling')) {
+    if (action.type == ('STOP_POLLING')) {
       return {
         ...state,
         polling_state: {
@@ -122,13 +122,13 @@ root.render(
 
 
 
-setTimeout(() => {
-  store.dispatch({ type: 'start_polling'});
-}, 1000)
+// setTimeout(() => {
+//   store.dispatch({ type: 'START_POLLING'});
+// }, 1000)
 
-setTimeout(() => {
-  store.dispatch({ type: 'stop_polling' });
-}, 5000)
+// setTimeout(() => {
+//   store.dispatch({ type: 'STOP_POLLING' });
+// }, 5000)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

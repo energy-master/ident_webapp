@@ -45,8 +45,6 @@ const PollData = (props) => {
 
         poller_id = setInterval(grabSimData, 500);
 
-
-
     }
     if (props.polling_state.running == false) {
         console.log("not polling data");

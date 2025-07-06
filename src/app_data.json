@@ -66,16 +66,23 @@
         "root_acoustic_path" : "/media/marlin/Elements41/marlin_live/",
         "root_data_path" : "/media/marlin/Elements41/marlin_live_data/"
     },
-    "polling_state" : {"running" : false},
+    "polling_state" : {"running" : false, "job_sent" : false},
     "results_summary" : [],
     "plot_activity_data": {"labels" : [], "datasets": {}},
     "model_parameters" : [{
+
         "id" : 1,
+        "ratio_active" : 0.2,
         "model_id" : "-1",
         "numberBots" : 0,
         "delta_t" : 0.01,
         "nfft" : 1024,
-        "window_stream" : 60
+        "window_stream" : 60,
+        "status" : "waiting...",
+        "percentage_complete" : 0.0,
+        "activation_level" : 0.85,
+        "target" : "general",
+        "similarity_threshold" : 0.8
 
     }]
 

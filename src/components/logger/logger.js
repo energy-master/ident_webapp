@@ -25,17 +25,17 @@ const columns = [
         field: 'time', headerName: 'Time', width: 90,
         editable: false,
     },
-    {
-        field: 'sender',
-        headerName: 'Sender',
-        width: 150,
-        editable: false,
-    },
+    // {
+    //     field: 'sender',
+    //     headerName: 'Sender',
+    //     width: 150,
+    //     editable: false,
+    // },
 
     {
         field: 'logMessage',
         headerName: 'Message',
-        width: 150,
+        width: 400,
         editable: false,
     }
 
@@ -50,9 +50,9 @@ const columns = [
 ];
 
 const rows = [
-    { id: 1, time: '20010101-010101-01', sender: 'simulation', logMessage: 'IDent live server running... [OK]' },
-    { id: 2, time: '20010101-010101-01', sender: 'simulation', logMessage: 'No audio data loaded.' },
-    { id: 3, time: '20010101-010101-01', sender: 'simulation', logMessage: 'Audio data required for ' }
+    { id: 1, time: '20010101-010101-01', logMessage: 'IDent live server running... [OK]' },
+    { id: 2, time: '20010101-010101-01', logMessage: 'No audio data loaded.' },
+    { id: 3, time: '20010101-010101-01', logMessage: 'Audio data required for ' }
     // { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 }
 
 ];

@@ -57,12 +57,12 @@ body{
 
   /* Control */
   --control_height: 100%;
-  --control_width: 30%;
+  --control_width: 20%;
   --control_top: 80%;
   --control_left: 20%;
  
   /* Logger */
-  --logger_width: 40%;
+  --logger_width: 20%;
   --logger_height: 100%;
 
   /* Model Data */
@@ -72,6 +72,10 @@ body{
   /* Results Data */
   --results_data_width: 50%;
   --results_data_height: 100%;
+
+  /* Model Parms / Run */
+  --model_parms_width: 75%;
+  --model_parms_height: 100%;
 
 }
 
