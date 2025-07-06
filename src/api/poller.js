@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 
 
-const global_data_path = "/marlin_live_data/global_out.json";
+// let global_data_path = "/marlin_live_data/global_out.json";
 // Global frame stats
 let frame_stats = {}
 let all_environments = []
@@ -12,43 +12,74 @@ let max_iter = 0;
 
 
 
-let poller_id = "";
 
+let poller_ids = [];
 const PollData = (props) => {
+    // console.log('checking polling');
+    // console.log(props);
     const dispatch = useDispatch();
+   
     const grabSimData = () => {
 
-        // console.log('grabbing sim data')
-        // console.log(props);
+
+        let global_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_global_out.json';
+        console.log(global_data_path);
+
+        //check if file exists
+
+
+        
         fetch(global_data_path)
             .then((response) => {
-                return (response.json());
+                console.log(response);
+                if (response.statusText == 'OK') {
+                    return (response.json());
+                }
+                else {
+                    return 'error';
+                }
             })
             .then((json_data) => {
-                // console.log(json_data);
+                if (json_data != 'error') {
+                    console.log(json_data);
                 
-                let model_data = BuildFrameStats(json_data);
-                console.log(model_data['results_summary']);
-                dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
-                dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
+                    let model_data = BuildFrameStats(json_data);
+                    
+                    dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
+                    dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
+                    dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
 
+                }
+                else {
+                    console.log("No dispatch");
+                    dispatch({ type: 'STOP_POLLING'});
+                }
 
             });
+            // .catch((error) => {
+            //     console.log("No global data")
+            // }).done();
         
 
     }
     
-    // console.log(props);
+    
 
     if (props.polling_state.running == true) {
         console.log("polling data");
 
-        poller_id = setInterval(grabSimData, 500);
+        let poller_id = setInterval(grabSimData, 2000);
+        poller_ids.push(poller_id);
+
 
     }
     if (props.polling_state.running == false) {
-        console.log("not polling data");
-        clearInterval(poller_id);
+        console.log("stopping polling data");
+        // console.log("not polling data");
+        for (let i = 0; i < poller_ids.length; i++){
+            clearInterval(poller_ids[i]);
+        }
+        
     }
 
 
@@ -62,7 +93,8 @@ const PollData = (props) => {
 
 const mapStateToProps = (state) => (
     {
-   polling_state:state.polling_state
+        polling_state: state.polling_state,
+        model_parameters : state.model_parameters
 })
 
 

@@ -79,11 +79,11 @@ const ActivityPlotter = (props) => {
     }
     else {
         data = props.activity_plot_data;
-        console.log(data);
+        // console.log(data);
     }
 
 
-    console.log(data);
+    // console.log(data);
     return (
         <div className='activity_plot'>
             <Bar options = {options} data = {data} />

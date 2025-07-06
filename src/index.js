@@ -41,6 +41,8 @@ console.log(app_data.model_parameters.model_id)
 
 const store = createStore((state = app_data, action) => {
   
+  // console.log("Running Store");
+  // console.log(state);
 
   if (action.type == ('fileupload')) {
     let fileName = action.payload['file-data'].file.name;
@@ -57,18 +59,28 @@ const store = createStore((state = app_data, action) => {
 
   
   if (action.type == ('MODEL_PARMS_UPDATE')) {
-    console.log(action.payload)
+    // console.log(action.payload)
     return {
       ...state,
-      model_parameters: action.payload
+      model_parameters: [action.payload]
     }
   }
   
   if (action.type == ('ACTIVITY_PLOT_DATA_BUILD')) {
-    console.log(action.payload)
+    // console.log(action.payload)
     return {
       ...state,
       plot_activity_data: action.payload
+    }
+  }
+  if (action.type == ('STATUS_UPDATE')) {
+    // console.log(action.payload)
+    let current_p = state.model_parameters[0];
+    current_p.status = action.payload;
+
+    return {
+      ...state,
+      model_parameters:[current_p]
     }
   }
   if (action.type == ('RESULTS_SUMMARY_BUILD')) {
@@ -99,7 +111,7 @@ const store = createStore((state = app_data, action) => {
   
   // state.acousticFileData.fileName = "hello-triiger";
   // updateStore(state, action);
-  console.log(state);
+  // console.log(state);
   return state;
 });
 

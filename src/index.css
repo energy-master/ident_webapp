@@ -20,11 +20,11 @@ code {
 
 /* GLOBALS */
 
-body{
-  border:1px solid #1e90ff;
-}
+
 
 :root {
+
+  
   /* Colors  */
   --blue: #1e90ff;
   --white: #ffffff;

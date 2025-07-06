@@ -44,25 +44,32 @@ function ModelParams(props) {
                     color="primary"
                     size="small"
                     style={{ marginLeft: 16 }}
-                    onClick={() => {
+                    onClick={(event) => {
 
                         console.log(props)
                         // submit Run
                         event.preventDefault()
-                        const url = 'https://marlin-network.hopto.org/cgi-bin/';
+                        const url = 'https://marlin-network.hopto.org/cgi-bin/run_live.php';
                         const formData = new FormData();
                         // console.log(file);
-                        formData.append('model_id', props.ConnectedModelParams[0].model_id);
+                        formData.append('model_id', props.model_parameters[0].model_id);
                         formData.append('user_uid', '0001vixen');
-                        formData.append('ratio_active', props.ConnectedModelParams[0].ratio_active);
-                        formData.append('number_bots', props.ConnectedModelParams[0].numberBots);
-                        formData.append('activation-level', props.ConnectedModelParams[0].activation_level);
-                        formData.append('target', props.ConnectedModelParams[0].target);
-                        formData.append('similarity_threshold', props.ConnectedModelParams[0].similarity_threshold);
-                        formData.append('streaming_window', props.ConnectedModelParams[0].window_stream);
-                        formData.append('delta_t', props.ConnectedModelParams[0].delta_t);
-                        formData.append('nfft', props.ConnectedModelParams[0].nfft);
-                        
+                        formData.append('ratio_active', props.model_parameters[0].ratio_active);
+                        formData.append('number_bots', props.model_parameters[0].numberBots);
+                        formData.append('activation-level', props.model_parameters[0].activation_level);
+                        formData.append('target', props.model_parameters[0].target);
+                        formData.append('similarity_threshold', props.model_parameters[0].similarity_threshold);
+                        formData.append('streaming_window', props.model_parameters[0].window_stream);
+                        formData.append('delta_t', props.model_parameters[0].delta_t);
+                        formData.append('nfft', props.model_parameters[0].nfft);
+                        let config = {};
+
+                        axios.post(url, formData, config).then((response) => {
+                           
+                            console.log(response);
+
+                        });
+
 
                     }}
                 >
@@ -77,7 +84,7 @@ function ModelParams(props) {
         // console.log(props.model_parameters[0].percentage_complete);
         return (
             <strong>
-                {props.model_parameters.status == "Complete" ?
+                {props.model_parameters[0].status == "Complete." ?
                     <Button
                         variant="contained"
                         color="primary"
@@ -141,7 +148,7 @@ function ModelParams(props) {
         },
         {
             field: 'download',
-            headerName: '',
+            headerName: 'Download',
             width: 150,
             disableClickEventBubbling: true,
             renderCell: renderModelDownloadButton
@@ -163,7 +170,7 @@ function ModelParams(props) {
         updatedRow.window_stream = parseInt(updatedRow.window_stream);
         //handle send data to api
 
-        console.log(updatedRow);
+        // console.log(updatedRow);
         dispatch({type:"MODEL_PARMS_UPDATE", payload : updatedRow})
 
         // return to datagrid
