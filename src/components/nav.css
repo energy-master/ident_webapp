@@ -1,17 +1,38 @@
 .navbar{
+
     width : 100vw;
     /* padding: 20px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: none;
+    z-index: 1000;
+    background-color: rgb(87, 151, 154);
+    
 
+   
+    .marlin_title{
+        padding: 10px;
+        font-weight: 1000;
+        font-size: 20px;
+        color:rgb(213, 18, 12);
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+    }
     .appName {
-            font-size: 25px;
+            padding: 10px;
+            font-size: 20px;
+            color: white;
         }
+                .subAppName {
+                    font-size: 15px;
+                    color: white;
+                }
     
     .logo {
         display: flex;
-        align-items: center;   
+        align-items: center;  
+        
     }
 
 }

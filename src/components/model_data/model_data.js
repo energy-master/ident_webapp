@@ -13,24 +13,28 @@ const columns = [
     {
         field: 'name', headerName: 'ID', width: 90,
         editable: false,
+        flex:1
     },
     {
         field: 'target',
         headerName: 'Target',
         width: 150,
         editable: false,
+        flex: 1
     },
     {
         field: 'study_focus',
         headerName: 'Study Focus',
         width: 150,
         editable: false,
+        flex: 1
     },
     {
         field: 'environment_name',
         headerName: 'DM Env',
         width: 150,
         editable: false,
+        flex: 1
     }
 
 ];

@@ -32,7 +32,7 @@ code {
   /* Spec Panel */
   --spec-panel-height: 30%;
   --spec-panel-width: 100%;
-  --spec-panel-top: 0%;
+  --spec-panel-top: 5%;
 
   /* Results panel */
   --results-panel-height: 30%;
@@ -94,7 +94,7 @@ html{
   bottom: var(--data-panel-bottom);
   height: var(--data-panel-height);
   width: var(--data-panel-width);
-  padding: 1px;
+  
 }
 
 .results-panel {
@@ -104,7 +104,7 @@ html{
   top: var(--results-panel-top);
   height: var(--results-panel-height);
   width: var(--results-panel-width);
-  padding: 1px;
+  
 }
 
 
@@ -115,7 +115,7 @@ html{
   top: var(--spec-panel-top);
   height: var(--spec-panel-height);
   width: var(--spec-panel-width);
-  padding: 1px;
+ 
 }
 
 .plotter-panel {
@@ -125,5 +125,5 @@ html{
   top: var(--plotter-panel-top);
   height: var(--plotter-panel-height);
   width: var(--plotter-panel-width);
-  padding: 1px;
+ 
 }

@@ -36,7 +36,7 @@ function addFilename(text) {
 // Set application state and store
 var app_data = require('./app_data.json');
 app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000)
-console.log(app_data.model_parameters.model_id)
+console.log(app_data.model_parameters[0].model_id)
 
 
 const store = createStore((state = app_data, action) => {
@@ -44,7 +44,7 @@ const store = createStore((state = app_data, action) => {
   // console.log("Running Store");
   // console.log(state);
 
-  if (action.type == ('fileupload')) {
+  if (action.type == ('FILE_UPLOAD_COMPLETE')) {
     let fileName = action.payload['file-data'].file.name;
     return {
       ...state,
@@ -52,8 +52,21 @@ const store = createStore((state = app_data, action) => {
         fileName: action.payload['file-data'].file.name,
         fileType: 'wav',
         location: 'unknown',
-        sampleRate: 'unknown'
+        sampleRate: 'unknown',
+        status:'Upload'
       }
+    }
+  }
+
+  if (action.type == ('FILE_UPLOAD_START')) {
+    // console.log(action.payload)
+    let current_p = state.acousticFileData;
+    current_p.status = 'Uploading';
+    current_p.fileName = 'Transferring'
+
+    return {
+      ...state,
+      acousticFileData: current_p
     }
   }
 
@@ -106,6 +119,28 @@ const store = createStore((state = app_data, action) => {
       }
     }
 
+  if (action.type == ('RUN_STARTED')) {
+    // console.log(action.payload)
+    let current_p = state.model_parameters[0];
+    current_p.run_title = 'Running';
+    
+
+    return {
+      ...state,
+      model_parameters: [current_p]
+    }
+  }
+  if (action.type == ('RUN_FINISHED')) {
+    // console.log(action.payload)
+    let current_p = state.model_parameters[0];
+    current_p.run_title = 'Run IDent';
+
+
+    return {
+      ...state,
+      model_parameters: [current_p]
+    }
+  }
   
 
   
@@ -120,11 +155,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode >
    
+    <NavBar appName="IDent Live"  />
+    
     <Provider store={store}>
       <ConnectedPollData />
       <SpecPanel />
       <PlotterPanel />
-      <IDentSpeedMenu />
+      {/* <IDentSpeedMenu /> */}
       <DataPanel />
       <ResultsPanel />
     </Provider>

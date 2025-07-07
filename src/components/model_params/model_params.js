@@ -51,7 +51,8 @@ function ModelParams(props) {
                         event.preventDefault()
                         const url = 'https://marlin-network.hopto.org/cgi-bin/run_live.php';
                         const formData = new FormData();
-                        // console.log(file);
+                        console.log(props.acousticFile.fileName);
+                        formData.append('fileName', props.acousticFile.fileName);
                         formData.append('model_id', props.model_parameters[0].model_id);
                         formData.append('user_uid', '0001vixen');
                         formData.append('ratio_active', props.model_parameters[0].ratio_active);
@@ -63,17 +64,24 @@ function ModelParams(props) {
                         formData.append('delta_t', props.model_parameters[0].delta_t);
                         formData.append('nfft', props.model_parameters[0].nfft);
                         let config = {};
+                        console.log('start');
 
+                        // start data polling
+                        dispatch({ type: "START_POLLING" })
+                        dispatch({ type: 'RUN_STARTED' })
                         axios.post(url, formData, config).then((response) => {
                            
                             console.log(response);
+                            // start data polling
+                            dispatch({ type: "STOP_POLLING" })
+                            dispatch({ type: 'RUN_FINISHED'})
 
                         });
 
 
                     }}
                 >
-                    Run IDent
+                    {props.model_parameters[0].run_title}
                     
                 </Button>
             </strong>
@@ -233,7 +241,8 @@ function ModelParams(props) {
 
 
 const mapStateToProps = (state) => ({
-    model_parameters : state.model_parameters
+    model_parameters: state.model_parameters,
+    acousticFile: state.acousticFileData
 })
 
 // const ConnectedFileDataGrid = connect((state) => {

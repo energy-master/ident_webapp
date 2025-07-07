@@ -15,44 +15,58 @@ import '@fontsource/roboto/300.css';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import Fileuploadbtn from '../components/Fileuploadbtn';
-
-
-const columns = [
-    {
-        field: 'fileName', headerName: 'File', width: 90 
-        
-    },
-    {
-        field: 'fileType',
-        headerName: 'File Type',
-        width: 150,
-        editable: false,
-    },
-    
-    {
-        field: 'sampleRate',
-        headerName: 'Sample Rate',
-        
-        width: 110,
-        editable: false,
-    },
-    {
-        field: 'srcLength',
-        headerName: 'Src Length',
-        width: 150,
-        editable: false,
-    }
-  
-];
+import ConnectedFileuploadbtn from '../components/Fileuploadbtn';
 
 
 
- function IDentFileDataGrid(props) {
-   
+
+function IDentFileDataGrid(props) {
+     
+     const renderUploadBtn = () => {
+         // console.log(props.model_parameters[0].percentage_complete);
+         return (
+           <ConnectedFileuploadbtn />
+         )
+     }
+
+     const columns = [
+         {
+             field: 'fileLoader',
+             headerName: '',
+             width: 150,
+             disableClickEventBubbling: true,
+             renderCell: renderUploadBtn
+         },
+         {
+             field: 'fileName', headerName: 'File', width: 90
+
+         },
+         {
+             field: 'fileType',
+             headerName: 'File Type',
+             width: 150,
+             editable: false,
+         },
+
+         {
+             field: 'sampleRate',
+             headerName: 'Sample Rate',
+
+             width: 110,
+             editable: false,
+         },
+         {
+             field: 'srcLength',
+             headerName: 'Src Length',
+             width: 150,
+             editable: false,
+         }
+
+     ];
+
     let rows = [
     
-        { id: 1, fileName: props.fileName, fileType: 'no data', sampleRate: 'no data', srcLength: 'no data' }
+        { id: 1, fileName: props.fileName, fileType: props.fileType, sampleRate: '[no data]', srcLength: '[no data]' }
   
     ];
 

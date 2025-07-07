@@ -12,7 +12,7 @@ let max_iter = 0;
 
 
 
-
+let bar_Colors = {};
 let poller_ids = [];
 const PollData = (props) => {
     // console.log('checking polling');
@@ -51,8 +51,9 @@ const PollData = (props) => {
 
                 }
                 else {
-                    console.log("No dispatch");
-                    dispatch({ type: 'STOP_POLLING'});
+                    console.log("no json global file found");
+                    // console.log("No dispatch");
+                    // dispatch({ type: 'STOP_POLLING'});
                 }
 
             });
@@ -112,9 +113,8 @@ export default ConnectedPollData;
 function BuildFrameStats(data) {
 
 
-   
-    
 
+    
     let number_bots = data['number_bots'];
    
     let latest_iter = data['last_bot_iter'];
@@ -191,7 +191,8 @@ function BuildFrameStats(data) {
 
     return ({
         "results_summary": results_summary,
-        "plot_activity_data" : activity_plot
+        "plot_activity_data": activity_plot
+        
     });
 
 }
@@ -205,16 +206,30 @@ const getRandomColor = () => {
     return color;
 };
 
+
+
+
 const parseActivity = (frame_stats) => {
+
+    
 
     let t_vals = Array.from({ length: max_iter + 1 }, (_, index) => index + 1);
     let plot_datasets = [];
     console.log(all_environments);
-    for (const x of all_environments) {
+    for (let x of all_environments) {
+        console.log(x)
+        console.log(bar_Colors);
+        if (x in bar_Colors){}
+        else {
+            console.log("getting color");
+            bar_Colors[x] = getRandomColor();
+        }
         console.log(max_iter);
         let e_vals = Array(max_iter + 1).fill(0);
-        let _c_ = getRandomColor();
-        let barColors = Array(max_iter + 1).fill(_c_);
+
+        // let _c_ = getRandomColor();
+
+        let barColors = Array(max_iter + 1).fill(bar_Colors[x]);
         for (const key in frame_stats) {
             if (frame_stats[key].env_prob.hasOwnProperty(x)) {
                 e_vals[key] = frame_stats[key].env_prob[x];
@@ -255,7 +270,8 @@ const parseResults = (frame_stats) => {
             "frame_number": key,
             "time": frame_stats[key]['time'],
             "probability": frame_stats[key]['probability'] * 100,
-            "number_bots": frame_stats[key]['number_bots']
+            "number_hits": frame_stats[key]['number_hits']
+            
         });
 
     }

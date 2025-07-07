@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 // import { fileUpload } from '../actions/actions';
 import './Fileuploadbtn.css';
+import Button from '@mui/material/Button';
 
 const Fileuploadbtn = (props) => {
     const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const Fileuploadbtn = (props) => {
         
         // send file
         handleSubmit(event, fileUploaded);
+        dispatch({type:'FILE_UPLOAD_START', payload:'Uploading'})
 
     };
 
@@ -53,7 +55,7 @@ const Fileuploadbtn = (props) => {
             // console.log(response.data);
             // console.log(props);
             // props.fileName = response.data['file-data'].file.name;
-            dispatch({ type: 'fileupload', payload: response.data });
+            dispatch({ type: 'FILE_UPLOAD_COMPLETE', payload: response.data });
             // dispatch(fileUpload(response.data));
             
         
@@ -62,13 +64,22 @@ const Fileuploadbtn = (props) => {
 
     }
 
-
+    console.log(props);
     return (
        
         <div>
-            <IconButton aria-label="upload audio file" onClick={handleClick}>
-                <FileUploadIcon sx={{ height: 24, width: 24 }} />
-            </IconButton>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ marginLeft: 16 }}
+                aria-label="upload audio file"
+                onClick={handleClick}>
+
+                {props.status}
+
+            </Button>
+
             <input
                 type="file"
                 onChange={handleChange}
@@ -94,8 +105,11 @@ const Fileuploadbtn = (props) => {
 
 const ConnectedFileuploadbtn = connect((state) => {
     // console.log('building ');
-    return { fileName: state.acousticFileData.fileName };
+    return {
+        fileName: state.acousticFileData.fileName,
+        status: state.acousticFileData.status
+     };
 })(Fileuploadbtn);
 
 
-export default Fileuploadbtn;
+export default ConnectedFileuploadbtn;

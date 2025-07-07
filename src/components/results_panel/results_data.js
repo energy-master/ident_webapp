@@ -37,7 +37,7 @@ const columns = [
     {
         field: 'number_hits',
         headerName: 'Number Hits',
-        width: 150,
+        width: 100,
         editable: false,
         flex:1
     },
@@ -59,6 +59,7 @@ const columns = [
 function ModelResults(props) {
     
     let rows = props.model_results;
+    console.log(props.model_results);
     //borderColor:'primary.light'
     return (
 

@@ -1,5 +1,5 @@
 {
-    "version" : 0.01,
+    "version" : 0.02,
     
     "acousticFileData" :
         {
@@ -8,7 +8,8 @@
             "location" : "No Data",
             "sampleRate" : "No Data",
             "size"  : "No Data",
-            "length" : "No Data"
+            "length" : "No Data",
+            "status" : "Upload"
         },
     "models" : [
         {"id":1,"name" : "hp_alpha", "study_focus" : "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]", "training_set_description" : "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.", "environment_name" : "smooth_temporal", "target": "hp_click"},
@@ -82,7 +83,10 @@
         "percentage_complete" : 0.0,
         "activation_level" : 0.85,
         "target" : "general",
-        "similarity_threshold" : 0.8
+        "similarity_threshold" : 0.8,
+        "run_title" : "Run IDent",
+        "active_bot_number" : 0,
+        "sim_bot_number" : 0
 
     }]
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import logo from '../logo_2.jpg';
 
 import './nav.css';
 
@@ -8,14 +9,21 @@ const NavBar = ({
     appName : AppName
 }) => {
     return (
+       
+        
         <div className='navbar'>
-            
+            <div className='marlin_bar'>
+                <span className='marlin_title'>MARLIN</span>
+            </div>
+           
+
             <div className='logo'>
-                {/* <img src="logo.svg" alt="App Logo" /> */}
-                <span className='appName'> { AppName } </span>
+               {/* <img src={logo}  /> */}
+                <span className='appName'> {AppName} <span className='subAppName'>[v0.2]</span></span> 
             </div>
 
         </div>
+        
     );
 }
 
