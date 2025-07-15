@@ -21,14 +21,10 @@ const PollData = (props) => {
    
     const grabSimData = () => {
 
-
+        console.log("Grabbing live data");
         let global_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_global_out.json';
         console.log(global_data_path);
 
-        //check if file exists
-
-
-        
         fetch(global_data_path)
             .then((response) => {
                 console.log(response);
@@ -69,7 +65,7 @@ const PollData = (props) => {
     if (props.polling_state.running == true) {
         console.log("polling data");
 
-        let poller_id = setInterval(grabSimData, 2000);
+        let poller_id = setInterval(grabSimData, 5000);
         poller_ids.push(poller_id);
 
 

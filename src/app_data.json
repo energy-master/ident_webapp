@@ -9,7 +9,9 @@
             "sampleRate" : "No Data",
             "size"  : "No Data",
             "length" : "No Data",
-            "status" : "Upload"
+            "status" : "Upload",
+            "SHOW_SPEC_FLAG" : 0,
+            "GL_MESH_LOADED" : false
         },
     "models" : [
         {"id":1,"name" : "hp_alpha", "study_focus" : "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]", "training_set_description" : "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.", "environment_name" : "smooth_temporal", "target": "hp_click"},
@@ -74,7 +76,7 @@
 
         "id" : 1,
         "ratio_active" : 0.2,
-        "model_id" : "-1",
+        "model_id" : "8449",
         "numberBots" : 50,
         "delta_t" : 0.1,
         "nfft" : 1024,
