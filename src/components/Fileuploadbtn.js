@@ -10,6 +10,7 @@ import './Fileuploadbtn.css';
 import Button from '@mui/material/Button';
 
 const Fileuploadbtn = (props) => {
+    
     const dispatch = useDispatch();
     
     // const [mode, setMode] = React.useState('light');
@@ -20,7 +21,9 @@ const Fileuploadbtn = (props) => {
     // Programatically click the hidden file input element
     // when the Button component is clicked
     const handleClick = event => {
+        
         hiddenFileInput.current.click();
+        // dispatch({type:'FILE_BTN_CLICK', payload:'clicked'})
     };
 
     // Call a function (passed as a prop from the parent component)
@@ -37,6 +40,128 @@ const Fileuploadbtn = (props) => {
 
     };
 
+    let ACTX = new AudioContext();
+    let ANALYSER = ACTX.createAnalyser();
+    ANALYSER.fftSize = 2048;
+    ANALYSER.smoothingTimeConstant = 0.5;
+    // General configuration for common settings
+    const config = {
+        /**
+         * The resolution of the FFT calculations
+         * Higher value means higher resolution decibel domain..
+         */
+        fftResolution: 4096,
+        /**
+         * Smoothing value for FFT calculations
+         */
+        smoothingTimeConstant: 0.1,
+        /**
+         * The size of processing buffer,
+         * determines how often FFT is run
+         */
+        processorBufferSize: 2048,
+    }
+    const handleAudioConnect = () => {
+       
+           
+        
+        let SOURCE;
+        console.log('fetching audio');
+        fetch('/marlin_live/test_file.wav').then(response => {
+            console.log(response);
+            response.arrayBuffer().then(function (buffer) {
+                console.log(buffer);
+                ACTX.decodeAudioData(buffer).then((audioBuffer) => {
+                    console.log('analysing');
+                    console.log('audioBuffer', audioBuffer);
+                    // {length: 1536000, duration: 32, sampleRate: 48000, numberOfChannels: 2}
+                    let audioData = audioBuffer;
+                    const offlineCtx = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
+                    const offlineAnalyser = offlineCtx.createAnalyser()
+                    let frequency_samples = 1024;
+                    offlineAnalyser.fftSize = 4 * frequency_samples;
+                    offlineAnalyser.smoothingTimeConstant = 0.5;
+                    let DATA = new Uint8Array(offlineAnalyser.frequencyBinCount);
+
+                    const source = offlineCtx.createBufferSource();
+                    source.buffer = audioBuffer;
+
+                    source.connect(offlineAnalyser);
+                    source.start();
+                    console.log(offlineAnalyser.frequencyBinCount);
+                    // let DATA = new Float32Array(offlineAnalyser.frequencyBinCount);
+                    offlineAnalyser.getByteFrequencyData(DATA);
+                    console.log(DATA);
+                    
+
+                    // source.channelCount = audioBuffer.numberOfChannels;
+                    // const splitter = offlineCtx.createChannelSplitter(source.channelCount)
+                    //     const generalAnalyzer = offlineCtx.createAnalyser()
+                    //     generalAnalyzer.fftSize = config.fftResolution
+                    //     generalAnalyzer.smoothingTimeConstant = config.smoothingTimeConstant
+
+
+                    // // Prepare buffers and analyzers for each channel
+                    // const channelFFtDataBuffers = []
+                    // const channelDbRanges = []
+                    // const analyzers = []
+                    // for (let i = 0; i < source.channelCount; i += 1) {
+                    //     channelFFtDataBuffers[i] = new Uint8Array((audioBuffer.length / config.processorBufferSize) * (config.fftResolution / 2))
+                    //     // Setup analyzer for this channel
+                    //     analyzers[i] = offlineCtx.createAnalyser()
+                    //     analyzers[i].smoothingTimeConstant = config.smoothingTimeConstant
+                    //     analyzers[i].fftSize = config.fftResolution
+                    //     // Connect the created analyzer to a single channel from the splitter
+                    //     splitter.connect(analyzers[i], i)
+                    //     channelDbRanges.push({
+                    //         minDecibels: analyzers[i].minDecibels,
+                    //         maxDecibels: analyzers[i].maxDecibels,
+                    //     })
+                    // }
+                    // offlineCtx.AudioWorkletNode = offlineCtx.AudioWorkletNode || offlineCtx.createJavaScriptNode
+                    // const processor = offlineCtx.createScriptProcessor(config.processorBufferSize, 1, 1)
+                    // let offset = 0
+                    // processor.onaudioprocess = (ev) => {
+                    //     // Run FFT for each channel
+                    //     for (let i = 0; i < source.channelCount; i += 1) {
+                    //         const freqData = new Uint8Array(channelFFtDataBuffers[i].buffer, offset, analyzers[i].frequencyBinCount)
+                    //         analyzers[i].getByteFrequencyData(freqData)
+                    //     }
+                    //     offset += generalAnalyzer.frequencyBinCount
+                    // }
+                    // source.connect(splitter)
+                    // source.connect(processor)
+                    // processor.connect(offlineCtx.destination)
+                    // source.connect(generalAnalyzer)
+                    // // Start the source, other wise start rendering would not process the source
+                    // source.start(0)
+
+                    // // Process the audio buffer
+                    // // offlineCtx.startRendering()
+                    // let res = {
+                    //     channels: channelFFtDataBuffers,
+                    //     channelDbRanges,
+                    //     stride: config.fftResolution / 2,
+                    //     tickCount: Math.ceil(audioBuffer.length / config.processorBufferSize),
+                    //     maxFreq: offlineCtx.sampleRate / 2, // max freq is always half the sample rate
+                    //     duration: audioBuffer.duration,
+                    // }
+                    // console.log(res);
+                    // return {
+                    //     channels: channelFFtDataBuffers,
+                    //     channelDbRanges,
+                    //     stride: config.fftResolution / 2,
+                    //     tickCount: Math.ceil(audioBuffer.length / config.processorBufferSize),
+                    //     maxFreq: offlineCtx.sampleRate / 2, // max freq is always half the sample rate
+                    //     duration: audioBuffer.duration,
+                    // }
+
+                    
+                    });
+                });
+            })
+        
+    }
 
     function handleSubmit(event, file) {
         event.preventDefault()
@@ -51,13 +176,17 @@ const Fileuploadbtn = (props) => {
                 'content-type': 'multipart/form-data',
             },
         };
+        console.log(props);
         axios.post(url, formData, config).then((response) => {
             // console.log(response.data);
             // console.log(props);
+            console.log('uploaded');
             // props.fileName = response.data['file-data'].file.name;
             dispatch({ type: 'FILE_UPLOAD_COMPLETE', payload: response.data });
+            console.log(props);
             // dispatch(fileUpload(response.data));
             
+            handleAudioConnect();
         
 
         });

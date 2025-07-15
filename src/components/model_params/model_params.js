@@ -68,15 +68,16 @@ function ModelParams(props) {
 
                         // start data polling
                         dispatch({ type: "START_POLLING" })
-                        dispatch({ type: 'RUN_STARTED' })
-                        axios.post(url, formData, config).then((response) => {
-                           
-                            console.log(response);
-                            // start data polling
-                            dispatch({ type: "STOP_POLLING" })
-                            dispatch({ type: 'RUN_FINISHED'})
 
-                        });
+                        // dispatch({ type: 'RUN_STARTED' })
+                        // axios.post(url, formData, config).then((response) => {
+                           
+                        //     console.log(response);
+                        //     // start data polling
+                        //     dispatch({ type: "STOP_POLLING" })
+                        //     dispatch({ type: 'RUN_FINISHED'})
+
+                        // });
 
 
                     }}
