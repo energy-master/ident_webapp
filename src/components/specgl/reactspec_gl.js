@@ -29,7 +29,7 @@ const SpecGL = ({ }) => {
             dpr={Math.min(window.devicePixelRatio, 2)}
             camera={{
                 fov: 40,
-                position: [0, 0, 200],
+                position: [0, 0, 250],
                 near: 0.1,
                 far: 2000
             }}
@@ -40,8 +40,8 @@ const SpecGL = ({ }) => {
         {/* <Lights /> */}
         <OrbitControls dampingFactor={0.05} />
         <ConnectedSpectrogramMesh />
-      
-
+            <TestLine></TestLine>
+        
         </Canvas>
       
 
@@ -51,11 +51,17 @@ const SpecGL = ({ }) => {
 
 export default SpecGL;
 
-//     const TestLine = () => {
-//         return (
-//             <mesh>
-//                 <meshLineGeometry points={[-150, -5, 1, 150, -5, 1]} />
-//                 <meshLineMaterial lineWidth={1} color="blue" /> 
-//             </mesh>
-//         )
-//     }
+const TestLine = () => {
+    return (
+        <mesh>
+            <meshLineGeometry points={
+                [-250, -50, 30,
+                -50, -50, 30,
+                -50, -9, 30,
+                -50, -50, 30,
+                250, -50, 30]} />
+            
+            <meshLineMaterial lineWidth={2} color="green" /> 
+        </mesh>
+    )
+}
