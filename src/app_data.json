@@ -69,6 +69,7 @@
         "root_acoustic_path" : "/media/marlin/Elements41/marlin_live/",
         "root_data_path" : "/media/marlin/Elements41/marlin_live_data/"
     },
+    "openGl" : {"x_width" : 800, "y_width" : 200},
     "polling_state" : {"running" : false, "job_sent" : false},
     "results_summary" : [],
     "plot_activity_data": {"labels" : [], "datasets": {}},
@@ -89,6 +90,7 @@
         "run_title" : "Run IDent",
         "active_bot_number" : 0,
         "sim_bot_number" : 0
+       
 
     }]
 

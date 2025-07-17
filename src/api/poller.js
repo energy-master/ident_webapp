@@ -27,7 +27,7 @@ const PollData = (props) => {
 
         fetch(global_data_path)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 if (response.statusText == 'OK') {
                     return (response.json());
                 }
@@ -37,9 +37,9 @@ const PollData = (props) => {
             })
             .then((json_data) => {
                 if (json_data != 'error') {
-                    console.log(json_data);
+                    // console.log(json_data);
                 
-                    let model_data = BuildFrameStats(json_data);
+                    let model_data = BuildFrameStats(json_data, props.model_parameters[0], props.gl_data);
                     
                     dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
                     dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
@@ -91,7 +91,9 @@ const PollData = (props) => {
 const mapStateToProps = (state) => (
     {
         polling_state: state.polling_state,
-        model_parameters : state.model_parameters
+        model_parameters: state.model_parameters,
+        gl_data : state.openGl
+        
 })
 
 
@@ -106,7 +108,7 @@ export default ConnectedPollData;
 */
 
 /* DATA functions */
-function BuildFrameStats(data) {
+function BuildFrameStats(data, model_data, gl_data) {
 
 
 
@@ -179,7 +181,7 @@ function BuildFrameStats(data) {
     // Update application state with result structures
     let results_summary = parseResults(frame_stats);
     // console.log(results_summary);
-    let activity_plot = parseActivity(frame_stats);
+    let activity_plot = parseActivity(frame_stats, model_data, gl_data);
 
     
 
@@ -205,44 +207,72 @@ const getRandomColor = () => {
 
 
 
-const parseActivity = (frame_stats) => {
+const parseActivity = (frame_stats, model_data, gl_data) => {
 
     
 
     let t_vals = Array.from({ length: max_iter + 1 }, (_, index) => index + 1);
     let plot_datasets = [];
     console.log(all_environments);
+    let env_number = 1;
     for (let x of all_environments) {
-        console.log(x)
-        console.log(bar_Colors);
+       
         if (x in bar_Colors){}
         else {
-            console.log("getting color");
+            // console.log("getting color");
             bar_Colors[x] = getRandomColor();
         }
-        console.log(max_iter);
+        
         let e_vals = Array(max_iter + 1).fill(0);
-
-        // let _c_ = getRandomColor();
-
         let barColors = Array(max_iter + 1).fill(bar_Colors[x]);
+        let points = [];
+
+        let start_x = 0 - (gl_data.x_width / 2);
+        let y_zero = 0 - (gl_data.y_width / 2);
+        let delta_x = gl_data.x_width / t_vals.length;
+        
+        for (let ij = 0; ij < t_vals.length; ij++){
+            let start_idx = (ij + 2) * ij;
+            // console.log(ij);
+            points[start_idx] = start_x + (ij * delta_x);
+            if (ij in frame_stats) {
+                
+                if (frame_stats[ij].env_prob.hasOwnProperty(x)) {
+                    if (frame_stats[ij].env_prob[x] > model_data.activation_level) {
+                        points[start_idx + 1] = y_zero + (frame_stats[ij].env_prob[x] * 40);
+                    } else {
+                        points[start_idx + 1] = y_zero + (frame_stats[ij].env_prob[x] * 10);
+                    }
+                    points[start_idx + 2] = (10 + (env_number * 2));
+                }
+            }
+            else {
+                points[start_idx + 1] = y_zero;
+                points[start_idx + 2] = (10 + (env_number * 2));
+            }
+
+        }
+       
         for (const key in frame_stats) {
+            
             if (frame_stats[key].env_prob.hasOwnProperty(x)) {
                 e_vals[key] = frame_stats[key].env_prob[x];
                
             }
+           
         }
 
+        env_number += 1;
         plot_datasets.push({
-            label : x,
+            environment_label : x,
             data: e_vals,
             borderColor: getRandomColor(),
             backgroundColor:barColors,
             fill: true,
-            tension: 1.0
+            tension: 1.0,
+            points: points
 
         })
-
 
     }
 

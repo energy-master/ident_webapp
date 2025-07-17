@@ -43,61 +43,6 @@ const columns = [
 
 function ModelData(props) {
 
-    // const rows = [
-    //     {
-    //         "id" : 1, "name": "hp_alpha", "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]", "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.", "environment_name": "smooth_temporal", "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 2,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 3,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 4,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 5,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 6,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     },
-    //     {
-    //         "id": 7,
-    //         "name": "hp_alpha",
-    //         "study_focus": "Investigate the adaption of duration of activation times in searching for HP clicks. Simply Energy Spikes of energy peaks at high res time ( with temporal element ) Active when within threshold. Starting with low spike energy percentages.[VectorEnergySpike] &[VectorEnergySpikeTemporal]",
-    //         "training_set_description": "sim_ids = [7430472924515043056643,896731126311732357710735] -  initial low s/n. Repeat of earlier work.",
-    //         "environment_name": "smooth_temporal",
-    //         "target": "hp_click"
-    //     }
-    // ]
-
-
     let rows = props.model_list;
 
     return (

@@ -16,7 +16,7 @@ const DataPanel = ({})=> {
                 <ConnectedFileDataGrid />
                 <ConnectedModelParams />
                 {/* <Logger /> */}
-                {/* <ConnectedSimControlCard /> */}
+                <ConnectedSimControlCard />
 
             </Paper>
         </div>

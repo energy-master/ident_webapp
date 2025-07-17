@@ -59,7 +59,7 @@ const columns = [
 function ModelResults(props) {
     
     let rows = props.model_results;
-    console.log(props.model_results);
+    // console.log(props.model_results);
     //borderColor:'primary.light'
     return (
 

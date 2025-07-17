@@ -122,8 +122,9 @@ class SpectrogramMesh extends React.Component{
             let ysegments = this.frequency_samples;
 
             /* OpenGL stuff */
-            let xsize = 600;
-            let ysize = 100;
+            let xsize = this.props.gl_data.x_width;
+            let ysize = this.props.gl_data.y_width;
+
             let xhalfSize = xsize / 2;
             let yhalfSize = ysize / 2;
             let xsegmentSize = xsize / xsegments;
@@ -272,14 +273,17 @@ const mapStateToProps = (state) => ({
 
     showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
     meshLoaded: state.acousticFileData.GL_MESH_LOADED,
-    activity_plot_data: state.plot_activity_data
+    activity_plot_data: state.plot_activity_data,
+    gl_data : state.openGl
+    
 
 })
 
 const mapDispatchToProps = (dispatch) => {
     
     return {
-        MESH_LOADED : () => dispatch(meshUpdateFunction())
+        MESH_LOADED: () => dispatch(meshUpdateFunction())
+        
     }
 
 }

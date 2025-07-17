@@ -10,18 +10,28 @@ import { DoubleSide } from 'three'
 // import './styles.css'
 import { Stats, OrbitControls, Line } from '@react-three/drei';
 import { useControls } from 'leva';
-import { columnResizeStateInitializer, escapeRegExp, useGridParamsApi } from '@mui/x-data-grid/internals';
+import { columnResizeStateInitializer, escapeRegExp, propsStateInitializer, useGridParamsApi } from '@mui/x-data-grid/internals';
 import { getListItemSecondaryActionClassesUtilityClass } from '@mui/material/ListItemSecondaryAction';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { FirstPersonControls } from '@react-three/drei';
 import ConnectedSpectrogramMesh from './spec_mesh';
-import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
+import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import ConnectedPlotLines from './plot_lines';
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
 
 const SpecGL = ({ }) => {
+
+    const { autoRotate, mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
+        autoRotate: !0,
+        mipmapBlur: !0,
+        luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
+        luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
+        intensity: { value: 2, min: 0, max: 5, step: 0.01 }
+    })
 
     return (
         
@@ -37,10 +47,20 @@ const SpecGL = ({ }) => {
         >
         <color attach="background" args={['black']}/>
         {/* <FirstPersonControls movementSpeed={3}/> */}
-        {/* <Lights /> */}
+        
         <OrbitControls dampingFactor={0.05} />
-        <ConnectedSpectrogramMesh />
-            <TestLine></TestLine>
+        <EffectComposer>
+            <Bloom
+                mipmapBlur={mipmapBlur}
+                luminanceThreshold={luminanceThreshold}
+                luminanceSmoothing={luminanceSmoothing}
+                intensity={intensity}
+            />
+            </EffectComposer>
+            
+            /* Scene */
+            <ConnectedPlotLines />
+            <ConnectedSpectrogramMesh />
         
         </Canvas>
       
@@ -51,17 +71,3 @@ const SpecGL = ({ }) => {
 
 export default SpecGL;
 
-const TestLine = () => {
-    return (
-        <mesh>
-            <meshLineGeometry points={
-                [-250, -50, 30,
-                -50, -50, 30,
-                -50, -9, 30,
-                -50, -50, 30,
-                250, -50, 30]} />
-            
-            <meshLineMaterial lineWidth={2} color="green" /> 
-        </mesh>
-    )
-}
