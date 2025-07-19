@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import React, { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame,extend } from '@react-three/fiber'
-import { GridMoreVertIcon } from '@mui/x-data-grid'
+import { GridMoreVertIcon, renderActionsCell } from '@mui/x-data-grid'
 import * as THREE from 'three';
 import { DoubleSide } from 'three'
-// import './styles.css'
+
 import { Stats, OrbitControls, Line } from '@react-three/drei';
 import { useControls } from 'leva';
 import { columnResizeStateInitializer, escapeRegExp, useGridParamsApi } from '@mui/x-data-grid/internals';
@@ -16,10 +16,8 @@ import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
-
-
 const PlotLines = (props) => {
-    console.log(props.activityPlotData);
+ 
     let points = [];
     let color = 'blue';
     let xAxis = props.activityPlotData['labels'];
@@ -39,7 +37,6 @@ const PlotLines = (props) => {
         }
     }
    
-
 
 if (dataPresent) {
     return (
@@ -67,9 +64,7 @@ else {
         </>
     );
 
-
     }
-
    
 }
 
@@ -84,7 +79,6 @@ const mapStateToProps = (state) => ({
 const ConnectedPlotLines = connect(mapStateToProps)(PlotLines);
 export default ConnectedPlotLines;
 
-
 const PlotLine = ({
     color,
     zdim,
@@ -92,13 +86,26 @@ const PlotLine = ({
     width,
     label
 }) => {
+    let s = 2;
+    const ref = useRef()
+    useFrame((state) => {
+     
+        for (let i = 0; i < points.length; i++){
+            // ref.current.position.x = x + Math.sin((state.clock.getElapsedTime() * s) / 2)
+            let idx = (i + 2) * i;
+            // ref.current.position.y = points[idx + 1] + Math.sin((state.clock.getElapsedTime() * s) / 2);
+            points[idx + 1] = points[idx + 1] + Math.sin((state.clock.getElapsedTime() * s) / 2)
+            i = idx;
+           // ref.current.position.z = z + Math.sin((state.clock.getElapsedTime() * s) / 2)
+        }
+        
+        
 
-
-
-
+    })
+    
 
     return (
-        <mesh>
+        <mesh ref={ref}>
             <meshLineGeometry points={points} widthCallback={(p) => p>0.8 ? 1.5 : 0.4} />
             <meshLineMaterial emissive lineWidth={width} color={color} />
         </mesh>

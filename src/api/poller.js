@@ -15,19 +15,20 @@ let max_iter = 0;
 let bar_Colors = {};
 let poller_ids = [];
 const PollData = (props) => {
-    // console.log('checking polling');
-    // console.log(props);
+    
     const dispatch = useDispatch();
-   
+
     const grabSimData = () => {
 
         console.log("Grabbing live data");
         let global_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_global_out.json';
         console.log(global_data_path);
+        let geometry_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_geo_hits.json';
+        console.log(geometry_data_path);
 
         fetch(global_data_path)
             .then((response) => {
-                // console.log(response);
+                
                 if (response.statusText == 'OK') {
                     return (response.json());
                 }
@@ -37,25 +38,53 @@ const PollData = (props) => {
             })
             .then((json_data) => {
                 if (json_data != 'error') {
-                    // console.log(json_data);
+                    console.log(json_data);
                 
                     let model_data = BuildFrameStats(json_data, props.model_parameters[0], props.gl_data);
                     
                     dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
                     dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
                     dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
+                    dispatch({ type: 'MAX_ITER_UPDATE', payload: json_data['max_iter'] });
+
+
+                    // *** get geometry ***
+                    fetch(geometry_data_path)
+                        .then((geom_response) => {
+
+                            if (geom_response.statusText == 'OK') {
+                                return (geom_response.json());
+                            }
+                            else {
+                                return 'error';
+                            }
+                        })
+                        .then((geom_json_data) => {
+                            if (geom_json_data != 'error') {
+                                console.log("***geometry***");
+                                console.log(geom_json_data);
+
+                                dispatch({ type: 'DECISION_GEOMETRY_UPDATE', payload: geom_json_data });
+
+
+                            }
+                            else {
+                                console.log("no geometry json global file found");
+
+                            }
+
+                        });
+
+
 
                 }
                 else {
                     console.log("no json global file found");
-                    // console.log("No dispatch");
-                    // dispatch({ type: 'STOP_POLLING'});
+                   
                 }
 
             });
-            // .catch((error) => {
-            //     console.log("No global data")
-            // }).done();
+           
         
 
     }
@@ -189,7 +218,8 @@ function BuildFrameStats(data, model_data, gl_data) {
 
     return ({
         "results_summary": results_summary,
-        "plot_activity_data": activity_plot
+        "plot_activity_data": activity_plot,
+        "max_iter": max_iter
         
     });
 

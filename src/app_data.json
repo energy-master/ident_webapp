@@ -89,10 +89,14 @@
         "similarity_threshold" : 0.8,
         "run_title" : "Run IDent",
         "active_bot_number" : 0,
-        "sim_bot_number" : 0
+        "sim_bot_number" : 0,
+        "max_iter" : 0
        
 
-    }]
-
+    }],
+    "spectrogram" : {
+        "frequency_vector" : []
+    },
+    "ft_geometry" : {}
 }
     

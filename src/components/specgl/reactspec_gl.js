@@ -19,6 +19,7 @@ import ConnectedSpectrogramMesh from './spec_mesh';
 import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import ConnectedPlotLines from './plot_lines';
+import ConnectedPlotActiveGeometry from './plot_geometry';
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
@@ -61,6 +62,7 @@ const SpecGL = ({ }) => {
             /* Scene */
             <ConnectedPlotLines />
             <ConnectedSpectrogramMesh />
+            <ConnectedPlotActiveGeometry />
         
         </Canvas>
       

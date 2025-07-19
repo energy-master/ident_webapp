@@ -43,6 +43,14 @@ const store = createStore((state = app_data, action) => {
   
   // console.log("Running Store");
   // console.log(state);
+  //
+  if (action.type == ('DECISION_GEOMETRY_UPDATE')) {
+    
+    return {
+      ...state,
+      ft_geometry: action.payload
+    }
+  }
 
   if (action.type == ('FILE_UPLOAD_COMPLETE')) {
     let fileName = action.payload['file-data'].file.name;
@@ -58,16 +66,19 @@ const store = createStore((state = app_data, action) => {
       
     }
   }
-
+ 
   if (action.type == ('MESH_LOADED')) {
     // console.log(action.payload)
     console.log("MESH loaded");
     let current_p = state.acousticFileData;
     current_p.GL_MESH_LOADED = true;
-
+    let current_s = state.spectrogram;
+    current_s.frequency_vector = action.payload;
+    console.log(current_s);
     return {
       ...state,
-      acousticFileData: current_p
+      acousticFileData: current_p,
+      spectrogram: current_s
     }
   }
 
@@ -97,6 +108,17 @@ const store = createStore((state = app_data, action) => {
     return {
       ...state,
       plot_activity_data: action.payload
+    }
+  }
+
+  if (action.type == ('MAX_ITER_UPDATE')) {
+    // console.log(action.payload)
+    let current_p = state.model_parameters[0];
+    current_p.max_iter = action.payload;
+
+    return {
+      ...state,
+      model_parameters: [current_p]
     }
   }
   if (action.type == ('STATUS_UPDATE')) {
