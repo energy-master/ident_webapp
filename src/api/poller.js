@@ -45,7 +45,7 @@ const PollData = (props) => {
                     dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
                     dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
                     dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
-                    dispatch({ type: 'MAX_ITER_UPDATE', payload: json_data['max_iter'] });
+                    dispatch({ type: 'MAX_ITER_UPDATE', payload: json_data['number_iters'] });
 
 
                     // *** get geometry ***
@@ -62,7 +62,7 @@ const PollData = (props) => {
                         .then((geom_json_data) => {
                             if (geom_json_data != 'error') {
                                 console.log("***geometry***");
-                                console.log(geom_json_data);
+                                // console.log(geom_json_data);
 
                                 dispatch({ type: 'DECISION_GEOMETRY_UPDATE', payload: geom_json_data });
 

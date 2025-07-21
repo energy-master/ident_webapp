@@ -35,8 +35,8 @@ function addFilename(text) {
 
 // Set application state and store
 var app_data = require('./app_data.json');
-//app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000)
-console.log(app_data.model_parameters[0].model_id)
+app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000)
+// console.log(app_data.model_parameters[0].model_id)
 
 
 const store = createStore((state = app_data, action) => {
@@ -55,7 +55,7 @@ const store = createStore((state = app_data, action) => {
   if (action.type == ('FILE_UPLOAD_COMPLETE')) {
     let fileName = action.payload['file-data'].file.name;
     let current_p = state.acousticFileData;
-    current_p.SHOW_SPEC_FLAG = 1;
+    
     current_p.fileName = fileName;
     current_p.status = "Upload";
     console.log(current_p);
@@ -67,11 +67,26 @@ const store = createStore((state = app_data, action) => {
     }
   }
  
+  if (action.type == ('SHOW_SPEC')) {
+   
+    let current_p = state.acousticFileData;
+    current_p.SHOW_SPEC_FLAG = 1;
+   
+    console.log(current_p);
+    return {
+      ...state,
+      acousticFileData: current_p
+
+
+    }
+  }
+
   if (action.type == ('MESH_LOADED')) {
     // console.log(action.payload)
     console.log("MESH loaded");
     let current_p = state.acousticFileData;
     current_p.GL_MESH_LOADED = true;
+    current_p.SHOW_SPEC_FLAG = 0;
     let current_s = state.spectrogram;
     current_s.frequency_vector = action.payload;
     console.log(current_s);
@@ -112,7 +127,7 @@ const store = createStore((state = app_data, action) => {
   }
 
   if (action.type == ('MAX_ITER_UPDATE')) {
-    // console.log(action.payload)
+    console.log(action.payload)
     let current_p = state.model_parameters[0];
     current_p.max_iter = action.payload;
 

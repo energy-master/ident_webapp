@@ -66,11 +66,11 @@ code {
   --logger_height: 100%;
 
   /* Model Data */
-  --model_data_width:50%;
+  --model_data_width:0%;
   --model_data_height:100%;
 
   /* Results Data */
-  --results_data_width: 50%;
+  --results_data_width: 100%;
   --results_data_height: 100%;
 
   /* Model Parms / Run */

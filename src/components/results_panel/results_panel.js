@@ -12,7 +12,7 @@ const ResultsPanel = ({ }) => {
         <div class='results-panel'>
             <Paper outline square sx={{ width: '100%', height: '100%', display: 'flex' }}>
 
-                <ConnectedModelResults />
+                {/* <ConnectedModelResults /> */}
                 <ConnectedModelData />
             </Paper>
         </div>

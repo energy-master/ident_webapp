@@ -64,7 +64,7 @@ const Fileuploadbtn = (props) => {
     const handleAudioConnect = () => {
        
            
-        
+        return (1);
         let SOURCE;
         console.log('fetching audio');
         fetch('/marlin_live/test_file.wav').then(response => {
@@ -178,15 +178,40 @@ const Fileuploadbtn = (props) => {
         };
         console.log(props);
         axios.post(url, formData, config).then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
+            if (response.data['error'] == true) {
+                return (response.data);
+            }
             // console.log(props);
             console.log('uploaded');
             // props.fileName = response.data['file-data'].file.name;
             dispatch({ type: 'FILE_UPLOAD_COMPLETE', payload: response.data });
-            console.log(props);
-            // dispatch(fileUpload(response.data));
-            
-            handleAudioConnect();
+            //RUN FFT
+            const formData2 = new FormData();
+            let sampling = 5;
+            let id = props.model_id;
+            formData2.append('run_id', id);
+            formData2.append('fileName', file.name);
+            formData2.append('sampling', sampling);
+            let fft_url = 'https://marlin-network.hopto.org/cgi-bin/live_fft.php';
+           
+            axios.post(fft_url, formData2, config).then((response_) => {
+                console.log('fft should be built!');
+                console.log(response_.data);
+
+
+
+                //show spectrogram
+                dispatch({ type: 'SHOW_SPEC', payload: 1 });
+
+                //dipatch show spec
+                console.log(props);
+                return (1);
+
+               
+            });
+
+          
         
 
         });
@@ -236,7 +261,8 @@ const ConnectedFileuploadbtn = connect((state) => {
     // console.log('building ');
     return {
         fileName: state.acousticFileData.fileName,
-        status: state.acousticFileData.status
+        status: state.acousticFileData.status,
+        model_id : state.model_parameters[0].model_id
      };
 })(Fileuploadbtn);
 

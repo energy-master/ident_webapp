@@ -2,7 +2,7 @@
 
 
 import { createRoot } from 'react-dom/client'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState, Suspense } from 'react'
 import { Canvas, useFrame,extend } from '@react-three/fiber'
 import { GridMoreVertIcon } from '@mui/x-data-grid'
 import * as THREE from 'three';
@@ -31,7 +31,7 @@ const SpecGL = ({ }) => {
         mipmapBlur: !0,
         luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
         luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-        intensity: { value: 2, min: 0, max: 5, step: 0.01 }
+        intensity: { value: 0, min: 0, max: 5, step: 0.01 }
     })
 
     return (
@@ -46,6 +46,7 @@ const SpecGL = ({ }) => {
             }}
 
         >
+            
         <color attach="background" args={['black']}/>
         {/* <FirstPersonControls movementSpeed={3}/> */}
         
@@ -57,12 +58,12 @@ const SpecGL = ({ }) => {
                 luminanceSmoothing={luminanceSmoothing}
                 intensity={intensity}
             />
-            </EffectComposer>
+        </EffectComposer>
             
-            /* Scene */
-            <ConnectedPlotLines />
-            <ConnectedSpectrogramMesh />
-            <ConnectedPlotActiveGeometry />
+        /* Scene */
+        <ConnectedPlotLines />
+        <ConnectedSpectrogramMesh />
+        <ConnectedPlotActiveGeometry />
         
         </Canvas>
       
@@ -73,3 +74,27 @@ const SpecGL = ({ }) => {
 
 export default SpecGL;
 
+
+
+function Box(props) {
+    // This reference will give us direct access to the mesh
+    const meshRef = useRef()
+    // Set up state for the hovered and active state
+    const [hovered, setHover] = useState(false)
+    const [active, setActive] = useState(false)
+    // Subscribe this component to the render-loop, rotate the mesh every frame
+    useFrame((state, delta) => (meshRef.current.rotation.x += delta))
+    // Return view, these are regular three.js elements expressed in JSX
+    return (
+        <mesh
+            {...props}
+            ref={meshRef}
+            scale={active ? 1.5 : 1}
+            onClick={(event) => setActive(!active)}
+            onPointerOver={(event) => setHover(true)}
+            onPointerOut={(event) => setHover(false)}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+        </mesh>
+    )
+}
