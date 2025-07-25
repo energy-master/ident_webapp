@@ -63,6 +63,10 @@ function ModelParams(props) {
                         formData.append('streaming_window', props.model_parameters[0].window_stream);
                         formData.append('delta_t', props.model_parameters[0].delta_t);
                         formData.append('nfft', props.model_parameters[0].nfft);
+                        formData.append('selected_models', props.selectedModels);
+                        
+                        console.log(formData);
+
                         let config = {};
                         console.log('start');
 
@@ -243,7 +247,8 @@ function ModelParams(props) {
 
 const mapStateToProps = (state) => ({
     model_parameters: state.model_parameters,
-    acousticFile: state.acousticFileData
+    acousticFile: state.acousticFileData,
+    selectedModels: state.selected_models
 })
 
 // const ConnectedFileDataGrid = connect((state) => {

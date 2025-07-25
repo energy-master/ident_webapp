@@ -52,6 +52,41 @@ const store = createStore((state = app_data, action) => {
     }
   }
 
+  if (action.type == ('MODEL_SELECTED')) {
+
+   
+    let selectedTag = action.payload;
+    let current_models = state.selected_models;
+    if (current_models.includes(selectedTag)) {
+      // remove model
+      const index = current_models.indexOf(selectedTag);
+      if (index !== -1) {
+        current_models.splice(index, 1);
+      }
+    }
+    else {
+      current_models.push(selectedTag);
+    }
+
+    console.log(current_models);
+
+    return {
+      ...state,
+      selected_models: current_models
+    }
+  }
+
+  //
+  if (action.type == ('MODELS_LOADED')) {
+    // let rows = action.payload;
+    //console.log(action.payload);
+    return {
+      ...state,
+      models: action.payload
+    }
+  }
+
+
   if (action.type == ('FILE_UPLOAD_COMPLETE')) {
     let fileName = action.payload['file-data'].file.name;
     let current_p = state.acousticFileData;
