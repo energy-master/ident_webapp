@@ -30,8 +30,8 @@ const PlotLabels = ({
     delta_t
 }) => {
 
-    console.log(frequencyVector);
-    console.log(timeVector);
+    // console.log(frequencyVector);
+    // console.log(timeVector);
     // console.log(gl_y);
     let f_max = frequencyVector[frequencyVector.length - 1];
     let total_time_s = Math.floor(timeVector[timeVector.length - 1]);

@@ -379,6 +379,10 @@ class SpectrogramMesh extends React.Component{
                 't_vector' : this.time_vector
 
             });
+            // this.props.LOG_UPDATE({
+            //     'message' : 'Ident Message: Spectrogram mesh has been calculated. Rendering under way. This can take a while.'
+
+            // });
 
         }
 
@@ -413,7 +417,7 @@ class SpectrogramMesh extends React.Component{
 
             }
             // this.lut = cm_c;
-            console.log(this.lut);
+            //console.log(this.lut);
             // console.log(init_colors);
 
             this.uniforms = {
@@ -504,7 +508,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     
     return {
-        MESH_LOADED: frequency_vector => dispatch(meshUpdateFunction(frequency_vector))
+        MESH_LOADED: frequency_vector => dispatch(meshUpdateFunction(frequency_vector)),
+        LOG_UPDATE: message => dispatch(updateLogger(message))
         
     }
 
@@ -514,6 +519,12 @@ const mapDispatchToProps = (dispatch) => {
 const ConnectedSpectrogramMesh = connect(mapStateToProps, mapDispatchToProps)(SpectrogramMesh);
 export default ConnectedSpectrogramMesh;
 
+const updateLogger = (message) => {
+    return {
+        'type' : "LOG_UPDATE",
+        'payload' : message
+    }
+}
 
 const meshUpdateFunction = (frequency_vector) => {
 

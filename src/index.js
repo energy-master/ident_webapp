@@ -132,7 +132,20 @@ const store = createStore((state = app_data, action) => {
       spectrogram: current_s
     }
   }
-
+  
+  if (action.type == ('LOG_UPDATE')) {
+    // console.log(action.payload)
+    let messages = state.applicationLog;
+    // messages.push(action.payload);
+    messages[0] = "test";
+    //console.log(messages);
+    return {
+      ...state,
+      applicationLog: messages,
+      logMessage:action.payload
+    }
+  }
+  
   if (action.type == ('FILE_UPLOAD_START')) {
     // console.log(action.payload)
     let current_p = state.acousticFileData;

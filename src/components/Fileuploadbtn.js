@@ -36,7 +36,8 @@ const Fileuploadbtn = (props) => {
         
         // send file
         handleSubmit(event, fileUploaded);
-        dispatch({type:'FILE_UPLOAD_START', payload:'Uploading'})
+        dispatch({ type: 'FILE_UPLOAD_START', payload: 'Uploading' })
+        dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Starting to upload acoustic file to application.' })
 
     };
 
@@ -186,6 +187,9 @@ const Fileuploadbtn = (props) => {
             console.log('uploaded');
             // props.fileName = response.data['file-data'].file.name;
             dispatch({ type: 'FILE_UPLOAD_COMPLETE', payload: response.data });
+            dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Acoustic file upload complete.' });
+
+
             //RUN FFT
             const formData2 = new FormData();
             let sampling = 5;
@@ -193,6 +197,8 @@ const Fileuploadbtn = (props) => {
             formData2.append('run_id', id);
             formData2.append('fileName', file.name);
             formData2.append('sampling', sampling);
+
+            dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Acoustic data analysis begins.' })
             let fft_url = 'https://marlin-network.hopto.org/cgi-bin/live_fft.php';
            
             axios.post(fft_url, formData2, config).then((response_) => {
@@ -203,6 +209,8 @@ const Fileuploadbtn = (props) => {
 
                 //show spectrogram
                 dispatch({ type: 'SHOW_SPEC', payload: 1 });
+                dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Spectrogram rendering has started. This may take some time.' });
+
 
                 //dipatch show spec
                 console.log(props);

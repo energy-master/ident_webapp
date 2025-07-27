@@ -54,6 +54,7 @@
         "time_vector" : []
     },
     "ft_geometry" : {},
-    "applicationLog" : ["MARLIN IDENT v0.3 Log"]
+    "applicationLog" : [],
+    "logMessage" : "MARLIN IDent v0.3"
 }
     

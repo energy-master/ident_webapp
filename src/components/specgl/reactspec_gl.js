@@ -66,18 +66,19 @@ const SpecGL = ({ }) => {
         
         <ConnectedPlotLines />
         <ConnectedSpectrogramMesh />
-        <ConnectedPlotActiveGeometry />
-            <Text
-                                // position={[20, 20, -10]}
-                                scale={[40, 40, 10]}
-                                color="red" // default
-                                anchorX="center" // default
-                                anchorY="middle" // default
-                            >
-                                M A R L I N  AI
-            </Text>
-            
+            <ConnectedPlotActiveGeometry />
             <ConnectedLogger />
+        <Text
+                            // position={[20, 20, -10]}
+                            scale={[40, 40, 10]}
+                            color="red" // default
+                            anchorX="center" // default
+                            anchorY="middle" // default
+                        >
+                            M A R L I N  AI
+        </Text>
+            
+        
             
         </Canvas>
       
