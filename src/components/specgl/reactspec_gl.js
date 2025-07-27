@@ -8,7 +8,7 @@ import { GridMoreVertIcon } from '@mui/x-data-grid'
 import * as THREE from 'three';
 import { DoubleSide } from 'three'
 // import './styles.css'
-import { Stats, OrbitControls, Line } from '@react-three/drei';
+import { Stats, OrbitControls, Line, Text } from '@react-three/drei';
 import { useControls } from 'leva';
 import { columnResizeStateInitializer, escapeRegExp, propsStateInitializer, useGridParamsApi } from '@mui/x-data-grid/internals';
 import { getListItemSecondaryActionClassesUtilityClass } from '@mui/material/ListItemSecondaryAction';
@@ -20,6 +20,8 @@ import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import ConnectedPlotLines from './plot_lines';
 import ConnectedPlotActiveGeometry from './plot_geometry';
+import ConnectedLogger from './logging';
+
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
@@ -29,9 +31,9 @@ const SpecGL = ({ }) => {
     const { autoRotate, mipmapBlur, luminanceThreshold, luminanceSmoothing, intensity } = useControls({
         autoRotate: !0,
         mipmapBlur: !0,
-        luminanceThreshold: { value: 0.5, min: 0, max: 2, step: 0.01 },
+        luminanceThreshold: { value: 0.0, min: 0, max: 2, step: 0.01 },
         luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-        intensity: { value: 0, min: 0, max: 5, step: 0.01 }
+        intensity: { value: 10.0, min: 0, max: 10, step: 0.01 }
     })
 
     return (
@@ -60,11 +62,23 @@ const SpecGL = ({ }) => {
             />
         </EffectComposer>
             
-        /* Scene */
+            /* Scene */
+        
         <ConnectedPlotLines />
         <ConnectedSpectrogramMesh />
         <ConnectedPlotActiveGeometry />
-        
+            <Text
+                                // position={[20, 20, -10]}
+                                scale={[40, 40, 10]}
+                                color="red" // default
+                                anchorX="center" // default
+                                anchorY="middle" // default
+                            >
+                                M A R L I N  AI
+            </Text>
+            
+            <ConnectedLogger />
+            
         </Canvas>
       
 

@@ -48,11 +48,12 @@
         "sim_bot_number" : 0,
         "max_iter" : 0
        
-
     }],
     "spectrogram" : {
-        "frequency_vector" : []
+        "frequency_vector" : [],
+        "time_vector" : []
     },
-    "ft_geometry" : {}
+    "ft_geometry" : {},
+    "applicationLog" : ["MARLIN IDENT v0.3 Log"]
 }
     

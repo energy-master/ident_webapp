@@ -41,7 +41,7 @@ const PollData = (props) => {
                     console.log(json_data);
                 
                     let model_data = BuildFrameStats(json_data, props.model_parameters[0], props.gl_data);
-                    
+                    max_iter = json_data['number_iters'];
                     dispatch({ type: 'RESULTS_SUMMARY_BUILD', payload: model_data['results_summary'] });
                     dispatch({ type: 'ACTIVITY_PLOT_DATA_BUILD', payload: model_data['plot_activity_data'] });
                     dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
@@ -242,6 +242,7 @@ const parseActivity = (frame_stats, model_data, gl_data) => {
     
 
     let t_vals = Array.from({ length: max_iter + 1 }, (_, index) => index + 1);
+    console.log(max_iter);
     let plot_datasets = [];
     console.log(all_environments);
     let env_number = 1;

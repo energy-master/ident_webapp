@@ -123,7 +123,8 @@ const store = createStore((state = app_data, action) => {
     current_p.GL_MESH_LOADED = true;
     current_p.SHOW_SPEC_FLAG = 0;
     let current_s = state.spectrogram;
-    current_s.frequency_vector = action.payload;
+    current_s.frequency_vector = action.payload['f_vector'];
+    current_s.time_vector = action.payload['t_vector'];
     console.log(current_s);
     return {
       ...state,
