@@ -123,6 +123,37 @@ function ModelParams(props) {
         )
     }
 
+    const renderReportLinkButton = () => {
+        // console.log(props.model_parameters[0].percentage_complete);
+        return (
+            <strong>
+                {props.model_parameters[0].status == "Complete." ?
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        style={{ marginLeft: 16 }}
+                        onClick={() => {
+
+                            let report_path = `https://marlin-network.hopto.org/live/reports/site/reports/rpt_${props.model_parameters[0].model_id}`;
+                            console.log(report_path);
+                            // let dl_path = '/marlin_live_data/dump/out/' + props.model_parameters[0].model_id + '.zip';
+                            let link = document.createElement("a");
+                            // link.download = props.model_parameters[0].model_id + '.zip';
+                            link.href = report_path;
+                            link.click();
+
+                        }}
+                    >
+                        Report
+                    </Button> : null
+
+
+                }
+            </strong>
+        )
+    }
+
     const columns = [
         {
             field: 'delta_t', headerName: 'Delta T (s)', width: 90,
@@ -172,6 +203,13 @@ function ModelParams(props) {
             disableClickEventBubbling: true,
             renderCell: renderModelDownloadButton
         },
+        {
+            field: 'report',
+            headerName: 'Report',
+            width: 150,
+            disableClickEventBubbling: true,
+            renderCell: renderReportLinkButton
+        }
 
 
     ];
