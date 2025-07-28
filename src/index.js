@@ -192,7 +192,7 @@ const store = createStore((state = app_data, action) => {
     // console.log(action.payload)
     let current_p = state.model_parameters[0];
     current_p.status = action.payload;
-    
+    console.log(action.payload);
 
     return {
       ...state,

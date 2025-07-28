@@ -39,7 +39,7 @@
         "delta_t" : 0.1,
         "nfft" : 1024,
         "window_stream" : 60,
-        "status" : "Waiting.",
+        "status" : "Idle",
         "percentage_complete" : 0.0,
         "activation_level" : 0.85,
         "target" : "general",
