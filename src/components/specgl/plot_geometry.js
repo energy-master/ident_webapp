@@ -23,7 +23,7 @@ const PlotActiveGeometry = (props) => {
     let dataPresent = false;
 
     const get_y_from_f = (frequency) => {
-        console.log(props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1]);
+        // console.log(props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1]);
         let f_y_ratio = props.gl_data.y_width / props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1] ;
         let freq_vector = props.spectrogram.frequency_vector;
         let gl_y_range = props.gl_data.y_width;
@@ -51,10 +51,10 @@ const PlotActiveGeometry = (props) => {
         console.log(delta_x);
         // console.log(time_s, props.model_parameters.delta_t);
         let number_iters = (time_s / props.model_parameters.delta_t);
-        console.log(number_iters);
+        // console.log(number_iters);
         number_iters = 1;
         let gl_delta_x = delta_x * number_iters;
-        console.log(gl_delta_x);
+        // console.log(gl_delta_x);
 
         return (gl_delta_x);
 
@@ -76,14 +76,14 @@ const PlotActiveGeometry = (props) => {
 
         // memory x
         let delta_xgl_memory = get_delta_x_from_delta_t(geo.max_memory/1000);
-        console.log(xgl_iter, ygl_max, ygl_min, delta_xgl_memory)
+        // console.log(xgl_iter, ygl_max, ygl_min, delta_xgl_memory)
 
         // points
         points.push(xgl_iter, ygl_max, 10, xgl_iter, ygl_min, 10, xgl_iter - delta_xgl_memory, ygl_min, 10, xgl_iter - delta_xgl_memory, ygl_max, 10);
-        console.log(points);
-        console.log(geo.max_memory/1000);
-        console.log(geo.f_max,geo.f_min);
-        console.log(props.gl_data.x_width,props.model_parameters.max_iter);
+        // console.log(points);
+        // console.log(geo.max_memory/1000);
+        // console.log(geo.f_max,geo.f_min);
+        // console.log(props.gl_data.x_width,props.model_parameters.max_iter);
 
         dataSetArray.push({
             'points': points,
@@ -100,7 +100,7 @@ const PlotActiveGeometry = (props) => {
 
     }
 
-    console.log('plot geometry');
+    // console.log('plot geometry');
     // console.log(props.active_geometry);
     for (const [key, value] of Object.entries(props.active_geometry)) {
         // console.log(`${key}: ${value}`);
@@ -191,7 +191,7 @@ const PlotGeo = ({
     return (
         <mesh ref={ref}>
             <meshLineGeometry points={points} widthCallback={(p) => p > 0.8 ? 1.5 : 0.4} />
-            <meshLineMaterial emissive lineWidth={width} color={color} />
+            <meshLineMaterial emissive lineWidth={width} color={color} wireframe={true} />
         </mesh>
     )
 }

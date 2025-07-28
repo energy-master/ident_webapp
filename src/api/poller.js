@@ -20,11 +20,11 @@ const PollData = (props) => {
 
     const grabSimData = () => {
 
-        console.log("Grabbing live data");
+        // console.log("Grabbing live data");
         let global_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_global_out.json';
-        console.log(global_data_path);
+        // console.log(global_data_path);
         let geometry_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_geo_hits.json';
-        console.log(geometry_data_path);
+        // console.log(geometry_data_path);
 
         fetch(global_data_path)
             .then((response) => {
@@ -38,7 +38,7 @@ const PollData = (props) => {
             })
             .then((json_data) => {
                 if (json_data != 'error') {
-                    console.log(json_data);
+                    // console.log(json_data);
                 
                     let model_data = BuildFrameStats(json_data, props.model_parameters[0], props.gl_data);
                     max_iter = json_data['number_iters'];
@@ -47,6 +47,18 @@ const PollData = (props) => {
                     dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
                     dispatch({ type: 'MAX_ITER_UPDATE', payload: json_data['number_iters'] });
 
+                    
+                    dispatch({
+                        type: 'RUN_UPDATE', payload: {
+                            'number_bots': json_data['number_bots'],
+                            'active_bot': json_data['last_bot_iter']
+                        }
+                    });
+
+                    console.log({
+                        'number_bots': json_data['number_bots'],
+                        'active_bot': json_data['last_bot_iter']
+                    })
 
                     // *** get geometry ***
                     fetch(geometry_data_path)
@@ -76,7 +88,6 @@ const PollData = (props) => {
                         });
 
 
-
                 }
                 else {
                     console.log("no json global file found");
@@ -88,7 +99,6 @@ const PollData = (props) => {
         
 
     }
-    
     
 
     if (props.polling_state.running == true) {
@@ -107,8 +117,6 @@ const PollData = (props) => {
         }
         
     }
-
-
 
     return (
         <div></div>

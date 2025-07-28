@@ -71,15 +71,16 @@ function ModelParams(props) {
                         console.log('start');
 
                         // start data polling
-                        dispatch({ type: "START_POLLING" })
-
-                        dispatch({ type: 'RUN_STARTED' })
+                        //dispatch({ type: "START_POLLING" });
+                        dispatch({ type: 'RUN_STARTED' });
+                        dispatch({type:'LOG_UPDATE', payload:'Run submitted to IDent.'});
+                        
                         axios.post(url, formData, config).then((response) => {
                            
                             console.log(response);
                             // start data polling
-                            dispatch({ type: "STOP_POLLING" })
-                            dispatch({ type: 'RUN_FINISHED'})
+                            //dispatch({ type: "STOP_POLLING" });
+                            dispatch({ type: 'RUN_FINISHED' });
 
                         });
 

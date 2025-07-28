@@ -8,7 +8,8 @@ import { GridMoreVertIcon } from '@mui/x-data-grid'
 import * as THREE from 'three';
 import { DoubleSide } from 'three'
 // import './styles.css'
-import { Stats, OrbitControls, Line, Text } from '@react-three/drei';
+import { Stats, OrbitControls, Line, Text, useProgress, Loader, Html } from '@react-three/drei';
+// import {  } from '@react-three/drei/web';
 import { useControls } from 'leva';
 import { columnResizeStateInitializer, escapeRegExp, propsStateInitializer, useGridParamsApi } from '@mui/x-data-grid/internals';
 import { getListItemSecondaryActionClassesUtilityClass } from '@mui/material/ListItemSecondaryAction';
@@ -21,7 +22,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import ConnectedPlotLines from './plot_lines';
 import ConnectedPlotActiveGeometry from './plot_geometry';
 import ConnectedLogger from './logging';
-
+import ConnectedGLHud from './hud';
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
@@ -37,7 +38,7 @@ const SpecGL = ({ }) => {
     })
 
     return (
-        
+        <>
         <Canvas
             dpr={Math.min(window.devicePixelRatio, 2)}
             camera={{
@@ -69,19 +70,29 @@ const SpecGL = ({ }) => {
             <ConnectedPlotActiveGeometry />
             <ConnectedLogger />
         <Text
-                            // position={[20, 20, -10]}
+                            position={[-130, 0, -10]}
                             scale={[40, 40, 10]}
                             color="red" // default
-                            anchorX="center" // default
+                            anchorX="left" // default
                             anchorY="middle" // default
                         >
                             M A R L I N  AI
         </Text>
             
-        
+         <ConnectedGLHud /> 
             
-        </Canvas>
-      
+            </Canvas>
+            <Loader />
+        {/* <Loader
+            containerStyles={...container} // Flex layout styles
+            innerStyles = { ...inner } // Inner container styles
+            barStyles = { ...bar } // Loading-bar styles
+            dataStyles = { ...data } // Text styles
+            dataInterpolation = {(p) => `Loading ${p.toFixed(2)}%`} // Text
+            initialState = {(active) => active} // Initial black out state
+        >
+         */}
+        </> 
 
 
     )
@@ -113,3 +124,4 @@ function Box(props) {
         </mesh>
     )
 }
+

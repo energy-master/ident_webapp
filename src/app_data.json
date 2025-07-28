@@ -20,12 +20,13 @@
         }
     ],
     "selected_models" : [],
+    "model_id": "8449",
     "paths":
     {
         "root_acoustic_path" : "/media/marlin/Elements41/marlin_live/",
         "root_data_path" : "/media/marlin/Elements41/marlin_live_data/"
     },
-    "openGl" : {"x_width" : 800, "y_width" : 200},
+    "openGl" : {"x_width" : 800, "y_width" : 200 },
     "polling_state" : {"running" : false, "job_sent" : false},
     "results_summary" : [],
     "plot_activity_data": {"labels" : [], "datasets": {}},
@@ -55,6 +56,11 @@
     },
     "ft_geometry" : {},
     "applicationLog" : [],
-    "logMessage" : "MARLIN IDent v0.3"
+    "logMessage" : "MARLIN IDent v0.3",
+    "sim_runnning" : 0,
+    "hud_data": {
+        "active_bot_number" : 0,
+        "sim_bot_number" : 0
+    }
 }
     

@@ -5,7 +5,7 @@ import { GridMoreVertIcon } from '@mui/x-data-grid'
 import * as THREE from 'three';
 import { DoubleSide } from 'three'
 // import './styles.css'
-import { Stats, OrbitControls, Line, Text } from '@react-three/drei';
+import { Stats, OrbitControls, Line, Text,  useProgress   } from '@react-three/drei';
 import { useControls } from 'leva';
 import { columnResizeStateInitializer, escapeRegExp, useGridParamsApi } from '@mui/x-data-grid/internals';
 import { getListItemSecondaryActionClassesUtilityClass } from '@mui/material/ListItemSecondaryAction';
@@ -199,6 +199,8 @@ class SpectrogramMesh extends React.Component{
         
         // ---
         this.initialised = false;
+        this.rendered = false;
+        this.rendered_number = 0;
         console.log(this.initialised);
 
         // *** Paramters ***
@@ -270,7 +272,7 @@ class SpectrogramMesh extends React.Component{
             // grab the frequency vector
             this.frequency_vector = specJsonData['f_vec'];
             this.time_vector = specJsonData['t_vec'];
-            console.log(this.time_vector);
+            //console.log(this.time_vector);
 
 
             console.log('building data');
@@ -373,6 +375,7 @@ class SpectrogramMesh extends React.Component{
             this.heights_vec = new THREE.Uint8BufferAttribute(heights, 1)
             // console.log(this.heights_vec);
             this.initialised = true;
+            
             // console.log(this.frequency_vector);
             this.props.MESH_LOADED({
                 'f_vector' : this.frequency_vector,
@@ -410,14 +413,28 @@ class SpectrogramMesh extends React.Component{
             console.log(init_colors.length);
             for (let n = 0; n < this.number_transitions; n++) {
                 //This line modifies the colors slightly
-                this.lut.push(new THREE.Vector3((init_colors[n][0] * (255 - 49)) / 206., (init_colors[n][1] * (255 - 19)) / 236., (init_colors[n][2] * (255 - 50)) / 190.));
+                //this.lut.push(new THREE.Vector3((init_colors[n][0] * (255 - 49)) / 206., (init_colors[n][1] * (255 - 19)) / 236., (init_colors[n][2] * (255 - 50)) / 190.));
                 // this.lut.push(new THREE.Vector3(custom_cm[n][0], custom_cm[n][1], custom_cm[n][2]));
-                //this.lut.push(new THREE.Vector3(init_colors[n][0], init_colors[n][1], init_colors[n][2]));
+                this.lut.push(new THREE.Vector3(init_colors[n][0], init_colors[n][1], init_colors[n][2]));
 
 
             }
+            let ta = [];
+            for (let n = 0; n < this.number_transitions; n++) {
+              
+                ta.push(new THREE.Vector3(cm_c[n].x, cm_c[n].y,cm_c[n].z));
+
+
+            }
+
+
+
+
             // this.lut = cm_c;
-            //console.log(this.lut);
+            console.log(this.lut);
+            console.log(cm_c);
+            console.log(ta)
+            this.lut = ta;
             // console.log(init_colors);
 
             this.uniforms = {
@@ -440,18 +457,26 @@ class SpectrogramMesh extends React.Component{
 
     render() {
         console.log(this.props);
+        let sim_runnning = this.props.sim_running;
         // *** Initialise Spectrogram ***
         if ((this.props.showSpec == 1)) {
             console.log('init in render');
             this.init();
         }
-        console.log('Rendering');
-        if (this.initialised) {
+
+
+
+       
+
+        if ((this.initialised)) {
+           
+            console.log('Rendering');
+            this.rendered = 1;
             // console.log(this.indices32);
             // console.log(this.heights_vec);
             return (
-                
-               
+                <>
+                    <Suspense fallback={null}>
                 <mesh>
                     <shaderMaterial
                         fragmentShader={fragmentShader}
@@ -470,21 +495,23 @@ class SpectrogramMesh extends React.Component{
                         timeVector = {this.time_vector}
                         gl_x={this.props.gl_data.x_width}
                         gl_y={this.props.gl_data.y_width}
-                        max_iter = {this.props.model_parms['max_iter']}
-                        delta_t = {this.props.model_parms['delta_t']}
+                        // max_iter = {this.props.model_parms['max_iter']}
+                        // delta_t = {this.props.model_parms['delta_t']}
                     />
 
                   
 
-                </mesh>  
-                    
+                    </mesh>  
+                </Suspense>
+               
+                </>
             )
         }
-        else {
-            return (
-              <mesh></mesh>
-            )
-        }
+        // else {
+        //     return (
+        //       <mesh></mesh>
+        //     )
+        // }
        
 
     }
@@ -495,13 +522,13 @@ class SpectrogramMesh extends React.Component{
 
 
 const mapStateToProps = (state) => ({
-
+    
     showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
     meshLoaded: state.acousticFileData.GL_MESH_LOADED,
-    activity_plot_data: state.plot_activity_data,
+    // activity_plot_data: state.plot_activity_data,
     gl_data: state.openGl,
-    model_id : state.model_parameters[0].model_id,
-    model_parms : state.model_parameters[0]
+    model_id: state.model_id
+
     
 })
 
@@ -591,6 +618,12 @@ for (let i = 0; i < hex_colormap2.length; i++) {
 console.log(color_scale);
 console.log(color_scale.length);
 
+// function Loader() {
+//     console.log("calling PROGRESS counter");
+//     const { active, progress, errors, item, loaded, total } = useProgress();
+//     console.log(progress);
+//     return <></>
+// }
 
 
 let cm_c = [

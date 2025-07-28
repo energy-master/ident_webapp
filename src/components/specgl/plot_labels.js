@@ -27,7 +27,7 @@ const PlotLabels = ({
     gl_y,
     gl_x,
     max_iter,
-    delta_t
+    
 }) => {
 
     // console.log(frequencyVector);
@@ -50,13 +50,14 @@ const PlotLabels = ({
    
     let mid_time_s = Math.floor(total_time_s / 2);
 
-    let delta_x = gl_x / max_iter;
-    let mid_time = delta_x * Math.floor((gl_x / 2));
-    let end_time = delta_x * Math.floor((gl_x));
+   
     let mid_x = 0;
     let end_x = 0 + Math.floor((gl_x / 2));
     let start_x = 0 - Math.floor((gl_x / 2));
     
+    let hud_x = gl_x + 30;
+    let hud_y = gl_y / 2;
+    let hud_z = -50;
 
 
     return (
@@ -118,8 +119,8 @@ const PlotLabels = ({
             >
                 time (s)
             </Text>
-
-
+            
+         
         </>
     );
 }
@@ -135,3 +136,4 @@ const mapStateToProps = (state) => ({
 
 const ConnectedPlotLabels = connect(mapStateToProps)(PlotLabels);
 export default ConnectedPlotLabels;
+

@@ -127,7 +127,7 @@ function ModelData(props) {
                     sx={{ m: 0, fontSize: 10, minWidth: '100%' }}
                     rows={rows}
                     columns={columns}
-                    hideFooter
+                    
                     initialState={{
                         pagination: {
                             paginationModel: {

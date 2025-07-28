@@ -35,7 +35,8 @@ function addFilename(text) {
 
 // Set application state and store
 var app_data = require('./app_data.json');
-app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000)
+app_data.model_parameters[0].model_id = parseInt(Math.random() * 10000);
+app_data.model_id = app_data.model_parameters[0].model_id;
 // console.log(app_data.model_parameters[0].model_id)
 
 
@@ -137,7 +138,7 @@ const store = createStore((state = app_data, action) => {
     // console.log(action.payload)
     let messages = state.applicationLog;
     // messages.push(action.payload);
-    messages[0] = "test";
+    
     //console.log(messages);
     return {
       ...state,
@@ -160,10 +161,12 @@ const store = createStore((state = app_data, action) => {
 
   
   if (action.type == ('MODEL_PARMS_UPDATE')) {
-    // console.log(action.payload)
+    console.log(action.payload)
+    let n_model_id = action.payload['model_id'];
     return {
       ...state,
-      model_parameters: [action.payload]
+      model_parameters: [action.payload],
+      model_id : n_model_id
     }
   }
   
@@ -189,12 +192,29 @@ const store = createStore((state = app_data, action) => {
     // console.log(action.payload)
     let current_p = state.model_parameters[0];
     current_p.status = action.payload;
+    
 
     return {
       ...state,
-      model_parameters:[current_p]
+      model_parameters: [current_p]
+      
     }
   }
+
+ 
+  if (action.type == ('RUN_UPDATE')) {
+    console.log(action.payload)
+    let current_p = state.model_parameters[0];
+
+    current_p.active_bot_number = action.payload['active_bot'];
+    current_p.sim_bot_number = action.payload['number_bots'];
+
+    return {
+      ...state,
+      model_parameters: [current_p]
+    }
+  }
+
   if (action.type == ('RESULTS_SUMMARY_BUILD')) {
     return {
       ...state,
@@ -244,11 +264,12 @@ const store = createStore((state = app_data, action) => {
     // console.log(action.payload)
     let current_p = state.model_parameters[0];
     current_p.run_title = 'Running';
-    
+    let running = 1;
 
     return {
       ...state,
-      model_parameters: [current_p]
+      model_parameters: [current_p],
+      sim_running : running
     }
   }
   if (action.type == ('RUN_FINISHED')) {

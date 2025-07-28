@@ -28,13 +28,13 @@ const Logger = (props) => {
    
 
     let message_x_start = Math.floor(0 - (props.gl_data['x_width'] / 2));
-    let message_y_start = (props.gl_data['y_width']/2) + 10;
+    let message_y_start = (props.gl_data['y_width']/2) + 30;
     let message_z = -10;
 
     let message = messages[messages.length - 1];
     
     
-    let message_x_start_init = -100;
+    let message_x_start_init = -130;
     let message_y_start_init = -30;
     // console.log(message);
     console.log(messages);
