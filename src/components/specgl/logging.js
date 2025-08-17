@@ -37,7 +37,7 @@ const Logger = (props) => {
     let message_x_start_init = -130;
     let message_y_start_init = -30;
     // console.log(message);
-    console.log(messages);
+    //console.log(messages);
 
     message = props.msg;
     return (

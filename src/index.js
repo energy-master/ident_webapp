@@ -17,6 +17,8 @@ import IDentSpeedMenu from './components/speed_menu/speed_menu';
 import DataPanel from './components/data_panel/data_panel';
 import PlotterPanel from './components/plotter_panel/plotter_panel';
 import ConnectedPollData from './api/poller';
+import Windows from './components/windows/windows';
+import ConnectedBuildWorld from './components/build_world/build_world';
 
 // import { configureStore } from 'react-redux';
 import ResultsPanel from './components/results_panel/results_panel';
@@ -53,6 +55,43 @@ const store = createStore((state = app_data, action) => {
     }
   }
 
+
+
+  //STREAM_SELECTED
+
+
+  if (action.type == ('STREAM_SELECTED')) {
+
+    
+    return {
+      ...state,
+      selected_stream: [action.payload]
+    }
+
+  }
+  //"
+
+  if (action.type == ('FILE_PATH_SELECTED')) {
+
+
+    return {
+      ...state,
+      selected_filepath: [action.payload]
+    }
+
+  }
+  if (action.type == ('FILE_SELECTED')) {
+
+    let current_p = state.acousticFileData;
+    current_p.fileName = action.payload;
+
+    return {
+      ...state,
+      acousticFileData: current_p
+    }
+
+  }
+
   if (action.type == ('MODEL_SELECTED')) {
 
    
@@ -86,6 +125,29 @@ const store = createStore((state = app_data, action) => {
       models: action.payload
     }
   }
+  //
+  if (action.type == ('STREAMS_LOADED')) {
+    // let rows = action.payload;
+    //console.log(action.payload);
+    return {
+      ...state,
+      streams: action.payload
+    }
+  }
+
+  if (action.type == ('STREAM_FILES_LOADED')) {
+    // let rows = action.payload;
+    //console.log(action.payload);
+    return {
+      ...state,
+      stream_files: action.payload
+      
+    }
+  }
+
+
+
+
 
 
   if (action.type == ('FILE_UPLOAD_COMPLETE')) {
@@ -107,6 +169,7 @@ const store = createStore((state = app_data, action) => {
    
     let current_p = state.acousticFileData;
     current_p.SHOW_SPEC_FLAG = 1;
+    // current_p.GL_MESH_LOADED = false;
    
     console.log(current_p);
     return {
@@ -163,10 +226,18 @@ const store = createStore((state = app_data, action) => {
   if (action.type == ('MODEL_PARMS_UPDATE')) {
     console.log(action.payload)
     let n_model_id = action.payload['model_id'];
+
+    // let nt = action.payload['nfft'];
+
+    // let gl = state.openGl;
+    // gl.number_transitions = nt > 10000 ? 1000 : 10000;
+    // console.log(gl.number_transitions);
     return {
       ...state,
       model_parameters: [action.payload],
-      model_id : n_model_id
+      model_id: n_model_id
+     
+      
     }
   }
   
@@ -302,10 +373,15 @@ root.render(
     <Provider store={store}>
       <ConnectedPollData />
       <SpecPanel />
+      <Windows />
+
       {/* <PlotterPanel /> */}
       {/* <IDentSpeedMenu /> */}
-      <DataPanel />
-      <ResultsPanel />
+
+
+      {/* <DataPanel /> */}
+      {/* <ResultsPanel /> */}
+      <ConnectedBuildWorld />
     </Provider>
 
   </React.StrictMode>

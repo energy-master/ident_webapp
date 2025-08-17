@@ -108,8 +108,8 @@ class SpectrogramMesh extends React.Component{
         // prepare colormaps
         // colormaps
         
-        this.number_transitions = 1000;
-
+        this.number_transitions = props.gl_data.number_transitions;
+        console.log(this.number_transitions);
         this.colors = {
             "jet": [[0, 0, 0.5137254901960784, 1], [1, 1, 1, 1]],
             "hot": [[0, 0, 0, 1],[0.5764705882352941, 1, 0, 1]]

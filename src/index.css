@@ -30,7 +30,7 @@ code {
   --white: #ffffff;
 
   /* Spec Panel */
-  --spec-panel-height: 50%;
+  --spec-panel-height: 95%;
   --spec-panel-width: 100%;
   --spec-panel-top: 5%;
 
@@ -51,7 +51,7 @@ code {
 
   /* File data grid */
   --file_grid_height: 100%;
-  --file_grid_width: 30%;
+  --file_grid_width: 100%;
   --file_grid_top: 80%;
   --file_grid_left: 0%;
 
@@ -126,4 +126,11 @@ html{
   height: var(--plotter-panel-height);
   width: var(--plotter-panel-width);
  
+}
+
+
+.dataHdr {
+  /* backgroundColor: black; */
+  /* background: black; */
+  color: rgb(251, 251, 251);
 }

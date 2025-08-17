@@ -13,7 +13,7 @@ const NavBar = ({
         
         <div className='navbar'>
             <div className='marlin_bar'>
-                <span className='marlin_title'>MARLIN</span>
+                <span className='marlin_title'>MARLIN AI | LIVE</span>
             </div>
            
 

@@ -35,10 +35,12 @@ function IDentFileDataGrid(props) {
              headerName: '',
              width: 150,
              disableClickEventBubbling: true,
-             renderCell: renderUploadBtn
+             renderCell: renderUploadBtn,
+             headerBg: '#292D39',
+             headerClassName:'dataHdr'
          },
          {
-             field: 'fileName', headerName: 'File', width: 90
+             field: 'fileName', headerName: 'File', width: 90, headerBg: '#292D39', headerClassName: 'dataHdr'
 
          },
          {
@@ -46,6 +48,8 @@ function IDentFileDataGrid(props) {
              headerName: 'File Type',
              width: 150,
              editable: false,
+             headerBg: '#292D39',
+             headerClassName: 'dataHdr'
          },
 
          {
@@ -54,12 +58,16 @@ function IDentFileDataGrid(props) {
 
              width: 110,
              editable: false,
+             headerBg: '#292D39',
+             headerClassName: 'dataHdr'
          },
          {
              field: 'srcLength',
              headerName: 'Src Length',
              width: 150,
              editable: false,
+             headerBg: '#292D39',
+             headerClassName: 'dataHdr'
          }
 
      ];
@@ -75,18 +83,24 @@ function IDentFileDataGrid(props) {
         <div className='IDentFileDataGrid'>
            
             <Stack direction="column" gap={0} style={{ width: '100%' }}>
-                <Box sx={{ width: '100%', maxWidth: 500, paddingtop:2 }}>
+                {/* <Box sx={{ width: '100%', maxWidth: 500, paddingtop:2 }}>
                     <Typography variant="h6" gutterBottom>
                         <span className='panel-header'>File Data</span>
-                    </Typography></Box>
+                    </Typography></Box> */}
                
            
                 <DataGrid
-                    sx={{ m: 0, fontSize:10 }}
+                   
+                    sx={{
+                        m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
+                            backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
+                        }
+                    }}
                     rows={rows}
                     columns={columns}
                     hideFooter 
                     initialState={{
+
                         pagination: {
                             paginationModel: {
                                 pageSize: 5,

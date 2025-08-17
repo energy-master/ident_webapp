@@ -19,23 +19,39 @@
             "name" : "Loading models from MARLIN database."
         }
     ],
+    "streams" : [
+        {
+           "id" : 1,
+        "name" : "Saved Files"   
+        }
+    ],
+    "stream_files": [
+        {
+            "id": 1,
+            "name": "Searching for files."
+        }
+    ],
     "selected_models" : [],
+    "selected_stream" : [],
+    "selected_filepath" : [],
     "model_id": "8449",
     "paths":
     {
         "root_acoustic_path" : "/media/marlin/Elements41/marlin_live/",
-        "root_data_path" : "/media/marlin/Elements41/marlin_live_data/"
+        "root_data_path" : "/media/marlin/Elements41/marlin_live_data/",
+        "root_acoustic_stream_path" : "/media/marlin/Elements41/marlin_live/streams/"
+
     },
-    "openGl" : {"x_width" : 800, "y_width" : 200 },
+    "openGl" : {"x_width" : 800, "y_width" : 200, "number_transitions" : 1000 },
     "polling_state" : {"running" : false, "job_sent" : false},
     "results_summary" : [],
     "plot_activity_data": {"labels" : [], "datasets": {}},
     "model_parameters" : [{
 
         "id" : 1,
-        "ratio_active" : 0.2,
+        "ratio_active" : 0.5,
         "model_id" : "8449",
-        "numberBots" : 50,
+        "numberBots" : 10,
         "delta_t" : 0.1,
         "nfft" : 1024,
         "window_stream" : 60,

@@ -13,10 +13,10 @@ const DataPanel = ({})=> {
         <div class='data-panel'>
             <Paper outline square sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 
-                <ConnectedFileDataGrid />
-                <ConnectedModelParams />
+                {/* <ConnectedFileDataGrid />
+                <ConnectedModelParams /> */}
                 {/* <Logger /> */}
-                <ConnectedSimControlCard />
+                {/* <ConnectedSimControlCard /> */}
 
             </Paper>
         </div>

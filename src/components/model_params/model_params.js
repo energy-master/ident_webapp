@@ -127,7 +127,7 @@ function ModelParams(props) {
         // console.log(props.model_parameters[0].percentage_complete);
         return (
             <strong>
-                {props.model_parameters[0].status == "Report Built" ?
+                {props.model_parameters[0].status == "Search Complete" ?
                     <Button
                         variant="contained"
                         color="primary"

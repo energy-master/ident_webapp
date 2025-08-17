@@ -9,8 +9,8 @@
     width:var(--file_grid_width);
     height:var(--file_grid_height);
     overflow-x: scroll;
-    margin: 2px;
+    padding: 2px;
     color: var(--blue);
-
+    
 
 }

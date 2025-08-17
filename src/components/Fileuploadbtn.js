@@ -180,15 +180,18 @@ const Fileuploadbtn = (props) => {
         console.log(props);
         axios.post(url, formData, config).then((response) => {
             console.log(response.data);
+
             if (response.data['error'] == true) {
                 return (response.data);
             }
+
             // console.log(props);
             console.log('uploaded');
             // props.fileName = response.data['file-data'].file.name;
             dispatch({ type: 'FILE_UPLOAD_COMPLETE', payload: response.data });
             dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Acoustic file upload complete.' });
 
+            
 
             //RUN FFT
             const formData2 = new FormData();

@@ -1,4 +1,4 @@
-.model_data {
+.stream_data {
 
     /* position: absolute; */
     /* top:var(--file_grid_top); */
@@ -7,7 +7,8 @@
     height: var(--results_data_height);
     overflow-x: scroll;
     /* color:blue; */
-    padding: 2px; 
+    margin: 2px;
     color: var(--blue);
+    padding:2px;
 
 }
