@@ -20,7 +20,14 @@ let columns = [
         editable: false,
         flex: 1,
         headerClassName: 'dataHdr'
+    },
+    {
+        field: 'time', headerName: 'Time', width: 300,
+        editable: false,
+        flex: 1,
+        headerClassName: 'dataHdr'
     }
+
 
 
 ];
@@ -67,15 +74,22 @@ function StreamFiles(props) {
                 // console.log(response.data);
                 // start data polling
                 let file_list = [];
+                let file_data = [];
                 for (let j = 0; j < stream_data['streams'].length; j++){
                     // console.log(stream_data['streams'][j]);
-                    if (selected_stream_tag in stream_data['streams'][j])
-                    {
-                        file_list = stream_data['streams'][j][selected_stream_tag];
+                    // if (selected_stream_tag in stream_data['streams'][j])
+                    // {
+                    //     //file_list = stream_data['streams'][j][selected_stream_tag];
+                        
+                    // }
+                    if (selected_stream_tag in stream_data['ordered']) {
+                        file_data = stream_data['ordered'][selected_stream_tag];
                     }
+
+
                 }
                 // console.log(file_list);
-                buildRows(file_list);
+                buildRows(file_data);
 
             });
 
@@ -87,11 +101,12 @@ function StreamFiles(props) {
         
         rows = [];
         for (let i = 0; i < (data.length); i++) {
-            // console.log(data[i]);
+            console.log(data[i]);
             rows.push({
 
                 "id": i,
-                "name": data[i]
+                "name": data[i]['filename'],
+                "time": data[i]['datetime']['date']
                 
         
             });
@@ -108,8 +123,9 @@ function StreamFiles(props) {
         event, // MuiEvent<React.MouseEvent<HTMLElement>>
         details, // GridCallbackDetails
     ) => {
+
         console.log(params);
-        dispatch({ type: "FILE_SELECTED", payload: params['row']['name'] });
+        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'] } } );
         
     };
     let selected_stream_tag = "";

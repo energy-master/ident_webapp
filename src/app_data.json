@@ -10,6 +10,7 @@
             "size"  : "No Data",
             "length" : "No Data",
             "status" : "Upload",
+            "timestamp" : "No time given",
             "SHOW_SPEC_FLAG" : 0,
             "GL_MESH_LOADED" : false
         },
@@ -42,7 +43,7 @@
         "root_acoustic_stream_path" : "/media/marlin/Elements41/marlin_live/streams/"
 
     },
-    "openGl" : {"x_width" : 800, "y_width" : 200, "number_transitions" : 1000 },
+    "openGl" : {"x_width" : 500, "y_width" : 200, "number_transitions" : 1000 },
     "polling_state" : {"running" : false, "job_sent" : false},
     "results_summary" : [],
     "plot_activity_data": {"labels" : [], "datasets": {}},
@@ -72,7 +73,7 @@
     },
     "ft_geometry" : {},
     "applicationLog" : [],
-    "logMessage" : "MARLIN IDent v0.3",
+    "logMessage" : "MARLIN IDent v0.5",
     "sim_runnning" : 0,
     "hud_data": {
         "active_bot_number" : 0,

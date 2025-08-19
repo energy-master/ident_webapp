@@ -34,7 +34,10 @@ const GLHud = (params) => {
 
 
     let x_start = (params.gl_data.x_width / 2) + 40;
+    x_start = 0
     let y_start = (params.gl_data.y_width / 2) + 30;
+    y_start = -5 - (params.gl_data.y_width / 2);
+    
     let z_start = -30;
 
     let active_bot_number = params.model_parameters[0]['active_bot_number'];

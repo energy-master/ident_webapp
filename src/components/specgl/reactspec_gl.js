@@ -34,7 +34,7 @@ const SpecGL = ({ }) => {
         mipmapBlur: !0,
         luminanceThreshold: { value: 0.0, min: 0, max: 2, step: 0.01 },
         luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-        intensity: { value: 10.0, min: 0, max: 10, step: 0.01 }
+        intensity: { value: 7.0, min: 0, max: 10, step: 0.01 }
     })
 
     return (
@@ -65,7 +65,7 @@ const SpecGL = ({ }) => {
             
             /* Scene */
         
-        <ConnectedPlotLines />
+        {/* <ConnectedPlotLines /> */}
         <ConnectedSpectrogramMesh />
             <ConnectedPlotActiveGeometry />
             <ConnectedLogger />
@@ -79,7 +79,7 @@ const SpecGL = ({ }) => {
                             M A R L I N  AI
         </Text>
             
-         <ConnectedGLHud /> 
+        {/* <ConnectedGLHud />  */}
             
             </Canvas>
             <Loader />

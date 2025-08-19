@@ -19,7 +19,7 @@ const NavBar = ({
 
             <div className='logo'>
                {/* <img src={logo}  /> */}
-                <span className='appName'> {AppName} <span className='subAppName'>[v0.2]</span></span> 
+                <span className='appName'> {AppName} <span className='subAppName'>[v0.5]</span></span> 
             </div>
 
         </div>
