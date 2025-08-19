@@ -16,15 +16,26 @@ import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
-const PlotActiveGeometry = (props) => {
+const PlotLoadedDetection = (props) => {
+
+    if (props.acousticFileData.fileName == "No Active File") {
+        return;
+    }
+
+    if (props.selected_stream.length < 1){
+        return;
+    }
+
+    if (props.spectrogram.data_present == false) {
+        return;
+    }
 
     let dataSetArray = [];
-
     let dataPresent = false;
 
     const get_y_from_f = (frequency) => {
         // console.log(props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1]);
-        let f_y_ratio = props.gl_data.y_width / props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1] ;
+        let f_y_ratio = props.gl_data.y_width / props.spectrogram.frequency_vector[props.spectrogram.frequency_vector.length - 1];
         let freq_vector = props.spectrogram.frequency_vector;
         let gl_y_range = props.gl_data.y_width;
         let y_zero = 0 - (props.gl_data.y_width / 2);
@@ -43,24 +54,27 @@ const PlotActiveGeometry = (props) => {
         return glx;
     }
 
-    const get_delta_x_from_delta_t = (time_s) => {
+    const get_delta_x_from_t = (time_s) => {
 
-        // iter delta x
-        // console.log(props.model_parameters.max_iter);
-        let delta_x = props.gl_data.x_width / props.model_parameters.max_iter;
-        console.log(delta_x);
-        // console.log(time_s, props.model_parameters.delta_t);
-        let number_iters = (time_s / props.model_parameters.delta_t);
-        // console.log(number_iters);
-        number_iters = 1;
-        let gl_delta_x = delta_x * number_iters;
-        // console.log(gl_delta_x);
+        // // iter delta x
+        // // console.log(props.model_parameters.max_iter);
+        // let delta_x = props.gl_data.x_width / props.model_parameters.max_iter;
+        // console.log(delta_x);
+        // // console.log(time_s, props.model_parameters.delta_t);
+        // let number_iters = (time_s / props.model_parameters.delta_t);
+        // // console.log(number_iters);
+        // number_iters = 1;
+        // let gl_delta_x = delta_x * number_iters;
+        // // console.log(gl_delta_x);
+
+        let gl_delta_x = 0;
+        gl_delta_x = (time_s / props.spectrogram.time_vector[props.spectrogram.time_vector.length - 1]) * props.gl_data.x_width;
 
         return (gl_delta_x);
 
     }
 
-    const buildGeometry = (geo, iter) => {
+    const buildGeometry = (start_time, end_time) => {
 
         let points = [];
         // console.log(geo);
@@ -68,18 +82,20 @@ const PlotActiveGeometry = (props) => {
         // console.log(iter);
         // points at iter:
         // iter x:
-        let xgl_iter = get_x_from_iter(iter);
-        let ygl_max = get_y_from_f(geo.f_max);
-        let ygl_min = get_y_from_f(geo.f_min);
-        
+        // let xgl_iter = get_x_from_iter(iter);
+        let xgl_start = get_delta_x_from_t(start_time);
+        let xgl_end = get_delta_x_from_t(end_time);
+        let ygl_max = get_y_from_f(50000);
+        let ygl_min = get_y_from_f(100);
+
 
 
         // memory x
-        let delta_xgl_memory = get_delta_x_from_delta_t(geo.max_memory/1000);
+        //let delta_xgl_memory = get_delta_x_from_delta_t(geo.max_memory / 1000);
         // console.log(xgl_iter, ygl_max, ygl_min, delta_xgl_memory)
 
         // points
-        points.push(xgl_iter, ygl_max, 10, xgl_iter, ygl_min, 10, xgl_iter - delta_xgl_memory, ygl_min, 10, xgl_iter - delta_xgl_memory, ygl_max, 10);
+        points.push(xgl_start, ygl_max, 10, xgl_start, ygl_min, 10, xgl_end, ygl_min, 10, xgl_end, ygl_max, 10);
         // console.log(points);
         // console.log(geo.max_memory/1000);
         // console.log(geo.f_max,geo.f_min);
@@ -87,37 +103,45 @@ const PlotActiveGeometry = (props) => {
 
         dataSetArray.push({
             'points': points,
-            'label' : 'interesting'
+            'label': 'interesting'
         });
-
-      
-
-
-        
-        
-        
 
 
     }
+
 
     // console.log('plot geometry');
     // console.log(props.active_geometry);
-    for (const [key, value] of Object.entries(props.active_geometry)) {
-        // console.log(`${key}: ${value}`);
-        for (const [iter, structure] of Object.entries(value)) {
-            // console.log(`${iter}: ${structure.f_min}`);
-            buildGeometry(structure, iter);
-        }
+    // for (const [key, value] of Object.entries(props.active_geometry)) {
+    //     // console.log(`${key}: ${value}`);
+    //     for (const [iter, structure] of Object.entries(value)) {
+    //         // console.log(`${iter}: ${structure.f_min}`);
+    //         buildGeometry(structure, iter);
+    //     }
 
+    // }
+
+    // *** Grab detections ***
+    let active_file_root = props.acousticFileData.fileName.split('.')[0];
+    let active_detections = [];
+    console.log(props.detections);
+    for (let i = 0; i < props.detections[props.selected_stream[0]].length; i++){
+        let detection_file_root = props.detections[props.selected_stream[0]][i].file_root;
+        if (detection_file_root == active_file_root) {
+            active_detections = props.detections[props.selected_stream[0]][i].detections;
+            console.log(active_detections);
+        }
     }
+
+    // *** Build Geometry ***
+    for (let i = 0; i < active_detections.length; i++){
+        buildGeometry(active_detections[i].start_time, active_detections[i].end_time);
+    }
+    
 
     if (dataSetArray.length > 0) {
         dataPresent = true;
     }
-   
-    // dataSetArray = dataSetArray[1];
-   
-    
 
     if (dataPresent) {
         return (
@@ -126,7 +150,7 @@ const PlotActiveGeometry = (props) => {
             <>
                 {
                     dataSetArray.map((item, key) => (
-                        <PlotGeo points={item.points} color= 'red' label={item.label} width={4.0} />
+                        <PlotGeo points={item.points} color='red' label={item.label} width={4.0} />
                     ))
                 }
             </>
@@ -157,11 +181,16 @@ const mapStateToProps = (state) => ({
     gl_data: state.openGl,
     spectrogram: state.spectrogram,
     model_parameters: state.model_parameters[0],
-    
+    showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
+    detections: state.detections,
+    selected_stream: state.selected_stream,
+    acousticFileData: state.acousticFileData,
+    spectrogram: state.spectrogram
+
 })
 
-const ConnectedPlotActiveGeometry = connect(mapStateToProps)(PlotActiveGeometry);
-export default ConnectedPlotActiveGeometry;
+const ConnectedPlotLoadedDetection = connect(mapStateToProps)(PlotLoadedDetection);
+export default ConnectedPlotLoadedDetection;
 
 const PlotGeo = ({
     color,
@@ -191,7 +220,7 @@ const PlotGeo = ({
     return (
         <mesh ref={ref}>
             <meshLineGeometry points={points} widthCallback={(p) => p > 0.8 ? 1.5 : 0.4} />
-            <meshLineMaterial emissive lineWidth={width} color={color} wireframe={true} />
+            <meshLineMaterial emissive lineWidth={width} color={color} wireframe={false} />
         </mesh>
     )
 }

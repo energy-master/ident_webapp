@@ -69,7 +69,8 @@
     }],
     "spectrogram" : {
         "frequency_vector" : [],
-        "time_vector" : []
+        "time_vector" : [],
+        "data_present" : false
     },
     "ft_geometry" : {},
     "applicationLog" : [],
@@ -78,6 +79,7 @@
     "hud_data": {
         "active_bot_number" : 0,
         "sim_bot_number" : 0
-    }
+    },
+    "detections" : []
 }
     

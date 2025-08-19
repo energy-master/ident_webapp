@@ -21,6 +21,7 @@ import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import ConnectedPlotLines from './plot_lines';
 import ConnectedPlotActiveGeometry from './plot_geometry';
+import ConnectedPlotLoadedDetection from './loaded_detections';
 import ConnectedLogger from './logging';
 import ConnectedGLHud from './hud';
 extend({ MeshLineGeometry, MeshLineMaterial })
@@ -34,7 +35,7 @@ const SpecGL = ({ }) => {
         mipmapBlur: !0,
         luminanceThreshold: { value: 0.0, min: 0, max: 2, step: 0.01 },
         luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-        intensity: { value: 7.0, min: 0, max: 10, step: 0.01 }
+        intensity: { value: 2.0, min: 0, max: 10, step: 0.01 }
     })
 
     return (
@@ -67,8 +68,9 @@ const SpecGL = ({ }) => {
         
         {/* <ConnectedPlotLines /> */}
         <ConnectedSpectrogramMesh />
-            <ConnectedPlotActiveGeometry />
-            <ConnectedLogger />
+        <ConnectedPlotActiveGeometry />
+        <ConnectedPlotLoadedDetection />
+        <ConnectedLogger />
         <Text
                             position={[-130, 0, -10]}
                             scale={[40, 40, 10]}

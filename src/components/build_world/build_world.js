@@ -46,12 +46,9 @@ const BuildWorld = (params) => {
         console.log('fft should be built!');
         console.log(response_.data);
 
-
-
         //show spectrogram
         dispatch({ type: 'SHOW_SPEC', payload: 1 });
         dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Spectrogram rendering has started. This may take some time.' });
-
 
         //dipatch show spec
         console.log(params);
@@ -77,7 +74,8 @@ const ConnectedBuildWorld = connect((state) => {
     return {
         activePath: state.selected_filepath,
         activeFileName: state.acousticFileData.fileName,
-        model_id: state.model_parameters[0].model_id
+        model_id: state.model_parameters[0].model_id,
+        detections: state.detections
      };
 })(BuildWorld);
 

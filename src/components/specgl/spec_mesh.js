@@ -525,11 +525,9 @@ const mapStateToProps = (state) => ({
     
     showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
     meshLoaded: state.acousticFileData.GL_MESH_LOADED,
-    // activity_plot_data: state.plot_activity_data,
     gl_data: state.openGl,
     model_id: state.model_id
 
-    
 })
 
 const mapDispatchToProps = (dispatch) => {

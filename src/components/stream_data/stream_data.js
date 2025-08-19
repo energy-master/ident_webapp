@@ -41,10 +41,12 @@ function StreamData(props) {
         // grab model list
         let url = "https://marlin-network.hopto.org/cgi-bin/get_data_streams.php";
         axios.post(url, formData, config).then((response) => {
-
+            
             // console.log(response);
             let stream_data = response.data;
-            console.log(response.data);
+            console.log(stream_data['detections']);
+            dispatch({ type: "DETECTIONS_LOADED", payload: stream_data['detections'] });
+            // console.log(response.data);
             // start data polling
             buildRows(stream_data['stream_ids']);
 
@@ -73,6 +75,7 @@ function StreamData(props) {
         });
 
         dispatch({ type: "STREAMS_LOADED", payload: rows });
+       
 
     }
 

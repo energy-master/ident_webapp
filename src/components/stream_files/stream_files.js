@@ -26,6 +26,12 @@ let columns = [
         editable: false,
         flex: 1,
         headerClassName: 'dataHdr'
+    },
+    {
+        field: 'detection', headerName: 'Detection', width: 300,
+        editable: false,
+        flex: 1,
+        headerClassName: 'dataHdr'
     }
 
 
@@ -36,6 +42,8 @@ let last_stream_location = "";
 
 function StreamFiles(props) {
 
+    
+    console.log(props.detections);
     const dispatch = useDispatch();
 
     //let rows = props.model_list;
@@ -89,7 +97,7 @@ function StreamFiles(props) {
 
                 }
                 // console.log(file_list);
-                buildRows(file_data);
+                buildRows(file_data, props.detections[selected_stream_tag]);
 
             });
 
@@ -97,16 +105,31 @@ function StreamFiles(props) {
 
     }
 
-    const buildRows = (data) => {
+    const buildRows = (data, detections) => {
         
         rows = [];
+        console.log(detections);
         for (let i = 0; i < (data.length); i++) {
-            console.log(data[i]);
+            // console.log(data[i]);
+
+            // detection logic
+            let root_fn = data[i]['filename'].split('.')[0];
+            let detection_present = false;
+            let number_detections = 0;
+            for (let i = 0; i < detections.length; i++){
+                // console.log(detections[i].file_root, root_fn);
+                if (detections[i].file_root == root_fn) {
+                    detection_present = true;
+                    number_detections += 1;
+                }
+            }
+
             rows.push({
 
                 "id": i,
                 "name": data[i]['filename'],
-                "time": data[i]['datetime']['date']
+                "time": data[i]['datetime']['date'],
+                "detection" : detection_present ? `[${number_detections} detection(s).]`:''
                 
         
             });
@@ -193,7 +216,8 @@ function StreamFiles(props) {
 
 const mapStateToProps = (state) => ({
     stream_files: state.stream_files,
-    selected_stream: state.selected_stream
+    selected_stream: state.selected_stream,
+    detections: state.detections
 })
 
 

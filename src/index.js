@@ -62,14 +62,21 @@ const store = createStore((state = app_data, action) => {
 
   if (action.type == ('STREAM_SELECTED')) {
 
-    
     return {
       ...state,
       selected_stream: [action.payload]
     }
 
   }
-  //"
+ 
+  if (action.type == ('DETECTIONS_LOADED')) {
+
+    return {
+      ...state,
+      detections: action.payload
+    }
+
+  }
 
   if (action.type == ('FILE_PATH_SELECTED')) {
 
@@ -190,6 +197,7 @@ const store = createStore((state = app_data, action) => {
     let current_s = state.spectrogram;
     current_s.frequency_vector = action.payload['f_vector'];
     current_s.time_vector = action.payload['t_vector'];
+    current_s.data_present = true;
     console.log(current_s);
     return {
       ...state,
