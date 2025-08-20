@@ -139,7 +139,9 @@ const store = createStore((state = app_data, action) => {
     //console.log(action.payload);
     return {
       ...state,
-      streams: action.payload
+      streams: action.payload,
+      stream_data_loaded: true
+
     }
   }
 
@@ -188,6 +190,15 @@ const store = createStore((state = app_data, action) => {
     }
   }
 
+  if (action.type == ('ORDERED_STREAM')) {
+
+   
+    return {
+      ...state,
+      ordered_stream_files: action.payload
+    }
+  }
+  //
   if (action.type == ('MESH_LOADED')) {
     // console.log(action.payload)
     console.log("MESH loaded");

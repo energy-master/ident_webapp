@@ -11,10 +11,12 @@ import '@fontsource/roboto/300.css';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { propsStateInitializer } from '@mui/x-data-grid/internals';
+import { gsap } from "gsap"; 
+import { useThree } from '@react-three/fiber';
 
 
 let columns = [
-
+    
     {
         field: 'name', headerName: 'Filename', width: 300,
         editable: false,
@@ -42,6 +44,7 @@ let last_stream_location = "";
 
 function StreamFiles(props) {
 
+    
     
     console.log(props.detections);
     const dispatch = useDispatch();
@@ -83,6 +86,7 @@ function StreamFiles(props) {
                 // start data polling
                 let file_list = [];
                 let file_data = [];
+                
                 for (let j = 0; j < stream_data['streams'].length; j++){
                     // console.log(stream_data['streams'][j]);
                     // if (selected_stream_tag in stream_data['streams'][j])
@@ -96,6 +100,7 @@ function StreamFiles(props) {
 
 
                 }
+
                 // console.log(file_list);
                 buildRows(file_data, props.detections[selected_stream_tag]);
 
@@ -138,6 +143,7 @@ function StreamFiles(props) {
         }
         // console.log(rows);
         dispatch({ type: "STREAM_FILES_LOADED", payload: rows });
+        
 
     }
 
@@ -149,7 +155,11 @@ function StreamFiles(props) {
 
         console.log(params);
         dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'] } } );
-        
+
+        // gsap.to(camera.position, { x: 10, y: 5, z: 0, duration: 1 });
+        // gsap.to(camera.rotation, { x: Math.PI / 4, duration: 1 });
+
+
     };
     let selected_stream_tag = "";
     // console.log(props.selected_stream);

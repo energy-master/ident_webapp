@@ -18,6 +18,10 @@ extend({ MeshLineGeometry, MeshLineMaterial })
 
 const PlotLoadedDetection = (props) => {
 
+    const dispatch = useDispatch();
+
+    return;
+
     if (props.acousticFileData.fileName == "No Active File") {
         return;
     }
@@ -29,6 +33,9 @@ const PlotLoadedDetection = (props) => {
     if (props.spectrogram.data_present == false) {
         return;
     }
+
+    dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Annotating any detections. ' })
+
 
     let dataSetArray = [];
     let dataPresent = false;

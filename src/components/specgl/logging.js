@@ -81,7 +81,7 @@ const GLMessage = ({message, xpos, ypos, zpos}) => {
     return (
          <Text
                 position={[xpos, ypos, zpos]}
-                scale={[10, 10,10]}
+                scale={[7, 7,7]}
                 color="green" // default
                 anchorX="left" // default
                 anchorY="middle" // default 

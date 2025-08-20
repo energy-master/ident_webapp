@@ -33,7 +33,7 @@ function IDentFileDataGrid(props) {
          {
              field: 'fileLoader',
              headerName: '',
-             width: 150,
+             width: 500,
              disableClickEventBubbling: true,
              renderCell: renderUploadBtn,
              headerBg: '#292D39',

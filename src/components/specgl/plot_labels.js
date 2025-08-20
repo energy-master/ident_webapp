@@ -27,6 +27,7 @@ const PlotLabels = ({
     gl_y,
     gl_x,
     max_iter,
+    offset
     
 }) => {
 
@@ -42,11 +43,11 @@ const PlotLabels = ({
     let f_max_x = (0 - gl_x / 2) - 20;
     let f_max_y = (0 + gl_y / 2);
     let f_max_z = 20;
-
+    f_max_x = f_max_x + offset;
     let f_min_x = (0 - gl_x / 2) - 20;
     let f_min_y = (0 - gl_y / 2);
     let f_min_z = 20;
-
+    f_min_x = f_min_x + offset;
    
     let mid_time_s = Math.floor(total_time_s / 2);
 
@@ -54,7 +55,8 @@ const PlotLabels = ({
     let mid_x = 0;
     let end_x = 0 + Math.floor((gl_x / 2));
     let start_x = 0 - Math.floor((gl_x / 2));
-    
+    end_x = end_x + offset;
+    start_x = start_x + offset;
     let hud_x = gl_x + 30;
     let hud_y = gl_y / 2;
     let hud_z = -50;
@@ -111,7 +113,7 @@ const PlotLabels = ({
             </Text>
 
             <Text
-                position={[-10, f_min_y - 10, f_min_z]}
+                position={[start_x+20, f_min_y - 10, f_min_z]}
                 scale={[10, 10, 10]}
                 color="green" // default
                 anchorX="center" // default

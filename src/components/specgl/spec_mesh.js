@@ -68,7 +68,7 @@ class SpectrogramMesh extends React.Component{
         super(props);
         // this.initialised = false;
         // console.log(this.initialised);
-
+        this.x_offset = 0;
         // // *** Paramters ***
         this.props = props;
         // this.s_data = [];
@@ -312,9 +312,25 @@ class SpectrogramMesh extends React.Component{
             let v = [];
             let c = [];
             let n = [];
+            
+
+            // determine x_offset
+            let stream_id = this.props.stream_tag[0];
+            let ordered_files = this.props.ordered_stream_files[stream_id];
+            let file_counter = 0;
+
+            for (let ij=0; ij<ordered_files.length;ij++){
+                if (this.props.fileName == ordered_files[ij].filename){
+                    break;
+                }
+                file_counter+=1;
+            }
+
+            this.x_offset = file_counter * (this.props.gl_data.x_width);
+
             for (let i = 0; i <= xsegments; i++) {
 
-                let x = (i * xsegmentSize) - xhalfSize; //midpoint of mesh is 0,0
+                let x = (this.x_offset) + (i * xsegmentSize) - xhalfSize; //midpoint of mesh is 0,0
                 // console.log(i,x);
                 for (let j = 0; j <= ysegments; j++) {
                     // console.log(this.s_data[j][i]);
@@ -495,6 +511,7 @@ class SpectrogramMesh extends React.Component{
                         timeVector = {this.time_vector}
                         gl_x={this.props.gl_data.x_width}
                         gl_y={this.props.gl_data.y_width}
+                        offset={this.x_offset}
                         // max_iter = {this.props.model_parms['max_iter']}
                         // delta_t = {this.props.model_parms['delta_t']}
                     />
@@ -523,10 +540,13 @@ class SpectrogramMesh extends React.Component{
 
 const mapStateToProps = (state) => ({
     
-    showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
-    meshLoaded: state.acousticFileData.GL_MESH_LOADED,
-    gl_data: state.openGl,
-    model_id: state.model_id
+    showSpec                : state.acousticFileData.SHOW_SPEC_FLAG,
+    meshLoaded              : state.acousticFileData.GL_MESH_LOADED,
+    gl_data                 : state.openGl,
+    model_id                : state.model_id,
+    ordered_stream_files    : state.ordered_stream_files,
+    stream_tag              : state.selected_stream,
+    fileName                : state.acousticFileData.fileName
 
 })
 

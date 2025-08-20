@@ -46,9 +46,15 @@ function StreamData(props) {
             let stream_data = response.data;
             console.log(stream_data['detections']);
             dispatch({ type: "DETECTIONS_LOADED", payload: stream_data['detections'] });
+
+            dispatch({ type: "ORDERED_STREAM", payload: stream_data['ordered']});
+            
+
             // console.log(response.data);
             // start data polling
             buildRows(stream_data['stream_ids']);
+
+            
 
         });
 

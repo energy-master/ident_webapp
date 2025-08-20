@@ -24,9 +24,10 @@ import ConnectedPlotActiveGeometry from './plot_geometry';
 import ConnectedPlotLoadedDetection from './loaded_detections';
 import ConnectedLogger from './logging';
 import ConnectedGLHud from './hud';
+import ConnectedCameraAction from '../camera/camera';
+import ConnectedStreamImages from './spec_img';
+
 extend({ MeshLineGeometry, MeshLineMaterial })
-
-
 
 const SpecGL = ({ }) => {
 
@@ -44,9 +45,9 @@ const SpecGL = ({ }) => {
             dpr={Math.min(window.devicePixelRatio, 2)}
             camera={{
                 fov: 40,
-                position: [0, 0, 250],
+                position: [0, 50, 800],
                 near: 0.1,
-                far: 2000
+                far: 10000
             }}
 
         >
@@ -63,11 +64,13 @@ const SpecGL = ({ }) => {
                 intensity={intensity}
             />
         </EffectComposer>
-            
+        <ConnectedCameraAction />
             /* Scene */
         
-        {/* <ConnectedPlotLines /> */}
-        <ConnectedSpectrogramMesh />
+                {/* <ConnectedPlotLines /> */}
+                <Suspense fallback={null}>
+                    <ConnectedSpectrogramMesh />
+                    </Suspense>
         <ConnectedPlotActiveGeometry />
         <ConnectedPlotLoadedDetection />
         <ConnectedLogger />
@@ -80,7 +83,10 @@ const SpecGL = ({ }) => {
                         >
                             M A R L I N  AI
         </Text>
-            
+                <Suspense fallback={null}>
+                    <ConnectedStreamImages />
+                </Suspense>
+                
         {/* <ConnectedGLHud />  */}
             
             </Canvas>
