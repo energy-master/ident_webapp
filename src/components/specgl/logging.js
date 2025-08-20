@@ -34,7 +34,7 @@ const Logger = (props) => {
     let message = messages[messages.length - 1];
     
     
-    let message_x_start_init = -130;
+    let message_x_start_init = -600;
     let message_y_start_init = -30;
     // console.log(message);
     //console.log(messages);
@@ -42,12 +42,12 @@ const Logger = (props) => {
     message = props.msg;
     return (
         <>
-                   <GLMessage 
+                   {/* <GLMessage 
                         message={message}
                         xpos={message_x_start}
                         ypos={message_y_start}
                         zpos={message_z}
-            />
+            /> */}
             <GLMessage
                 message={message}
                 xpos={message_x_start_init}

@@ -75,7 +75,7 @@ const SpecGL = ({ }) => {
         <ConnectedPlotLoadedDetection />
         <ConnectedLogger />
         <Text
-                            position={[-130, 0, -10]}
+                            position={[-600, 0, -10]}
                             scale={[40, 40, 10]}
                             color="red" // default
                             anchorX="left" // default

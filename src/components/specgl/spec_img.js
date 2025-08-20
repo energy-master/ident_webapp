@@ -7,7 +7,7 @@ import { Image } from '@react-three/drei';
 import { connect } from 'react-redux';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
-
+import { Stats, OrbitControls, Line, Text } from '@react-three/drei';
 
 function StreamImages(params)  {
     
@@ -28,6 +28,7 @@ function StreamImages(params)  {
     // let start_gl_x = 0 - (parseFloat(params.openGl.x_width) / 2);
     let start_gl_x = 0;
     let y_base = (parseFloat(params.openGl.y_width)) + 20;
+    y_base = 300 + 20;
     // console.log(params.ordered_stream_files);
     let number_loaded = 0;
     for (let i = 0; i < params.ordered_stream_files[params.selected_stream[0]].length; i++){
@@ -38,7 +39,9 @@ function StreamImages(params)  {
             'yPos': y_base,
             'zPos': 20,
             'width': params.openGl.x_width,
-            'height': params.openGl.y_width
+            'height': 500,
+            'file_name' : params.ordered_stream_files[params.selected_stream[0]][i].filename,
+            'timestamp': params.ordered_stream_files[params.selected_stream[0]][i]['datetime']['date']
         };
 
         // console.log(instance);
@@ -57,6 +60,7 @@ function StreamImages(params)  {
         <>
             {
                 stream_render_data.map((item, key) => (
+                    <>
                     <ImageBox
                         
                         imgPath={item.imgPath}
@@ -66,7 +70,27 @@ function StreamImages(params)  {
                         width={item.width}
                         height={item.height}
                         
-                     />
+                    />
+                     <Text
+                                    position={[item.xPos - (item.width/2), item.yPos + (item.height/2)+10, item.zPos]}
+                                    scale={[8, 8, 8]}
+                                    color="green" // default
+                                    anchorX="left" // default
+                                    anchorY="middle" // default 
+                                >
+                                    {item.file_name}
+                        </Text>
+                        <Text
+                            position={[item.xPos , item.yPos + (item.height / 2) + 10, item.zPos]}
+                            scale={[10, 10, 10]}
+                            color="white" // default
+                            anchorX="left" // default
+                            anchorY="middle" // default 
+                        >
+                            {item.timestamp}
+                        </Text>
+                        
+                     </>
                 ))
             }
         </>
@@ -118,18 +142,14 @@ function ImageBox({
     const texture = useLoader(TextureLoader,imgPath);
     console.log(width,height);
     return (
-        // <mesh ref={meshRef}>
-        //     {/* <boxGeometry args={[20, 20, 20]} /> */}
-        //     <meshStandardMaterial map={texture} /> Apply the texture to the material
-        // </mesh>
-        // <Image url={imgPath}>
-           
-        // </Image>
       
         <mesh position={[xPos,yPos,zPos]}>
                 <planeGeometry args={[width, height]} /> 
                 <meshBasicMaterial map={texture} />
         </mesh>
+
+        
+
        
     );
 }
