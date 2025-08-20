@@ -54,7 +54,7 @@ function StreamData(props) {
             // start data polling
             buildRows(stream_data['stream_ids']);
 
-            
+
 
         });
 

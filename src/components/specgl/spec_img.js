@@ -45,9 +45,9 @@ function StreamImages(params)  {
         stream_render_data.push(instance);
         start_gl_x += (params.openGl.x_width);
         number_loaded += 1;
-        if (number_loaded > 5) {
-            break;
-        }
+        // if (number_loaded > 5) {
+        //     break;
+        // }
 
     }
     // console.log(stream_render_data);

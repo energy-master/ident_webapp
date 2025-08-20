@@ -20,7 +20,7 @@ const PlotLoadedDetection = (props) => {
 
     const dispatch = useDispatch();
 
-    return;
+    
 
     if (props.acousticFileData.fileName == "No Active File") {
         return;
@@ -142,7 +142,7 @@ const PlotLoadedDetection = (props) => {
 
     // *** Build Geometry ***
     for (let i = 0; i < active_detections.length; i++){
-        buildGeometry(active_detections[i].start_time, active_detections[i].end_time);
+        buildGeometry(active_detections[i]['body']['chunk_start'], active_detections[i]['body']['chunk_end']);
     }
     
 
