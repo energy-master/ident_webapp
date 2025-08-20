@@ -77,7 +77,23 @@ const store = createStore((state = app_data, action) => {
     }
 
   }
+  //
+  if (action.type == ('ACTIVE_MODELS_TABLE_BUILT')) {
 
+    return {
+      ...state,
+      active_models_rows: action.payload
+    }
+
+  }
+  if (action.type == ('ACTIVE_MODELS_LOADED')) {
+
+    return {
+      ...state,
+      active_models: action.payload
+    }
+
+  }
   if (action.type == ('FILE_PATH_SELECTED')) {
 
 
@@ -123,6 +139,32 @@ const store = createStore((state = app_data, action) => {
       selected_models: current_models
     }
   }
+
+  if (action.type == ('VIEW_MODEL_CLICKED')) {
+
+
+    let selectedTag = action.payload;
+    let current_models = state.selected_view_models;
+    if (current_models.includes(selectedTag)) {
+      // remove model
+      const index = current_models.indexOf(selectedTag);
+      if (index !== -1) {
+        current_models.splice(index, 1);
+      }
+    }
+    else {
+      current_models.push(selectedTag);
+    }
+
+    console.log(current_models);
+
+    return {
+      ...state,
+      selected_view_models: current_models
+    }
+  }
+
+  //VIEW_MODEL_CLICKED
 
   //
   if (action.type == ('MODELS_LOADED')) {

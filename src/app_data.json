@@ -81,7 +81,15 @@
         "active_bot_number" : 0,
         "sim_bot_number" : 0
     },
-    "detections" : [],
-    "stream_data_loaded" : false
+    "detections" : {},
+    "stream_data_loaded" : false,
+    "active_models" : {},
+    "selected_view_models" : [],
+    "active_models_rows" : [
+        {
+            "id": 1,
+            "modelName": "No Models Found."
+        }
+    ]
 }
     

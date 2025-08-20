@@ -18,7 +18,7 @@ function StreamImages(params)  {
         return;
     }
 
-    console.log("rendering images");
+    // console.log("rendering images");
 
     let imgPath = 'https://marlin-network.hopto.org/marlin_live/streams/' + params.selected_stream[0];
     
@@ -140,7 +140,7 @@ function ImageBox({
     //     }
     // });
     const texture = useLoader(TextureLoader,imgPath);
-    console.log(width,height);
+    // console.log(width,height);
     return (
       
         <mesh position={[xPos,yPos,zPos]}>
