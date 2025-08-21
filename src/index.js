@@ -108,7 +108,7 @@ const store = createStore((state = app_data, action) => {
     let current_p = state.acousticFileData;
     current_p.fileName = action.payload['name'];
     current_p.timestamp = action.payload['timestamp'];
-
+    
     return {
       ...state,
       acousticFileData: current_p

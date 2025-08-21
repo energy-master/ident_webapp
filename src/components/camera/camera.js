@@ -14,10 +14,14 @@ import { propsStateInitializer } from '@mui/x-data-grid/internals';
 import { gsap } from "gsap";
 import { useThree } from '@react-three/fiber';
 import { Vector3 } from 'three';
-
+import { Stats, OrbitControls, Line, Text, useProgress, Loader, Html } from '@react-three/drei';
 
 const CameraAction = (params) => {
     const { camera } = useThree();
+    const { controls } = useThree();
+    // const { get } = useThree();
+    // const control = get().controls
+
     console.log(params);
     if (params.currentFileName == "No Active File") {
         return;
@@ -25,12 +29,15 @@ const CameraAction = (params) => {
 
     // get fileName
     let fileName = params.currentFileName;
-
+    
     // get file index in order
     let ordered_list = params.ordered_file_list[params.stream_tag];
     let file_index = 0;
+    console.log(params.currentFileName);
+    
     for (let i = 0; i < ordered_list.length; i++){
-        if (ordered_list[i].filename == params.currentFileName) {
+        console.log(ordered_list[i].filename)
+        if ((ordered_list[i].filename == params.currentFileName) || (ordered_list[i].filename.split('.')[0] == params.currentFileName)) {
             break;
         }
         file_index += 1;
@@ -39,24 +46,30 @@ const CameraAction = (params) => {
     // caluclate x,y,z and move camera
     let x_offset = file_index * params.openGl.x_width;
     console.log(x_offset);
+    console.log(controls);
 
-    // const targetPosition = useRef(new THREE.Vector3());
-    // targetPosition.current.set(5, 5, 5); 
-    // useFrame(() => {
-    //     // Animate camera towards the target position
-    //     camera.position.lerp(targetPosition.current, 0.05);
-    //     camera.lookAt(0, 0, 0); // Optional: keep looking at the origin
-    // });
-    const targetPoint = new Vector3(x_offset, 0, 0); // Example target
-    console.log(camera.position);
+    const targetPoint = new Vector3(x_offset+200, 400, 0); // Example target
+
+    //controls.object.position.set(new Vector3(0, 0, 30))
+    // controls.target.set(targetPoint);
+    // controls.update();
+    controls.enabled = false;
+    gsap.to(camera.position, { x: x_offset + 200, y: 400, z: 1800, duration: 1 });
+    gsap.to(camera.lookAt, { x: x_offset + 200, y: 400, z: 0, duration: 0.5 });
+   
+    // camera.lookAt(targetPoint);
     
-    console.log(targetPoint);
-    console.log(camera.lookAt);
-    camera.lookAt(targetPoint);
-    gsap.to(camera.position, { x: x_offset, y:0, z:800, duration: 1 });
-    // gsap.to(camera.lookAt, { targetPoint, duration: 1 });
-    //gsap.to(camera.rotation, { x: Math.PI / 4, duration: 1 });
-
+    
+    // controls.update();
+    controls.enabled = true;
+    // controls.object.position.set(new Vector3(x_offset, 250, 1800));
+    //controls.target.set(targetPoint);
+    controls.update();
+    return (
+        <>
+            <OrbitControls target={targetPoint} position={[x_offset+200, 400, 1800]} />
+        </>
+    )
 
 }
 

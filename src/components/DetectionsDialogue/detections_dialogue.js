@@ -30,6 +30,12 @@ let columns = [
         flex: 1,
         headerClassName: 'dataHdr'
     },
+    {
+        field: 'detection_time', headerName: 'File', width: 300,
+        editable: false,
+        flex: 1,
+        headerClassName: 'dataHdr'
+    },
 
 
 
@@ -67,7 +73,8 @@ function DetectionsDialogue(props) {
 
                 "id": i,
                 "detection_model": data[i]['model'],
-                "detection_file": data[i]['file_root']
+                "detection_file": data[i]['file_root'],
+                "detection_time": data[i]['timestamp']
               
             });
 
@@ -86,6 +93,11 @@ function DetectionsDialogue(props) {
     ) => {
 
         console.log(params);
+        if ((params['row']['detection_model'] == "No Data") || (params['row']['detection_model'] == "No Data in Stream")){
+            return;
+        }
+        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['detection_file'], 'timestamp': params['row']['timestamp'] } });
+
         //dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'] } });
 
         // gsap.to(camera.position, { x: 10, y: 5, z: 0, duration: 1 });

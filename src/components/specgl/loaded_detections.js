@@ -20,7 +20,7 @@ const PlotLoadedDetection = (props) => {
 
     const dispatch = useDispatch();
 
-    
+    return;
 
     if (props.acousticFileData.fileName == "No Active File") {
         return;

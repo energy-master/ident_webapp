@@ -92,12 +92,18 @@ const DrawStreamDetection = (props) => {
         let x_0 = 0 - (props.gl_data.x_width/2); // start of first spec
         let x_offset = 0
         let fidx = 0;
-        for (let i = 0; i < props.ordered_stream_files[props.selected_stream]; i++){
-            if (props.ordered_stream_files[props.selected_stream][i] == detection['body']['filename']) {
+        console.log(props.ordered_stream_files[props.selected_stream]);
+        for (let i = 0; i < props.ordered_stream_files[props.selected_stream].length; i++){
+            let det_fn = detection['body']['filename'];
+            let o_fn = props.ordered_stream_files[props.selected_stream][i]['filename'];
+            console.log(det_fn,o_fn)
+            if (props.ordered_stream_files[props.selected_stream][i]['filename'] == detection['body']['filename']) {
+                console.log(detection['body']['filename']);
                 break;
             }
             fidx += 1;
         }
+        console.log(fidx);
         x_offset = fidx * props.gl_data.x_width;
         let start_time = detection['body']['chunk_start'];
        
@@ -112,31 +118,13 @@ const DrawStreamDetection = (props) => {
        
         // points
         points.push(xgl_start, ygl_min, 40, xgl_start, ygl_max, 40, xgl_end, ygl_max, 40, xgl_end, ygl_min, 40, xgl_start, ygl_min, 40);
-        //points.push(-250, 0, 40, 0, 250, 40, 250, 0, 40, 250, 250, 40);
-        // console.log(points);
-        // console.log(geo.max_memory/1000);
-        // console.log(geo.f_max,geo.f_min);
-        // console.log(props.gl_data.x_width,props.model_parameters.max_iter);
-
+       
         dataSetArray.push({
             'points': points,
             'label': 'interesting'
         });
 
-
     }
-
-
-    // console.log('plot geometry');
-    // console.log(props.active_geometry);
-    // for (const [key, value] of Object.entries(props.active_geometry)) {
-    //     // console.log(`${key}: ${value}`);
-    //     for (const [iter, structure] of Object.entries(value)) {
-    //         // console.log(`${iter}: ${structure.f_min}`);
-    //         buildGeometry(structure, iter);
-    //     }
-
-    // }
 
     // *** Grab detections ***
     // let active_file_root = props.acousticFileData.fileName.split('.')[0];

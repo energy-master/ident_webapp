@@ -77,12 +77,14 @@ function StreamData(props) {
             });
         }
 
-        rows.push({
-            "id": data.length,
-            "name": "Saved Files"
-        });
+        // rows.push({
+        //     "id": data.length,
+        //     "name": "Saved Files"
+        // });
 
         dispatch({ type: "STREAMS_LOADED", payload: rows });
+        
+        
        
 
     }
@@ -94,6 +96,16 @@ function StreamData(props) {
     ) => {
         console.log(params);
         dispatch({ type: "STREAM_SELECTED", payload: params['row']['name'] });
+
+        // first filename in order & timestamp
+        if (props.ordered_files[params['row']['name']].length > 0) {
+            let f_file = props.ordered_files[params['row']['name']][0].filename;
+            let t_ts = props.ordered_files[params['row']['name']][0]["datetime"]["date"];
+            dispatch({ type: "FILE_SELECTED", payload: { 'name': f_file, 'timestamp': t_ts } });
+        }
+        
+
+        
     };
 
 
@@ -155,7 +167,8 @@ function StreamData(props) {
 
 const mapStateToProps = (state) => ({
     stream_list: state.streams,
-    selected_stream: state.selected_stream
+    selected_stream: state.selected_stream,
+    ordered_files: state.ordered_stream_files
 })
 
 

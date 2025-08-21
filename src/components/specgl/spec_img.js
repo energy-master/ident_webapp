@@ -130,17 +130,9 @@ function ImageBox({
 }) {
 
 
-    // const texture = useTexture(img1); // Load the JPG as a texture
-    // const texture = useTexture(imgPath);
-   
-    // useFrame(() => {
-    //     if (meshRef.current) {
-    //         meshRef.current.rotation.x += 0.01;
-    //         meshRef.current.rotation.y += 0.01;
-    //     }
-    // });
-    const texture = useLoader(TextureLoader,imgPath);
-    // console.log(width,height);
+    const texture = useLoader(TextureLoader, imgPath);
+ 
+    
     return (
       
         <mesh position={[xPos,yPos,zPos]}>

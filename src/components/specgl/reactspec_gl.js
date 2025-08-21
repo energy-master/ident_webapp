@@ -56,7 +56,10 @@ const SpecGL = ({ }) => {
         <color attach="background" args={['black']}/>
         {/* <FirstPersonControls movementSpeed={3}/> */}
         
-        <OrbitControls dampingFactor={0.05} />
+                <OrbitControls
+                    dampingFactor={0.05}
+                    makeDefault
+                     />
         <EffectComposer>
             <Bloom
                 mipmapBlur={mipmapBlur}
@@ -69,9 +72,9 @@ const SpecGL = ({ }) => {
             /* Scene */
         
                 {/* <ConnectedPlotLines /> */}
-                <Suspense fallback={null}>
+                {/* <Suspense fallback={null}>
                     <ConnectedSpectrogramMesh />
-                    </Suspense>
+                    </Suspense> */}
         <ConnectedPlotActiveGeometry />
         <ConnectedPlotLoadedDetection />
         <ConnectedDrawStreamDetection />
