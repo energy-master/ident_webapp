@@ -16,23 +16,23 @@ import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
 extend({ MeshLineGeometry, MeshLineMaterial })
 
 
-const PlotLoadedDetection = (props) => {
+const DrawStreamDetection = (props) => {
 
     const dispatch = useDispatch();
 
     
 
-    if (props.acousticFileData.fileName == "No Active File") {
-        return;
-    }
+    // if (props.acousticFileData.fileName == "No Active File") {
+    //     return;
+    // }
 
     if (props.selected_stream.length < 1){
         return;
     }
 
-    if (props.spectrogram.data_present == false) {
-        return;
-    }
+    // if (props.spectrogram.data_present == false) {
+    //     return;
+    // }
 
     dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Annotating any detections. ' })
 
@@ -61,7 +61,7 @@ const PlotLoadedDetection = (props) => {
         return glx;
     }
 
-    const get_delta_x_from_t = (time_s) => {
+    const get_delta_x_from_t = (time_s,filename) => {
 
         // // iter delta x
         // // console.log(props.model_parameters.max_iter);
@@ -75,34 +75,44 @@ const PlotLoadedDetection = (props) => {
         // // console.log(gl_delta_x);
 
         let gl_delta_x = 0;
-        gl_delta_x = (time_s / props.spectrogram.time_vector[props.spectrogram.time_vector.length - 1]) * props.gl_data.x_width;
-
+        gl_delta_x = ((time_s / props.file_data[props.selected_stream][filename].elapsed_time)) * props.gl_data.x_width;
+        console.log(time_s, props.file_data[props.selected_stream][filename].elapsed_time,gl_delta_x)
         return (gl_delta_x);
 
     }
 
-    const buildGeometry = (start_time, end_time) => {
-
+    const buildGeometry = (detection) => {
+        console.log(detection);
         let points = [];
-        // console.log(geo);
+        
         let geom_points = [];
-        // console.log(iter);
-        // points at iter:
-        // iter x:
-        // let xgl_iter = get_x_from_iter(iter);
-        let xgl_start = get_delta_x_from_t(start_time);
-        let xgl_end = get_delta_x_from_t(end_time);
-        let ygl_max = get_y_from_f(50000);
-        let ygl_min = get_y_from_f(100);
+      
 
+        //ger x start & x_offstet
+        let x_0 = 0 - (props.gl_data.x_width/2); // start of first spec
+        let x_offset = 0
+        let fidx = 0;
+        for (let i = 0; i < props.ordered_stream_files[props.selected_stream]; i++){
+            if (props.ordered_stream_files[props.selected_stream][i] == detection['body']['filename']) {
+                break;
+            }
+            fidx += 1;
+        }
+        x_offset = fidx * props.gl_data.x_width;
+        let start_time = detection['body']['chunk_start'];
+       
+        let end_time = detection['body']['chunk_end'];
 
+        let xgl_start = x_0 + x_offset + get_delta_x_from_t(start_time, detection['body']['filename']);
+        console.log(x_0, x_offset, xgl_start, start_time);
+        let xgl_end = x_0 + x_offset + get_delta_x_from_t(end_time, detection['body']['filename']);
+        let ygl_max = 300;
+        let ygl_min = 60;
 
-        // memory x
-        //let delta_xgl_memory = get_delta_x_from_delta_t(geo.max_memory / 1000);
-        // console.log(xgl_iter, ygl_max, ygl_min, delta_xgl_memory)
-
+       
         // points
-        points.push(xgl_start, ygl_max, 10, xgl_start, ygl_min, 10, xgl_end, ygl_min, 10, xgl_end, ygl_max, 10);
+        points.push(xgl_start, ygl_min, 40, xgl_start, ygl_max, 40, xgl_end, ygl_max, 40, xgl_end, ygl_min, 40, xgl_start, ygl_min, 40);
+        //points.push(-250, 0, 40, 0, 250, 40, 250, 0, 40, 250, 250, 40);
         // console.log(points);
         // console.log(geo.max_memory/1000);
         // console.log(geo.f_max,geo.f_min);
@@ -129,26 +139,34 @@ const PlotLoadedDetection = (props) => {
     // }
 
     // *** Grab detections ***
-    let active_file_root = props.acousticFileData.fileName.split('.')[0];
+    // let active_file_root = props.acousticFileData.fileName.split('.')[0];
     let active_detections = [];
     console.log(props.detections);
     for (let i = 0; i < props.detections[props.selected_stream[0]].length; i++){
         let detection_file_root = props.detections[props.selected_stream[0]][i].file_root;
-        if (detection_file_root == active_file_root) {
+        if (props.selected_view_models["interesting"].includes(props.detections[props.selected_stream[0]][i].model)) {
             active_detections.push(props.detections[props.selected_stream[0]][i].detections);
-            console.log(active_detections);
         }
+        
     }
-
+    console.log(active_detections);
     // *** Build Geometry ***
     for (let i = 0; i < active_detections.length; i++){
-        buildGeometry(active_detections[i]['body']['chunk_start'], active_detections[i]['body']['chunk_end']);
+        for (let j = 0; j < active_detections[i].length; j++){
+
+            buildGeometry(active_detections[i][j]);
+
+        }
+        
+
     }
     
 
     if (dataSetArray.length > 0) {
         dataPresent = true;
     }
+
+
 
     if (dataPresent) {
         return (
@@ -157,7 +175,7 @@ const PlotLoadedDetection = (props) => {
             <>
                 {
                     dataSetArray.map((item, key) => (
-                        <PlotGeo points={item.points} color='red' label={item.label} width={4.0} />
+                        <PlotGeo points={item.points} color='white' label={item.label} width={2.0} />
                     ))
                 }
             </>
@@ -182,22 +200,33 @@ const PlotLoadedDetection = (props) => {
 }
 
 
+
+
 const mapStateToProps = (state) => ({
 
-    active_geometry: state.ft_geometry,
+    
     gl_data: state.openGl,
-    spectrogram: state.spectrogram,
-    model_parameters: state.model_parameters[0],
-    showSpec: state.acousticFileData.SHOW_SPEC_FLAG,
+    selected_view_models: state.selected_view_models,
     detections: state.detections,
     selected_stream: state.selected_stream,
-    acousticFileData: state.acousticFileData,
-    spectrogram: state.spectrogram
-
+    ordered_stream_files: state.ordered_stream_files,
+    file_data: state.file_data
+    
+    
 })
 
-const ConnectedPlotLoadedDetection = connect(mapStateToProps)(PlotLoadedDetection);
-export default ConnectedPlotLoadedDetection;
+const ConnectedDrawStreamDetection = connect(mapStateToProps)(DrawStreamDetection);
+export default ConnectedDrawStreamDetection;
+
+// function Rectangle(props) {
+//     return (
+//         <mesh {...props}>
+//             <boxGeometry args={[props.width, props.height, props.depth || 0.01]} /> {/* width, height, and a small depth for 2D appearance */}
+//             <meshStandardMaterial color={props.color || 'hotpink'} />
+//         </mesh>
+//     );
+// }
+
 
 const PlotGeo = ({
     color,
@@ -208,21 +237,7 @@ const PlotGeo = ({
 }) => {
     let s = 2;
     const ref = useRef()
-    // useFrame((state) => {
-
-    //     for (let i = 0; i < points.length; i++) {
-    //         // ref.current.position.x = x + Math.sin((state.clock.getElapsedTime() * s) / 2)
-    //         let idx = (i + 2) * i;
-    //         // ref.current.position.y = points[idx + 1] + Math.sin((state.clock.getElapsedTime() * s) / 2);
-    //         points[idx + 1] = points[idx + 1] + Math.sin((state.clock.getElapsedTime() * s) / 2)
-    //         i = idx;
-    //         // ref.current.position.z = z + Math.sin((state.clock.getElapsedTime() * s) / 2)
-    //     }
-
-
-
-    // })
-
+ 
 
     return (
         <mesh ref={ref}>

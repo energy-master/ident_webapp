@@ -50,7 +50,7 @@ function DetectionsDialogue(props) {
         ];
 
     console.log(props.detections);
-    
+    console.log(props.view_models);
     // rows = props.active_models_rows;
     let selected_stream_tag = "";
     
@@ -99,19 +99,21 @@ function DetectionsDialogue(props) {
     if (props.selected_stream.length > 0) {
         selected_stream_tag = props.selected_stream[0];
         if (selected_stream_tag in props.detections) {
-            
+            console.log("looking now");
             let valid_decisions = [];
             for (let i = 0; i < props.detections[selected_stream_tag].length; i++){
-                
-                if (props.detections[selected_stream_tag][i]['model'] in props.view_models) {
+                console.log(props.detections[selected_stream_tag][i]['model'], props.view_models["interesting"]);
+                if (props.view_models["interesting"].includes(props.detections[selected_stream_tag][i]['model'])) {
+                    console.log("hit");
                     valid_decisions.push(props.detections[selected_stream_tag][i]);
                 }
 
             }
+            console.log(valid_decisions);
             buildRows(valid_decisions);
         }
     }
-
+    console.log(rows);
     if (rows.length == 0) {
         rows = [
             {
@@ -171,11 +173,14 @@ function DetectionsDialogue(props) {
 }
 
 
-const mapStateToProps = (state) => ({
-    view_models: state.selected_view_models,
-    selected_stream: state.selected_stream,
-    detections: state.detections
-})
+const mapStateToProps = (state) => {
+    return {
+
+        view_models: state.selected_view_models,
+        selected_stream: state.selected_stream,
+        detections: state.detections
+    }
+}
 
 
 const ConnectedDetectionsDialogue = connect(mapStateToProps)(DetectionsDialogue);

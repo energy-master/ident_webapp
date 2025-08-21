@@ -19,6 +19,7 @@ import ConnectedStreamData from '../../components/stream_data/stream_data';
 import ConnectedStreamFiles from '../../components/stream_files/stream_files'
 import ConnectedActiveModelDialogue from '../../components/ActiveModelDialogue/active_model_dialogue';
 import ConnectedDetectionsDialogue from '../../components/DetectionsDialogue/detections_dialogue';
+import ConnectedLayersDialogue from '../../components/layers_dialogue/layers_dialogue';
 const eventLogger = (e, data) => {
     console.log('Event: ', e);
     console.log('Data: ', data);
@@ -192,9 +193,7 @@ const WindowGUI = ({}) => {
                                 <Typography component="span">Layers</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography>
-
-                                </Typography>
+                                <ConnectedLayersDialogue />
                             </AccordionDetails>
                         </Accordion>
                     </div>

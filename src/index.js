@@ -144,7 +144,7 @@ const store = createStore((state = app_data, action) => {
 
 
     let selectedTag = action.payload;
-    let current_models = state.selected_view_models;
+    let current_models = state.selected_view_models["interesting"];
     if (current_models.includes(selectedTag)) {
       // remove model
       const index = current_models.indexOf(selectedTag);
@@ -156,17 +156,27 @@ const store = createStore((state = app_data, action) => {
       current_models.push(selectedTag);
     }
 
-    console.log(current_models);
-
+    // console.log(current_models);
+    let return_models = {
+      "interesting" : current_models
+    }
     return {
       ...state,
-      selected_view_models: current_models
+      selected_view_models: return_models
     }
   }
-
+  //FILEDATA_LOADED
   //VIEW_MODEL_CLICKED
 
   //
+  if (action.type == ('FILEDATA_LOADED')) {
+    // let rows = action.payload;
+    //console.log(action.payload);
+    return {
+      ...state,
+      file_data: action.payload
+    }
+  }
   if (action.type == ('MODELS_LOADED')) {
     // let rows = action.payload;
     //console.log(action.payload);

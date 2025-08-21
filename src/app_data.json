@@ -84,12 +84,13 @@
     "detections" : {},
     "stream_data_loaded" : false,
     "active_models" : {},
-    "selected_view_models" : [],
+    "selected_view_models" : {"interesting":[]},
     "active_models_rows" : [
         {
             "id": 1,
             "modelName": "No Models Found."
         }
-    ]
+    ],
+    "file_data" : {}
 }
     

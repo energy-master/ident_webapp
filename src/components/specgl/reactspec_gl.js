@@ -26,6 +26,7 @@ import ConnectedLogger from './logging';
 import ConnectedGLHud from './hud';
 import ConnectedCameraAction from '../camera/camera';
 import ConnectedStreamImages from './spec_img';
+import ConnectedDrawStreamDetection from './draw_stream_detections';
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 
@@ -73,6 +74,7 @@ const SpecGL = ({ }) => {
                     </Suspense>
         <ConnectedPlotActiveGeometry />
         <ConnectedPlotLoadedDetection />
+        <ConnectedDrawStreamDetection />
         <ConnectedLogger />
         <Text
                             position={[-600, 0, -10]}

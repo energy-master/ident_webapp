@@ -47,6 +47,7 @@ function StreamData(props) {
             console.log(stream_data['detections']);
             dispatch({ type: "DETECTIONS_LOADED", payload: stream_data['detections'] });
             dispatch({ type: "ACTIVE_MODELS_LOADED", payload: stream_data['models'] });
+            dispatch({ type: "FILEDATA_LOADED", payload: stream_data['file_data'] });
 
             dispatch({ type: "ORDERED_STREAM", payload: stream_data['ordered']});
             
