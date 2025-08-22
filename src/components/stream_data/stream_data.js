@@ -19,7 +19,12 @@ let columns = [
         field: 'name', headerName: 'Stream ID', width: 300,
         editable: false,
         flex: 1,
-        headerClassName:'dataHdr'
+        headerClassName: 'dataHdr',
+        renderCell: (params) => (
+            <Typography variant="overline" sx={{ color:'white' }}>
+                        {params.value}
+            </Typography>
+        ),
     }
 
 

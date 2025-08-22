@@ -28,8 +28,8 @@ const eventLogger = (e, data) => {
 
 
 const Windows = ({ }) => {
-    
-    
+
+
     return (
         <>
             <WindowGUI />
@@ -53,11 +53,14 @@ const WindowGUI = ({}) => {
             handle=".window-header" // Only drag by the header
 
         >
-       
-            <div ref={nodeRef} style={{ width:'20%', left: '2%', top: '10%', position:'absolute'}}>
-                <div className="window-header" >
-                  
-                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', fontSize: '14px', fontWeight: 'bold' }}>
+    
+               
+            <div ref={nodeRef} style={{ width:'30%', left: '2%', top: '10%', position:'absolute'}}>
+                <div >
+                        <div className="window-header" style={{
+                            width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor:'#292D39', color:'white',left: '91%',position: 'absolute', zIndex:100, cursor:'pointer', textAlign:'center' }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', fontSize: '14px', fontWeight: 'bold' , width:'90%'}}>
                     <AccordionSummary
                             expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
                         aria-controls="panel1-content"
@@ -70,8 +73,8 @@ const WindowGUI = ({}) => {
                         <ConnectedStreamData />
                     </AccordionDetails>
                     </Accordion>
-                    
-                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', fontWeight: 'bold' }}>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', fontWeight: 'bold', width: '90%' }}>
                         <AccordionSummary
                             expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
                             aria-controls="panel4-content"
@@ -95,7 +98,7 @@ const WindowGUI = ({}) => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                               
+
                             </Typography>
                         </AccordionDetails>
                     </Accordion> */}
@@ -110,15 +113,15 @@ const WindowGUI = ({}) => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                               
+
                             </Typography>
                         </AccordionDetails>
                     </Accordion> */}
 
-                   
-                       
+
+
                 </div>
-               
+
             </div>
 
         </Draggable >
@@ -128,9 +131,15 @@ const WindowGUI = ({}) => {
             nodeRef={nodeRef}
             handle=".window-header" // Only drag by the header
         >
-                <div ref={nodeRef} style={{ width: '20%', left: '73%', top: '10%', position: 'absolute' }}>
-                    <div className="window-header" >
-                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff' }}>
+        
+                <div ref={nodeRef} style={{ width: '20%', left: '70%', top: '10%', position: 'absolute' }}>
+                    {/* <div className="window-header" > */}
+                    <div>
+                    <div className="window-header" style={{
+                        width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor: '#292D39', color: 'white', left: '91%', position: 'absolute', zIndex: 100, cursor: 'pointer', textAlign: 'center'
+                    }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', width:'90%' }}>
                             <AccordionSummary
                                 expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
                                 aria-controls="panel3-content"
@@ -142,21 +151,25 @@ const WindowGUI = ({}) => {
                                 <ConnectedDetectionsDialogue />
                             </AccordionDetails>
                         </Accordion>
-                    </div>
-
+                    {/* </div> */}
+                       
                 </div>
+            </div>
        </Draggable>
 
-            
+
             <Draggable
                 nodeRef={nodeRef}
                 handle=".window-header" // Only drag by the header
 
             >
-            <div ref={nodeRef} style={{ width:'10%', left: '62%', top: '10%', position:'absolute'}}>
-                <div className="window-header" >
-                  
-                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff' }}>
+                <div ref={nodeRef} style={{ width:'15%', left: '52%', top: '10%', position:'absolute'}}>
+                <div>
+                    <div className="window-header" style={{
+                            width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor: '#292D39', color: 'white', left: '91%', position: 'absolute', zIndex: 100, cursor: 'pointer', textAlign: 'center'
+                    }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', width:'90%' }}>
                         <AccordionSummary
                             expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
                             aria-controls="panel3-content"
@@ -169,10 +182,10 @@ const WindowGUI = ({}) => {
                         </AccordionDetails>
                     </Accordion>
 
-                   
-                       
-                </div>
-               
+                    </div>
+
+              
+
             </div>
 
             </Draggable >
@@ -182,9 +195,14 @@ const WindowGUI = ({}) => {
                 nodeRef={nodeRef}
                 handle=".window-header" // Only drag by the header
             >
-                <div ref={nodeRef} style={{ width: '10%', left: '50%', top: '10%', position: 'absolute' }}>
-                    <div className="window-header" >
-                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff' }}>
+                <div ref={nodeRef} style={{ width: '15%', left: '35%', top: '10%', position: 'absolute' }}>
+                    {/* <div className="window-header" > */}
+                    <div>
+                    <div className="window-header" style={{
+                        width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor: '#292D39', color: 'white', left: '91%', position: 'absolute', zIndex: 100, cursor: 'pointer', textAlign: 'center'
+                    }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', width:'90%'}}>
                             <AccordionSummary
                                 expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
                                 aria-controls="panel3-content"
@@ -196,13 +214,25 @@ const WindowGUI = ({}) => {
                                 <ConnectedLayersDialogue />
                             </AccordionDetails>
                         </Accordion>
+                    {/* </div> */}
                     </div>
-
                 </div>
             </Draggable>
 
         </>
     );
 
+}
+
+
+const WindowHandle = ({
+    left,
+    top
+}) => {
+    return (
+        <div class="window-handle" style={{ left: {left}, top: {top}, position: 'absolute' }}>
+
+        </div>
+    )
 }
 

@@ -27,6 +27,7 @@ import ConnectedGLHud from './hud';
 import ConnectedCameraAction from '../camera/camera';
 import ConnectedStreamImages from './spec_img';
 import ConnectedDrawStreamDetection from './draw_stream_detections';
+import Button from '@mui/material/Button';
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 
@@ -37,16 +38,18 @@ const SpecGL = ({ }) => {
         mipmapBlur: !0,
         luminanceThreshold: { value: 0.0, min: 0, max: 2, step: 0.01 },
         luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
-        intensity: { value: 2.0, min: 0, max: 10, step: 0.01 }
+        intensity: { value: 0.6, min: 0, max: 10, step: 0.01 }
     })
-
+    const handleZoomIn = () => {
+        // Logic to zoom in the camera
+    };
     return (
         <>
         <Canvas
             dpr={Math.min(window.devicePixelRatio, 2)}
             camera={{
                 fov: 40,
-                position: [0, 50, 800],
+                position: [0, 50, 1000],
                 near: 0.1,
                 far: 10000
             }}
@@ -95,6 +98,12 @@ const SpecGL = ({ }) => {
         {/* <ConnectedGLHud />  */}
             
             </Canvas>
+            <div style={{ position: 'absolute', bottom: 10, left: 10 }}>
+                {/* <button onClick={handleZoomIn}>Zoom In</button>
+                <button>Reset Camera</button> */}
+                <Button variant="outlined">Reset Camera</Button>
+                <Button variant="outlined">Live</Button>
+            </div>
             <Loader />
         {/* <Loader
             containerStyles={...container} // Flex layout styles

@@ -21,7 +21,12 @@ let columns = [
         field: 'layer_name', headerName: 'Layer', width: 300,
         editable: false,
         flex: 1,
-        headerClassName: 'dataHdr'
+        headerClassName: 'dataHdr',
+         renderCell: (params) => (
+                    <Typography variant="overline" sx={{ color:'white' }}>
+                                {params.value}
+                    </Typography>
+                ),
     },
    
     
@@ -47,6 +52,7 @@ function LayersDialogue(props) {
             {
                 "id": 1,
                 "layer_name": 'Detections',
+                
                 
               
             },
@@ -90,7 +96,15 @@ function LayersDialogue(props) {
                     sx={{
                         m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
                             backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
-                        }
+                        }, '& .MuiTablePagination-root': {
+                            // Styles for the root of the pagination component
+                            color: 'primary.main',
+                        },
+                        '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                            // Styles for the "Rows per page" label and displayed rows count
+                            fontSize: '1.0rem',
+                            color: 'primary.main'
+                        },
                     }}
                     rows={rows}
                     columns={columns}

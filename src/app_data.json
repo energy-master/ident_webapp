@@ -91,6 +91,9 @@
             "modelName": "No Models Found."
         }
     ],
-    "file_data" : {}
+    "file_data" : {},
+    "app_init" : {
+        "camera" : true
+    }
 }
     

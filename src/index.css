@@ -132,5 +132,14 @@ html{
 .dataHdr {
   /* backgroundColor: black; */
   /* background: black; */
-  color: rgb(251, 251, 251);
+  color: white;
+  font-size: 16px;
+
+}
+
+.window-handle{
+  height:100px;
+  widht:100px;
+  background-color: black;
+  border:1pt solid #ffffff;
 }

@@ -23,6 +23,19 @@ const CameraAction = (params) => {
     // const control = get().controls
 
     console.log(params);
+
+    // if (params.app_init['camera'] == true) {
+
+    //     //controls.enabled = false;
+    //     gsap.to(camera.position, { x: x_offset - 200, y: 400, z: 1200, duration: 1 });
+    //     gsap.to(camera.lookAt, { x: x_offset - 200, y: 400, z: 0, duration: 0.5 });
+    //     // controls.enabled = true;
+    //     // controls.update();
+
+    // }
+
+
+
     if (params.currentFileName == "No Active File") {
         return;
     }
@@ -37,39 +50,35 @@ const CameraAction = (params) => {
     console.log(params.stream_tag);
     console.log(params.currentFileName);
     console.log(ordered_list);
-    for (let i = 0; i < ordered_list.length; i++){
-        console.log(ordered_list[i].filename)
-        if ((ordered_list[i].filename == params.currentFileName) || (ordered_list[i].filename.split('.')[0] == params.currentFileName)) {
-            break;
+    if (params.ordered_file_list.hasOwnProperty(params.stream_tag)) {
+        
+    
+        for (let i = 0; i < ordered_list.length; i++) {
+            console.log(ordered_list[i].filename)
+            if ((ordered_list[i].filename == params.currentFileName) || (ordered_list[i].filename.split('.')[0] == params.currentFileName)) {
+                break;
+            }
+            file_index += 1;
         }
-        file_index += 1;
     }
-
     // caluclate x,y,z and move camera
     let x_offset = file_index * params.openGl.x_width;
     console.log(x_offset);
     console.log(controls);
 
     const targetPoint = new Vector3(x_offset+200, 400, 0); // Example target
-
-    //controls.object.position.set(new Vector3(0, 0, 30))
-    // controls.target.set(targetPoint);
-    // controls.update();
+    
     controls.enabled = false;
-    gsap.to(camera.position, { x: x_offset + 200, y: 400, z: 1800, duration: 1 });
+    gsap.to(camera.position, { x: x_offset + 200, y: 400, z: 1200, duration: 1 });
     gsap.to(camera.lookAt, { x: x_offset + 200, y: 400, z: 0, duration: 0.5 });
-   
-    // camera.lookAt(targetPoint);
-    
-    
-    // controls.update();
     controls.enabled = true;
-    // controls.object.position.set(new Vector3(x_offset, 250, 1800));
-    //controls.target.set(targetPoint);
     controls.update();
+
+   
+
     return (
         <>
-            <OrbitControls target={targetPoint} position={[x_offset+200, 400, 1800]} />
+            <OrbitControls target={targetPoint} position={[x_offset + 200, 400, 1200]} dampingFactor={0.05} />
         </>
     )
 
@@ -81,7 +90,8 @@ const mapStateToProps = (state) => ({
     currentFileName: state.acousticFileData.fileName,
     ordered_file_list: state.ordered_stream_files,
     stream_tag : state.selected_stream,
-    openGl: state.openGl
+    openGl: state.openGl,
+    app_init : state.app_init
 
 })
 

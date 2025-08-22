@@ -21,19 +21,34 @@ let columns = [
         field: 'name', headerName: 'Filename', width: 300,
         editable: false,
         flex: 1,
-        headerClassName: 'dataHdr'
+        headerClassName: 'dataHdr',
+        renderCell: (params) => (
+            <Typography variant="overline" sx={{ color: 'white' }}>
+                {params.value}
+            </Typography>
+        ),
     },
     {
         field: 'time', headerName: 'Time', width: 300,
         editable: false,
         flex: 1,
-        headerClassName: 'dataHdr'
+        headerClassName: 'dataHdr',
+        renderCell: (params) => (
+            <Typography variant="overline" sx={{ color: 'white' }}>
+                {params.value}
+            </Typography>
+        ),
     },
     {
         field: 'detection', headerName: 'Detection', width: 300,
         editable: false,
         flex: 1,
-        headerClassName: 'dataHdr'
+        headerClassName: 'dataHdr',
+         renderCell: (params) => (
+                    <Typography variant="overline" sx={{ color:'white' }}>
+                                {params.value}
+                    </Typography>
+                ),
     }
 
 
