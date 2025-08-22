@@ -6,11 +6,12 @@ import { useTexture } from '@react-three/drei';
 import { Image } from '@react-three/drei';
 import { connect } from 'react-redux';
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+import { TextureLoader, Triangle } from 'three';
 import { Stats, OrbitControls, Line, Text } from '@react-three/drei';
 
 function StreamImages(params)  {
-    
+    console.log(params.current_filename);
+    console.log(params.selected_stream[0]);
     if (params.selected_stream.length < 1){
         return;
     }
@@ -18,9 +19,17 @@ function StreamImages(params)  {
         return;
     }
 
-    // console.log("rendering images");
+    console.log("rendering images");
+    let stream_src = true;
+    let imgPath = '';
+    if (params.selected_stream[0] == 'Saved Files') {
+        imgPath = 'https://marlin-network.hopto.org/marlin_live';
+        stream_src = false;
+    }
+    else {
+        imgPath = 'https://marlin-network.hopto.org/marlin_live/streams/' + params.selected_stream[0];
 
-    let imgPath = 'https://marlin-network.hopto.org/marlin_live/streams/' + params.selected_stream[0];
+    }
     
     // Iterate over files and load images into a sequence and build the stream for rendering
     // console.log(params.openGl);
@@ -31,27 +40,30 @@ function StreamImages(params)  {
     y_base = 300 + 20;
     // console.log(params.ordered_stream_files);
     let number_loaded = 0;
-    for (let i = 0; i < params.ordered_stream_files[params.selected_stream[0]].length; i++){
+
+    if (params.ordered_stream_files.hasOwnProperty(params.selected_stream[0])) {
+        for (let i = 0; i < params.ordered_stream_files[params.selected_stream[0]].length; i++) {
         
-        let instance = {
-            'imgPath': imgPath + '/' + params.ordered_stream_files[params.selected_stream[0]][i].file_root + "_spec.jpg",
-            'xPos': start_gl_x,
-            'yPos': y_base,
-            'zPos': 20,
-            'width': params.openGl.x_width,
-            'height': 500,
-            'file_name' : params.ordered_stream_files[params.selected_stream[0]][i].filename,
-            'timestamp': params.ordered_stream_files[params.selected_stream[0]][i]['datetime']['date']
-        };
+            let instance = {
+                'imgPath': imgPath + '/' + params.ordered_stream_files[params.selected_stream[0]][i].file_root + "_spec.jpg",
+                'xPos': start_gl_x,
+                'yPos': y_base,
+                'zPos': 20,
+                'width': stream_src ? params.openGl.x_width : params.openGl.x_width*3,
+                'height': 500,
+                'file_name': params.ordered_stream_files[params.selected_stream[0]][i].filename,
+                'timestamp': params.ordered_stream_files[params.selected_stream[0]][i]['datetime']['date']
+            };
 
-        // console.log(instance);
-        stream_render_data.push(instance);
-        start_gl_x += (params.openGl.x_width);
-        number_loaded += 1;
-        // if (number_loaded > 5) {
-        //     break;
-        // }
+            // console.log(instance);
+            stream_render_data.push(instance);
+            start_gl_x += (params.openGl.x_width);
+            number_loaded += 1;
+            // if (number_loaded > 5) {
+            //     break;
+            // }
 
+        }
     }
     // console.log(stream_render_data);
     return (
@@ -111,7 +123,8 @@ const mapStateToProps = (state) => ({
     selected_stream: state.selected_stream,
     ordered_stream_files: state.ordered_stream_files,
     openGl:state.openGl,
-    stream_data_loaded: state.stream_data_loaded
+    stream_data_loaded: state.stream_data_loaded,
+    current_filename: state.acousticFileData.fileName
 
 })
 

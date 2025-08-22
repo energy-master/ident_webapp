@@ -66,7 +66,7 @@ const WindowGUI = ({}) => {
                             <Typography component="span">Connect Data</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <ConnectedFileDataGrid />
+                        {/* <ConnectedFileDataGrid /> */}
                         <ConnectedStreamData />
                     </AccordionDetails>
                     </Accordion>

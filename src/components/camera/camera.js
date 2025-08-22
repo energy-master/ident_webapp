@@ -29,12 +29,14 @@ const CameraAction = (params) => {
 
     // get fileName
     let fileName = params.currentFileName;
-    
+    console.log(fileName);
+    console.log(params.ordered_file_list);
     // get file index in order
     let ordered_list = params.ordered_file_list[params.stream_tag];
     let file_index = 0;
+    console.log(params.stream_tag);
     console.log(params.currentFileName);
-    
+    console.log(ordered_list);
     for (let i = 0; i < ordered_list.length; i++){
         console.log(ordered_list[i].filename)
         if ((ordered_list[i].filename == params.currentFileName) || (ordered_list[i].filename.split('.')[0] == params.currentFileName)) {

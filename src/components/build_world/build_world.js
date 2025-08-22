@@ -47,8 +47,8 @@ const BuildWorld = (params) => {
         console.log(response_.data);
 
         //show spectrogram
-        dispatch({ type: 'SHOW_SPEC', payload: 1 });
-        dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Spectrogram rendering has started. This may take some time.' });
+        //dispatch({ type: 'SHOW_SPEC', payload: 1 });
+        //dispatch({ type: 'LOG_UPDATE', payload: 'IDent Message : Spectrogram rendering has started. This may take some time.' });
 
         //dipatch show spec
         console.log(params);

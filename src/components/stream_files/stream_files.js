@@ -60,6 +60,7 @@ function StreamFiles(props) {
         if (selected_stream_tag == last_stream_location){
             return;
         }
+        
         console.log("axios");
             last_stream_location = selected_stream_tag;
             const formData = new FormData();
@@ -82,27 +83,46 @@ function StreamFiles(props) {
 
                 // console.log(response);
                 let stream_data = response.data;
-                // console.log(response.data);
+                console.log(response.data);
                 // start data polling
                 let file_list = [];
                 let file_data = [];
+                console.log(selected_stream_tag);
+                if (selected_stream_tag != 'saved_files') {
+                    
                 
-                for (let j = 0; j < stream_data['streams'].length; j++){
-                    // console.log(stream_data['streams'][j]);
-                    // if (selected_stream_tag in stream_data['streams'][j])
-                    // {
-                    //     //file_list = stream_data['streams'][j][selected_stream_tag];
+                    for (let j = 0; j < stream_data['streams'].length; j++) {
+                        // console.log(stream_data['streams'][j]);
+                        // if (selected_stream_tag in stream_data['streams'][j])
+                        // {
+                        //     //file_list = stream_data['streams'][j][selected_stream_tag];
                         
-                    // }
-                    if (selected_stream_tag in stream_data['ordered']) {
-                        file_data = stream_data['ordered'][selected_stream_tag];
+                        // }
+                        if (selected_stream_tag in stream_data['ordered']) {
+                            file_data = stream_data['ordered'][selected_stream_tag];
+                        }
+
+
                     }
-
-
+                    buildRows(file_data, props.detections[selected_stream_tag]);
+                }
+                else {
+                    for (let j = 0; j < stream_data['streams'][0]['saved_files'].length; j++){
+                        file_data.push({
+                            "filename": stream_data['streams'][0][selected_stream_tag][j],
+                            "datetime": {
+                                "data": "not_streaming"
+                            }
+                        });
+                        // file_data = stream_data['streams'][0]['saved_files'];
+                        console.log(file_data);
+                    }
+                   
+                    buildRows(file_data, []);
                 }
 
                 // console.log(file_list);
-                buildRows(file_data, props.detections[selected_stream_tag]);
+                
 
             });
 
@@ -115,7 +135,7 @@ function StreamFiles(props) {
         rows = [];
         console.log(detections);
         for (let i = 0; i < (data.length); i++) {
-            // console.log(data[i]);
+            console.log(data[i]);
 
             // detection logic
             let root_fn = data[i]['filename'].split('.')[0];
@@ -154,7 +174,7 @@ function StreamFiles(props) {
     ) => {
 
         console.log(params);
-        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'] } } );
+        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'], 'active_stream' : props.selected_stream[0] } } );
 
         // gsap.to(camera.position, { x: 10, y: 5, z: 0, duration: 1 });
         // gsap.to(camera.rotation, { x: Math.PI / 4, duration: 1 });
@@ -194,8 +214,19 @@ function StreamFiles(props) {
                     sx={{
                         m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
                             backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
-                        }
-                    }}
+                        }, '& .MuiTablePagination-root': {
+                            // Styles for the root of the pagination component
+                            color: 'primary.main',
+                        },
+                        '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                            // Styles for the "Rows per page" label and displayed rows count
+                            fontSize: '1.0rem',
+                            color: 'primary.main'
+                        },
+                        // Add more specific selectors for other elements within pagination
+
+                    }
+                    }
                     rows={rows}
                     columns={columns}
 

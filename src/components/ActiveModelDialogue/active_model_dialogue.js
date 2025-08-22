@@ -85,10 +85,9 @@ function ActiveModelDialogue(props) {
         selected_stream_tag = props.selected_stream[0];
         console.log(selected_stream_tag);
         console.log(props.active_models);
-        // if (props.active_models.hasOwnProperty(selected_stream_tag)) {
-        buildRows(props.active_models[selected_stream_tag]);
-
-        // }
+        if (props.active_models.hasOwnProperty(selected_stream_tag)) {
+            buildRows(props.active_models[selected_stream_tag]);
+        }
     }
    
 

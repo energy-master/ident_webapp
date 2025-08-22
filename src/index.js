@@ -108,14 +108,49 @@ const store = createStore((state = app_data, action) => {
     let current_p = state.acousticFileData;
     current_p.fileName = action.payload['name'];
     current_p.timestamp = action.payload['timestamp'];
-    
+
+    let ordered_f = state.ordered_stream_files;
+    if (state.selected_stream[0] == 'Saved Files') {
+      console.log('clearing order');
+      ordered_f = state.ordered_stream_files;
+      console.log(ordered_f);
+      ordered_f["Saved Files"] = [];
+      ordered_f["Saved Files"].push({
+        "filename": action.payload["name"],
+        "file_root": action.payload["name"].split('.')[0],
+        "datetime": {
+          "date":"Not Streaming"
+        }
+      });
+      
+    }
+    console.log(ordered_f);
+
+    // ordered_f[]
+    console.log(action.payload);
     return {
       ...state,
-      acousticFileData: current_p
+      acousticFileData: current_p,
+      ordered_stream_files: ordered_f
+
     }
 
   }
+  //SINGLE_FILE_SELECTED
+  if (action.type == ('SINGLE_FILE_SELECTED')) {
 
+    // let current_p = state.ordered_stream_files;
+    
+    // let new_data = {};
+    // new_data['Saved Files'] = [];
+    
+
+    // return {
+    //   ...state,
+    //   ordered_stream_files: new_data
+    // }
+
+  }
   if (action.type == ('MODEL_SELECTED')) {
 
    

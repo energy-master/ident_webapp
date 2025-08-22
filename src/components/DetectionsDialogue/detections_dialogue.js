@@ -96,7 +96,7 @@ function DetectionsDialogue(props) {
         if ((params['row']['detection_model'] == "No Data") || (params['row']['detection_model'] == "No Data in Stream")){
             return;
         }
-        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['detection_file'], 'timestamp': params['row']['timestamp'] } });
+        dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['detection_file'], 'timestamp': params['row']['timestamp'], 'active_stream' : params.selected_stream } });
 
         //dispatch({ type: "FILE_SELECTED", payload: { 'name': params['row']['name'], 'timestamp': params['row']['time'] } });
 

@@ -130,13 +130,19 @@ const DrawStreamDetection = (props) => {
     // let active_file_root = props.acousticFileData.fileName.split('.')[0];
     let active_detections = [];
     console.log(props.detections);
-    for (let i = 0; i < props.detections[props.selected_stream[0]].length; i++){
-        let detection_file_root = props.detections[props.selected_stream[0]][i].file_root;
-        if (props.selected_view_models["interesting"].includes(props.detections[props.selected_stream[0]][i].model)) {
-            active_detections.push(props.detections[props.selected_stream[0]][i].detections);
+
+    if (props.detections.hasOwnProperty(props.selected_stream[0])) {
+        for (let i = 0; i < props.detections[props.selected_stream[0]].length; i++) {
+            let detection_file_root = props.detections[props.selected_stream[0]][i].file_root;
+            if (props.selected_view_models["interesting"].includes(props.detections[props.selected_stream[0]][i].model)) {
+                active_detections.push(props.detections[props.selected_stream[0]][i].detections);
+            }
+
         }
-        
     }
+
+   
+
     console.log(active_detections);
     // *** Build Geometry ***
     for (let i = 0; i < active_detections.length; i++){

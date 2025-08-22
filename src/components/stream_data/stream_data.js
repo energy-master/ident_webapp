@@ -48,7 +48,6 @@ function StreamData(props) {
             dispatch({ type: "DETECTIONS_LOADED", payload: stream_data['detections'] });
             dispatch({ type: "ACTIVE_MODELS_LOADED", payload: stream_data['models'] });
             dispatch({ type: "FILEDATA_LOADED", payload: stream_data['file_data'] });
-
             dispatch({ type: "ORDERED_STREAM", payload: stream_data['ordered']});
             
 
@@ -77,10 +76,10 @@ function StreamData(props) {
             });
         }
 
-        // rows.push({
-        //     "id": data.length,
-        //     "name": "Saved Files"
-        // });
+        rows.push({
+            "id": data.length,
+            "name": "Saved Files"
+        });
 
         dispatch({ type: "STREAMS_LOADED", payload: rows });
         
@@ -98,11 +97,19 @@ function StreamData(props) {
         dispatch({ type: "STREAM_SELECTED", payload: params['row']['name'] });
 
         // first filename in order & timestamp
-        if (props.ordered_files[params['row']['name']].length > 0) {
-            let f_file = props.ordered_files[params['row']['name']][0].filename;
-            let t_ts = props.ordered_files[params['row']['name']][0]["datetime"]["date"];
-            dispatch({ type: "FILE_SELECTED", payload: { 'name': f_file, 'timestamp': t_ts } });
+        // this is for a stream env
+        if (props.ordered_files.hasOwnProperty([params['row']['name']])) {
+            if (props.ordered_files[params['row']['name']].length > 0) {
+                let f_file = props.ordered_files[params['row']['name']][0].filename;
+                let t_ts = props.ordered_files[params['row']['name']][0]["datetime"]["date"];
+                dispatch({ type: "FILE_SELECTED", payload: { 'name': f_file, 'timestamp': t_ts, 'active_stream' : props.selected_stream } });
+            }
         }
+        else {
+            //update ordered_files for one file
+            dispatch({ type: "SINGLE_FILE_SELECTED" });
+        }
+        //single file
         
 
         
@@ -132,11 +139,26 @@ function StreamData(props) {
 
                 <DataGrid
                    
-                    sx={{
-                        m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
+                    sx={
+                        {
+                            m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr':
+                            {
                             backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
-                        }
-                    }}
+                            },'& .MuiTablePagination-root': {
+                                // Styles for the root of the pagination component
+                                color: 'primary.main',
+                            },
+                                '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                                // Styles for the "Rows per page" label and displayed rows count
+                                fontSize: '1.0rem',
+                                    color: 'primary.main'
+                            },
+                            // Add more specific selectors for other elements within pagination
+                        
+                            }
+                    }
+
+                    
                     rows={rows}
                     columns={columns}
 
@@ -145,10 +167,12 @@ function StreamData(props) {
                             paginationModel: {
                                 pageSize: 5,
                             },
+
                         },
                         pinnedColumns: {
                             left: ['id'],
                         },
+
                     }}
                     pinnedRows={{
                         bottom: [rows[0]],
