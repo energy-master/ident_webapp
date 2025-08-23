@@ -8,6 +8,7 @@
     overflow-x: scroll;
     font-size: 10px;
     color: var(--blue);
-    margin: 2px;
+    padding: 2px;
+
 
 }

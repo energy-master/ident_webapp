@@ -15,11 +15,17 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 import ConnectedFileDataGrid from '../../components/ident_data_grid';
+
 import ConnectedStreamData from '../../components/stream_data/stream_data';
+import ConnectedModelData from '../model_data/model_data';
 import ConnectedStreamFiles from '../../components/stream_files/stream_files'
 import ConnectedActiveModelDialogue from '../../components/ActiveModelDialogue/active_model_dialogue';
 import ConnectedDetectionsDialogue from '../../components/DetectionsDialogue/detections_dialogue';
 import ConnectedLayersDialogue from '../../components/layers_dialogue/layers_dialogue';
+import ConnectedModelParams from '../../components/model_params/model_params';
+import ConnectedAppProgressBar from '../../components/appProgressBar/app_progress_bar';
+
+
 const eventLogger = (e, data) => {
     console.log('Event: ', e);
     console.log('Data: ', data);
@@ -219,6 +225,63 @@ const WindowGUI = ({}) => {
                 </div>
             </Draggable>
 
+                
+            <Draggable
+                nodeRef={nodeRef}
+                handle=".window-header" // Only drag by the header
+            >
+                <div ref={nodeRef} style={{ width: '45%', left: '40%', top: '80%', position: 'absolute' }}>
+                    {/* <div className="window-header" > */}
+                    <div>
+                        <div className="window-header" style={{
+                            width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor: '#292D39', color: 'white', left: '91%', position: 'absolute', zIndex: 100, cursor: 'pointer', textAlign: 'center'
+                        }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', width: '90%' }}>
+                            <AccordionSummary
+                                expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
+                                aria-controls="panel3-content"
+                                id="panel3-header"
+                            >
+                                <Typography component="span">Simulation</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <ConnectedModelParams />
+                                <ConnectedAppProgressBar />
+                            </AccordionDetails>
+                        </Accordion>
+                        {/* </div> */}
+                    </div>
+                </div>
+            </Draggable>
+
+            <Draggable
+                nodeRef={nodeRef}
+                handle=".window-header" // Only drag by the header
+            >
+                <div ref={nodeRef} style={{ width: '30%', left: '60%', top: '70%', position: 'absolute' }}>
+                    {/* <div className="window-header" > */}
+                    <div>
+                        <div className="window-header" style={{
+                            width: '50px', height: '25px', background: '#292D39', backgroundColor: '#292D39', bgcolor: '#292D39', color: 'white', left: '91%', position: 'absolute', zIndex: 100, cursor: 'pointer', textAlign: 'center'
+                        }}>...</div>
+
+                        <Accordion sx={{ bgcolor: '#292D39', color: '#efeff1ff', width: '90%' }}>
+                            <AccordionSummary
+                                expandIcon={<ArrowDropDownIcon sx={{ color: '#818698' }} />}
+                                aria-controls="panel3-content"
+                                id="panel3-header"
+                            >
+                                <Typography component="span">Model DB</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <ConnectedModelData />
+                            </AccordionDetails>
+                        </Accordion>
+                        {/* </div> */}
+                    </div>
+                </div>
+            </Draggable>
         </>
     );
 

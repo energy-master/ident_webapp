@@ -18,7 +18,14 @@ let columns = [
     {
         field: 'name', headerName: 'Model ID', width: 300,
         editable: false,
-        flex:1
+        flex: 1,
+        headerClassName: 'dataHdr',
+        renderCell: (params) => (
+            <Typography variant="overline" sx={{ color: 'white' }}>
+                {params.value}
+            </Typography>
+        ),
+        
     }
    
 
@@ -105,7 +112,7 @@ function ModelData(props) {
             <Stack direction="column" gap={0} style={{ width: '100%' }}>
                 <Box sx={{ width: '100%', paddingtop: 0 }}>
                     <Typography variant="h6" gutterBottom>
-                        <span className='panel-header'>Select Model(s)</span>
+                        {/* <span className='panel-header'>Select Model(s)</span> */}
                     </Typography></Box>
 
 
@@ -114,7 +121,15 @@ function ModelData(props) {
                     sx={{
                         m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
                             backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
-                        }
+                        }, '& .MuiTablePagination-root': {
+                            // Styles for the root of the pagination component
+                            color: 'primary.main',
+                        },
+                        '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                            // Styles for the "Rows per page" label and displayed rows count
+                            fontSize: '1.0rem',
+                            color: 'primary.main'
+                        },
                     }}
                     rows={rows}
                     columns={columns}

@@ -15,18 +15,6 @@ import Typography from '@mui/material/Typography';
 
 
 import LinearProgress from '@mui/material/LinearProgress';
-// const getTheme = (mode) =>
-//     createTheme({
-//         palette: {
-//             mode,
-//             DataGrid: {
-//                 bg: mode === 'light' ? '#f8fafc' : '#334155',
-//                 pinnedBg: mode === 'light' ? '#f1f5f9' : '#293548',
-//                 headerBg: mode === 'light' ? '#eaeff5' : '#1e293b',
-//             },
-//         },
-//     });
-
 
 
 
@@ -71,7 +59,7 @@ function ModelParams(props) {
                         console.log('start');
 
                         // start data polling
-                        //dispatch({ type: "START_POLLING" });
+                        dispatch({ type: "START_POLLING" });
                         dispatch({ type: 'RUN_STARTED' });
                         dispatch({type:'LOG_UPDATE', payload:'Run submitted to IDent.'});
                         
@@ -79,7 +67,7 @@ function ModelParams(props) {
                            
                             console.log(response);
                             // start data polling
-                            //dispatch({ type: "STOP_POLLING" });
+                            dispatch({ type: "STOP_POLLING" });
                             dispatch({ type: 'RUN_FINISHED' });
 
                         });
@@ -158,30 +146,60 @@ function ModelParams(props) {
         {
             field: 'delta_t', headerName: 'Delta T (s)', width: 90,
             editable: true,
+            headerClassName: 'dataHdr',
+                    renderCell: (params) => (
+                        <Typography variant="overline" sx={{ color:'white' }}>
+                                    {params.value}
+                        </Typography>
+                    ),
         },
         {
             field: 'model_id',
             headerName: 'Model ID',
             width: 150,
             editable: true,
+            headerClassName: 'dataHdr',
+            renderCell: (params) => (
+                <Typography variant="overline" sx={{ color: 'white' }}>
+                    {params.value}
+                </Typography>
+            ),
         },
         {
             field: 'numberBots',
             headerName: 'Number Bots',
             width: 150,
             editable: true,
+            headerClassName: 'dataHdr',
+                    renderCell: (params) => (
+                        <Typography variant="overline" sx={{ color:'white' }}>
+                                    {params.value}
+                        </Typography>
+                    ),
         },
         {
             field: 'nfft',
             headerName: 'nfft',
             width: 150,
             editable: true,
+            headerClassName: 'dataHdr',
+                    renderCell: (params) => (
+                        <Typography variant="overline" sx={{ color:'white' }}>
+                                    {params.value}
+                        </Typography>
+                    ),
         },
         {
             field: 'window_stream',
             headerName: 'Stream Window',
             width: 150,
             editable: false,
+            headerClassName: 'dataHdr',
+                    renderCell: (params) => (
+                        <Typography variant="overline" sx={{ color:'white' }}>
+                                    {params.value}
+                        </Typography>
+                    ),
         },
         {
             field: 'run_button',
@@ -189,26 +207,42 @@ function ModelParams(props) {
             width: 150,
             renderCell: renderModelRunButton,
             disableClickEventBubbling: true,
+            headerClassName: 'dataHdr',
+                    // renderCell: (params) => (
+                    //     <Typography variant="overline" sx={{ color:'white' }}>
+                    //                 {params.value}
+                    //     </Typography>
+                    // ),
         },
         {
             field: 'status',
             headerName: 'Status',
             width: 150,
             disableClickEventBubbling: true,
+            headerClassName: 'dataHdr',
+            renderCell: (params) => (
+                <Typography variant="overline" sx={{ color: 'white' }}>
+                    {params.value}
+                </Typography>
+            ),
         },
         {
             field: 'download',
             headerName: 'Download',
             width: 150,
             disableClickEventBubbling: true,
-            renderCell: renderModelDownloadButton
+            renderCell: renderModelDownloadButton,
+            headerClassName: 'dataHdr',
+            
         },
         {
             field: 'report',
             headerName: 'Report',
             width: 150,
             disableClickEventBubbling: true,
-            renderCell: renderReportLinkButton
+            renderCell: renderReportLinkButton,
+            headerClassName: 'dataHdr',
+           
         }
 
 
@@ -248,16 +282,38 @@ function ModelParams(props) {
             <Stack direction="column" gap={0} style={{ width: '100%' }}>
                 <Box sx={{ width: '100%', maxWidth: 500, paddingtop: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                        <span className='panel-header'>Model Parameters</span>
+                        {/* <span className='panel-header'>Model Parameters</span> */}
                     </Typography></Box>
 
 
                 <DataGrid
-                    sx={{ m: 0, fontSize: 10 }}
+                    sx={
+                        {
+                            m: 0, fontSize: 11, bgcolor: '#292D39', color: '#818698', bg: '#292D39', color: '#8C92A4', fontWeight: 'bold', '& .dataHdr': {
+                                backgroundColor: '#292D39', color: '#8C92A4', fontWeight: 'bold'
+                            }, '& .MuiTablePagination-root': {
+                                // Styles for the root of the pagination component
+                                color: 'primary.main',
+                            },
+                            '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                                // Styles for the "Rows per page" label and displayed rows count
+                                fontSize: '1.0rem',
+                                color: 'primary.main'
+                            },
+                             "& .MuiTableRow - root:hover": {
+                            backgroundColor: "primary.dark"
+                            }
+                              
+                            
+                        }
+                    
+                    
+                    }
                     rows={rows}
                     columns={columns}
                     hideFooter
                     processRowUpdate={processRowUpdate}
+
                     initialState={{
                         
 
@@ -273,6 +329,7 @@ function ModelParams(props) {
                     pinnedRows={{
                         bottom: [rows[0]],
                     }}
+
                 />
                 {/* </ThemeProvider> */}
             </Stack>

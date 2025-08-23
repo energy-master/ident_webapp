@@ -18,6 +18,34 @@ const PollData = (props) => {
     
     const dispatch = useDispatch();
 
+    const grabPerformaceData = () => {
+
+        let performance_data_path = '/marlin_live_data/' + props.model_parameters[0].model_id + '_performance_out.json';
+
+        fetch(performance_data_path)
+            .then((response) => {
+
+                if (response.statusText == 'OK') {
+                    return (response.json());
+                }
+                else {
+                    return 'error';
+                }
+            })
+            .then((json_data) => {
+                if (json_data != 'error') {
+                    dispatch({ type: 'STATUS_UPDATE', payload: json_data['status'] });
+                    dispatch({ type: 'MAX_ITER_UPDATE', payload: json_data['number_iters'] });
+                    dispatch({
+                        type: 'RUN_UPDATE', payload: {
+                            'number_bots': json_data['number_bots'],
+                            'active_bot': json_data['last_bot_iter']
+                        }
+                    });
+                }
+            });
+    }
+
     const grabSimData = () => {
 
         // console.log("Grabbing live data");
@@ -104,8 +132,11 @@ const PollData = (props) => {
     if (props.polling_state.running == true) {
         console.log("polling data");
 
-        let poller_id = setInterval(grabSimData, 5000);
-        poller_ids.push(poller_id);
+        //let poller_id = setInterval(grabSimData, 5000);
+        let poller_id_p = setInterval(grabPerformaceData, 1000);
+        
+        //poller_ids.push(poller_id);
+        poller_ids.push(poller_id_p);
 
 
     }

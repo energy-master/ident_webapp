@@ -8,7 +8,7 @@ import { GridMoreVertIcon } from '@mui/x-data-grid'
 import * as THREE from 'three';
 import { DoubleSide } from 'three'
 // import './styles.css'
-import { Stats, OrbitControls, Line, Text, useProgress, Loader, Html } from '@react-three/drei';
+import { Stats, OrbitControls, Line, Text, useProgress, Loader, Html, calcPosFromAngles } from '@react-three/drei';
 // import {  } from '@react-three/drei/web';
 import { useControls } from 'leva';
 import { columnResizeStateInitializer, escapeRegExp, propsStateInitializer, useGridParamsApi } from '@mui/x-data-grid/internals';
@@ -103,6 +103,12 @@ const SpecGL = ({ }) => {
                 <button>Reset Camera</button> */}
                 <Button variant="outlined">Reset Camera</Button>
                 <Button variant="outlined">Live</Button>
+            </div>
+            <div style={{ position: 'absolute', bottom: 10, left: '20%' }}>
+                {/* <button onClick={handleZoomIn}>Zoom In</button>
+                <button>Reset Camera</button> */}
+                <Button variant="outlined" style={{width:'100px'}}>In +</Button>
+                <Button variant="outlined" style={{ width: '100px' }}>Out -</Button>
             </div>
             <Loader />
         {/* <Loader

@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+  background-color: black;
 }
 
 /* *{
@@ -74,7 +74,7 @@ code {
   --results_data_height: 100%;
 
   /* Model Parms / Run */
-  --model_parms_width: 75%;
+  --model_parms_width: 100%;
   --model_parms_height: 100%;
 
 }
@@ -94,6 +94,7 @@ html{
   bottom: var(--data-panel-bottom);
   height: var(--data-panel-height);
   width: var(--data-panel-width);
+ 
   
 }
 
