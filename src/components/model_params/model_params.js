@@ -64,11 +64,12 @@ function ModelParams(props) {
                         dispatch({type:'LOG_UPDATE', payload:'Run submitted to IDent.'});
                         
                         axios.post(url, formData, config).then((response) => {
-                           
+                            // this arrives a while after "search complte" Lots of file writing and report generation.
                             console.log(response);
                             // start data polling
                             dispatch({ type: "STOP_POLLING" });
                             dispatch({ type: 'RUN_FINISHED' });
+                            // alert('run finished.')
 
                         });
 
